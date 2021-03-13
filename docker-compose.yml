@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:4.0.23-xenial
+    command: --port 23086
+    ports:
+      - "23086:23086"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=db
+    healthcheck:
+      test: "[ `echo 'db.runCommand(\"ping\").ok' | mongo localhost/db --quiet` ] && echo 0 || echo 1"
+      interval: 5s
+      start_period: 10s
+      timeout: 4s
+      retries: 3 
+    
+  mongo-express:
+    image: mongo-express:0.54.0
+    ports:
+      - "8089:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_PORT=23086

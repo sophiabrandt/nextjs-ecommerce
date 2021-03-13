@@ -1,0 +1,1 @@
+export { accessEnv } from "./accessEnv";

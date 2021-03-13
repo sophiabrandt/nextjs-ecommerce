@@ -1,0 +1,20 @@
+{
+  "name": "nextjs-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build:fe": "yarn workspace @nextjs-ecommerce/frontend run build",
+    "build:be": "yarn workspace @nextjs-ecommerce/backend run build",
+    "dev:fe": "yarn workspace @nextjs-ecommerce/frontend run dev",
+    "dev:be": "yarn workspace @nextjs-ecommerce/backend run dev"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
