@@ -1,4 +1,5 @@
 import { Heading } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 export function Header() {
   return (
@@ -12,7 +13,7 @@ export function Header() {
         maxW="20%"
         as="h1"
       >
-        Shoppy
+        <NextLink href="#">Shoppy</NextLink>
       </Heading>
     </>
   );
