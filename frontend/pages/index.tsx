@@ -1,40 +1,18 @@
-import { GetServerSideProps, NextPage } from "next";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Flex, Spacer, Container } from "@chakra-ui/react";
+import { NextPage } from "next";
+import { Header, Nav } from "../features/navigation-header/";
 
-interface Props {
-  launch: {
-    mission: string;
-    site: string;
-    timestamp: number;
-    rocket: string;
-  };
-}
-const IndexPage: NextPage<Props> = ({ launch }) => {
-  const date = new Date(launch.timestamp);
+const IndexPage: NextPage<Props> = ({ children }: React.ReactNode) => {
   return (
-    <main>
-      <Heading m={2}>Next SpaceX Launch: {launch.mission}</Heading>
-      <Box bg="brand.primary" w="100%" p={4} color="ui.quaternary">
-        <Text>
-          {launch.rocket} will take off from {launch.site} on {date.toDateString()}
-        </Text>
-      </Box>
-    </main>
+    <Container maxW="container.xl" mt={2}>
+      <Flex>
+        <Header />
+        <Spacer />
+        <Nav />
+      </Flex>
+      {children}
+    </Container>
   );
 };
-export default IndexPage;
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const response = await fetch("https://api.spacexdata.com/v3/launches/next");
-  const nextLaunch = await response.json();
-  return {
-    props: {
-      launch: {
-        mission: nextLaunch.mission_name,
-        site: nextLaunch.launch_site.site_name_long,
-        timestamp: nextLaunch.launch_date_unix * 1000,
-        rocket: nextLaunch.rocket.rocket_name,
-      },
-    },
-  };
-};
+export default IndexPage;

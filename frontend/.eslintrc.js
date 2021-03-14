@@ -40,14 +40,10 @@ module.exports = {
         // Why would you want unused vars?
         "@typescript-eslint/no-unused-vars": ["error"],
 
-        // I suggest this setting for requiring return types on functions only where useful
-        "@typescript-eslint/explicit-function-return-type": [
-          "warn",
-          {
-            allowExpressions: true,
-            allowConciseArrowFunctionExpressionsStartingWithVoid: true,
-          },
-        ],
+        // Disable explicit retuns
+        // https://github.com/facebook/create-react-app/pull/8177
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
       },
     },
   ],

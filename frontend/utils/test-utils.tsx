@@ -7,7 +7,7 @@ const customTheme = extendTheme({
   fonts: theme.fonts,
 });
 
-const AllTheProviders: FC = ({ children }) => {
+const AllTheProviders: React.FC = ({ children }) => {
   return (
     <ChakraProvider theme={customTheme}>
       <Fonts />

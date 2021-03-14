@@ -1,4 +1,4 @@
-import { Global } from "@emotion/react"
+import { Global } from "@emotion/react";
 
 // https://fonts.googleapis.com/css2?family=Lato&family=Ubuntu:wght@700&display=swap
 export const Fonts = () => (
@@ -78,4 +78,4 @@ export const Fonts = () => (
 	}
       `}
   />
-)
+);

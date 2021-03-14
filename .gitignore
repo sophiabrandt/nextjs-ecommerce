@@ -152,3 +152,4 @@ variables.env
 .build
 .keystone
 tags
+__snapshots__
