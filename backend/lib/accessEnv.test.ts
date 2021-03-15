@@ -12,6 +12,6 @@ describe("Access Env", () => {
   });
 
   test("it should throw an error for a non-existing key when a no value was provided", () => {
-    expect(() => accessEnv("DOES_NOT_EXIST")).toThrowError()
+    expect(() => accessEnv("DOES_NOT_EXIST")).toThrowError();
   });
 });

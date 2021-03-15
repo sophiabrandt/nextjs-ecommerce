@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "keystone-next",
     "seed-data": "keystone-next --seed-data",
+    "build": "keystone-next build",
+    "start": "keystone-next start",
     "lint": "eslint --fix \"{,!(node_modules|.keystone)/**/}*.{js,jsx,ts,tsx}\"",
     "format": "prettier -w -u \"{,!(node_modules|.keystone)/**/}*.{js,jsx,ts,tsx}\"",
     "test": "jest"
