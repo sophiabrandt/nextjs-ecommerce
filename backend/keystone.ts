@@ -3,12 +3,12 @@ import { config, createSchema } from "@keystone-next/keystone/schema";
 import { statelessSessions, withItemData } from "@keystone-next/keystone/session";
 import "dotenv/config";
 import { accessEnv } from "./lib";
-import { User } from "./schemas";
+import { User, Product, ProductImage } from "./schemas";
 
-const databaseURL = accessEnv(<string>process.env.DATABASE_URL, "mongodb://localhost/keystone");
-const frontendURL = accessEnv(<string>process.env.FRONTEND_URL, "http://localhost:7777");
+const databaseURL = accessEnv(<string>"DATABASE_URL", "mongodb://localhost/keystone");
+const frontendURL = accessEnv(<string>"FRONTEND_URL", "http://localhost:7777");
 const sessionSecret = accessEnv(
-  <string>process.env.COOKIE_SECRET,
+  <string>"COOKIE_SECRET",
   "8r5a4LVRBiZtz8Uca7jfnHjll31ctXnZVIxOHWhqQLlVOWUGGc3lxVGQjFqVgD9uUboRWCDqoKbl4Zp4GOC7lFAURatavdUMucOLzi0Ps6PI9Ho0LGViDeejX99VLn0G"
 );
 
@@ -41,7 +41,7 @@ export default withAuth(
         console.log("Connected to the database!");
       },
     },
-    lists: createSchema({ User }),
+    lists: createSchema({ User, Product, ProductImage }),
     ui: {
       isAccessAllowed: ({ session }) => Boolean(session?.data),
     },

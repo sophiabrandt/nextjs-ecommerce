@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "keystone-next",
-    "seed-data": "keystone-next --seed-data",
     "build": "keystone-next build",
     "start": "keystone-next start",
     "lint": "eslint --fix \"{,!(node_modules|.keystone)/**/}*.{js,jsx,ts,tsx}\"",
