@@ -1,4 +1,4 @@
-import { Flex, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import { Link, Flex, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 export function Nav() {
@@ -7,17 +7,17 @@ export function Nav() {
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink as={NextLink} href="#">
-            Home
+            <Link _hover={{ color: "brand.secondary" }}>Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink as={NextLink} href="/sell">
-            Sell
+            <Link _hover={{ color: "brand.secondary" }}>Sell</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
           <BreadcrumbLink as={NextLink} href="/orders">
-            Orders
+            <Link _hover={{ color: "brand.secondary" }}>Orders</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>

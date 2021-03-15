@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { theme, Fonts } from "../infrastructure/theme";
-import "../infrastructure/theme/nprogress.css";
+import { theme, Fonts } from "@/infrastructure/theme";
+import "@/infrastructure/theme/nprogress.css";
 import NProgress from "nprogress";
 import Router from "next/router";
 

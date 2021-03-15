@@ -1,8 +1,12 @@
 import { Flex, Spacer, Container } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { Header, Nav } from "../features/navigation-header/";
+import { Header, Nav } from "@/features/navigation-header/";
 
-const IndexPage: NextPage<Props> = ({ children }: React.ReactNode) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const IndexPage: NextPage<Props> = ({ children }) => {
   return (
     <Container maxW="container.xl" mt={2}>
       <Flex>
