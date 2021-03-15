@@ -1,6 +1,6 @@
 import { render } from "test-utils";
 
-import IndexPage from "./index";
+import IndexPage from "@/pages/index";
 
 describe("Index page", () => {
   it("should match the snapshot", () => {

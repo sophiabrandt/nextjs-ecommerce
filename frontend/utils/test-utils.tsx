@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, RenderOptions } from "@testing-library/react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { theme, Fonts } from "../infrastructure/theme";
 
@@ -16,7 +16,7 @@ const AllTheProviders: React.FC = ({ children }) => {
   );
 };
 
-const customRender = (ui: ReactElement, options?: Omit<RenderOptions, "queries">) =>
+const customRender = (ui: React.ReactElement, options?: Omit<RenderOptions, "queries">) =>
   render(ui, { wrapper: AllTheProviders, ...options });
 
 export * from "@testing-library/react";

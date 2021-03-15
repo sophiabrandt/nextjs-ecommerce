@@ -1,6 +1,6 @@
 import { render } from "test-utils";
 
-import LaunchPage from "./launch";
+import LaunchPage from "@/pages/launch";
 
 describe("Launch page", () => {
   it("should match the snapshot", () => {
