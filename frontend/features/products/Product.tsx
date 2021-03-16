@@ -1,4 +1,4 @@
-import { Maybe, Product as ProductType } from "@/graphql/sdk";
+import { Query } from "@/graphql/sdk";
 import { theme } from "@/infrastructure/theme";
 import { formatMoney } from "@/lib/index";
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
@@ -38,7 +38,7 @@ const Title = styled(Heading)<StyledTextProps>`
 `;
 
 interface ProductProps {
-  product: Maybe<ProductType>;
+  product: Query["Product"];
 }
 
 export const Product = ({ product }: ProductProps) => {
@@ -56,7 +56,7 @@ export const Product = ({ product }: ProductProps) => {
           fallbackSrc="https://via.placeholder.com/400"
         />
         <Title>
-          <NextLink href={`/product/${product?.id}`}>
+          <NextLink href="/product/[id]" as={`/product/${product?.id}`}>
             <Link>{product?.name}</Link>
           </NextLink>
         </Title>

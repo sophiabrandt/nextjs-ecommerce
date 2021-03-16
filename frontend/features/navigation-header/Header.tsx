@@ -13,7 +13,9 @@ export function Header() {
         maxW="20%"
         as="h1"
       >
-        <NextLink href="#">Shoppy</NextLink>
+        <NextLink href="/" as="/">
+          Shoppy
+        </NextLink>
       </Heading>
     </>
   );

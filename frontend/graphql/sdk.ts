@@ -924,6 +924,27 @@ export type AllProductsQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type SingleProductQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type SingleProductQuery = { __typename?: "Query" } & {
+  Product?: Maybe<
+    { __typename?: "Product" } & Pick<Product, "name" | "price" | "description"> & {
+        photo?: Maybe<
+          { __typename?: "ProductImage" } & Pick<ProductImage, "altText"> & {
+              image?: Maybe<
+                { __typename?: "CloudinaryImage_File" } & Pick<
+                  CloudinaryImage_File,
+                  "publicUrlTransformed"
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
 export const AllProductsDocument = gql`
   query allProducts {
     allProducts {
@@ -933,6 +954,21 @@ export const AllProductsDocument = gql`
       description
       photo {
         id
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+`;
+export const SingleProductDocument = gql`
+  query singleProduct($id: ID!) {
+    Product(where: { id: $id }) {
+      name
+      price
+      description
+      photo {
+        altText
         image {
           publicUrlTransformed
         }
@@ -954,6 +990,14 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
         client.request<AllProductsQuery>(AllProductsDocument, variables, requestHeaders)
       );
     },
+    singleProduct(
+      variables: SingleProductQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<SingleProductQuery> {
+      return withWrapper(() =>
+        client.request<SingleProductQuery>(SingleProductDocument, variables, requestHeaders)
+      );
+    },
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;
@@ -970,6 +1014,17 @@ export function getSdkWithHooks(
       config?: SWRConfigInterface<AllProductsQuery, ClientError>
     ) {
       return useSWR<AllProductsQuery, ClientError>(key, () => sdk.allProducts(variables), config);
+    },
+    useSingleProduct(
+      key: SWRKeyInterface,
+      variables: SingleProductQueryVariables,
+      config?: SWRConfigInterface<SingleProductQuery, ClientError>
+    ) {
+      return useSWR<SingleProductQuery, ClientError>(
+        key,
+        () => sdk.singleProduct(variables),
+        config
+      );
     },
   };
 }

@@ -6,7 +6,7 @@ export function Nav() {
     <Flex align="center" fontSize="xl" color="text.primary">
       <Breadcrumb>
         <BreadcrumbItem>
-          <BreadcrumbLink as={NextLink} href="#">
+          <BreadcrumbLink as={NextLink} href="/">
             <Link _hover={{ color: "brand.tertiary" }}>Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
