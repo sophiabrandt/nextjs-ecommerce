@@ -90,18 +90,20 @@ To get a local copy up and running follow these steps.
    ```sh
    docker-compose up -d
    ```
-4. Create configuration file (`backend/.env`), see [`backend/sample.env`](backend/sample.env).
+4. Create configuration file for the backend (`backend/.env`), see [`backend/sample.env`](backend/sample.env).
+
+5. Create configuration file for the frontend (`frontend/.env.local`), see [`frontend/sample.env`](frontend/sample.env).
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
 ```sh
-yarn run dev:be
-yarn run dev:fe
+cd backend && yarn run dev
+cd frontend && yarn run dev
 ```
 
-Go to [http://localhost:3000](http://localhost:3000) for the Keystone CMS and [http://localhost:7777](http://localhost:7777) for the Next.js application.
+Go to [http://localhost:3000](http://localhost:3000) for the Keystone CMS (backend) and [http://localhost:7777](http://localhost:7777) for the Next.js application (frontend).
 
 <!-- ROADMAP -->
 

@@ -1,9 +1,10 @@
-import type { AppProps } from "next/app";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { theme, Fonts } from "@/infrastructure/theme";
+import { Page } from "@/components/Page";
+import { Fonts, theme } from "@/infrastructure/theme";
 import "@/infrastructure/theme/nprogress.css";
-import NProgress from "nprogress";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import type { AppProps } from "next/app";
 import Router from "next/router";
+import NProgress from "nprogress";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -14,13 +15,15 @@ const customTheme = extendTheme({
   fonts: theme.fonts,
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ChakraProvider theme={customTheme}>
       <Fonts />
-      <Component {...pageProps} />
+      <Page>
+        <Component {...pageProps} />
+      </Page>
     </ChakraProvider>
   );
-}
+};
 
 export default MyApp;

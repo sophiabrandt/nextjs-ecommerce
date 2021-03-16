@@ -1,0 +1,12 @@
+overwrite: true
+generates:
+  graphql/sdk.ts:
+    schema: 'http://localhost:3000/api/graphql'
+    documents: 'graphql/*.graphql'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+      - plugin-typescript-swr
+    config:
+      rawRequst: false

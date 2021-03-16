@@ -1,0 +1,14 @@
+query allProducts {
+  allProducts {
+    id
+    name
+    price
+    description
+    photo {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}

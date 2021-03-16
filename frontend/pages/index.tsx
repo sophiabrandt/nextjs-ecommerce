@@ -1,22 +1,21 @@
-import { Flex, Spacer, Container } from "@chakra-ui/react";
-import { NextPage } from "next";
-import { Header, Nav } from "@/features/navigation-header/";
+import { Products } from "@/features/products";
+import { getSdk } from "@/graphql/sdk";
+import { graphqlClient } from "@/graphql/index";
+import { InferGetStaticPropsType } from "next";
 
-interface Props {
-  children: React.ReactNode;
-}
+export const getStaticProps = async () => {
+  const sdk = getSdk(graphqlClient);
+  const { allProducts } = await sdk.allProducts();
+  return {
+    props: {
+      allProducts,
+    },
+    revalidate: 60,
+  };
+};
 
-const IndexPage: NextPage<Props> = ({ children }) => {
-  return (
-    <Container maxW="container.xl" mt={2}>
-      <Flex>
-        <Header />
-        <Spacer />
-        <Nav />
-      </Flex>
-      {children}
-    </Container>
-  );
+const IndexPage = ({ allProducts }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  return <Products products={allProducts} />;
 };
 
 export default IndexPage;

@@ -1,0 +1,1 @@
+export { graphqlClient } from "./graphqlClient";
