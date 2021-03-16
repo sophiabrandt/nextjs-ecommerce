@@ -7,17 +7,17 @@ export function Nav() {
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink as={NextLink} href="#">
-            <Link _hover={{ color: "brand.secondary" }}>Home</Link>
+            <Link _hover={{ color: "brand.tertiary" }}>Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink as={NextLink} href="/sell">
-            <Link _hover={{ color: "brand.secondary" }}>Sell</Link>
+            <Link _hover={{ color: "brand.tertiary" }}>Sell</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
           <BreadcrumbLink as={NextLink} href="/orders">
-            <Link _hover={{ color: "brand.secondary" }}>Orders</Link>
+            <Link _hover={{ color: "brand.tertiary" }}>Orders</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
