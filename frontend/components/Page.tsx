@@ -7,8 +7,8 @@ interface Props {
 
 export const Page = ({ children }: Props) => {
   return (
-    <Container maxW="container.xl" mt={2}>
-      <Flex mb={4}>
+    <Container maxW="container.xl" mt={4}>
+      <Flex mb={8}>
         <Header />
         <Spacer />
         <Nav />

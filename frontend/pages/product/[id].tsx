@@ -3,6 +3,7 @@ import { Spinner, Center } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { Query, getSdk } from "@/graphql/sdk";
 import { graphqlClient } from "@/graphql/index";
+import { ProductDetail } from "@/features/product/index";
 import Head from "next/head";
 
 const sdk = getSdk(graphqlClient);
@@ -28,10 +29,17 @@ const Product: NextPage<ProductProps> = ({ product }) => {
   }
 
   if (!product) {
-    return <Head>Page not found</Head>;
+    return <Head>404 - Page not found</Head>;
   }
 
-  return <div>{product.name}</div>;
+  return (
+    <div>
+      <Head>
+        <title>Shoppy | {product.name}</title>
+      </Head>
+      <ProductDetail product={product} />
+    </div>
+  );
 };
 
 export const getStaticPaths = async () => {
@@ -41,15 +49,15 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
-export const getStaticProps = async ({
-  params: { id },
-}: {
+interface StaticProps {
   params: { id: string | undefined };
-}) => {
+}
+
+export const getStaticProps = async ({ params: { id } }: StaticProps) => {
   if (!id) {
     throw new Error("Parameter is invalid");
   }
