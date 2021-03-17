@@ -1,7 +1,9 @@
 import { Page } from "@/components/Page";
 import { Fonts, theme } from "@/infrastructure/theme";
 import "@/infrastructure/theme/nprogress.css";
+import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { useApollo } from "@/lib/apollo";
 import type { AppProps } from "next/app";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -16,13 +18,17 @@ const customTheme = extendTheme({
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+
   return (
-    <ChakraProvider theme={customTheme}>
-      <Fonts />
-      <Page>
-        <Component {...pageProps} />
-      </Page>
-    </ChakraProvider>
+    <ApolloProvider client={apolloClient}>
+      <ChakraProvider theme={customTheme}>
+        <Fonts />
+        <Page>
+          <Component {...pageProps} />
+        </Page>
+      </ChakraProvider>
+    </ApolloProvider>
   );
 };
 

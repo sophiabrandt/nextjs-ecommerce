@@ -1,15 +1,50 @@
 import { useRouter } from "next/router";
 import { Spinner, Center } from "@chakra-ui/react";
+import { Product as ProductsType } from "@/lib/graphql/products.graphql";
+import { Product as ProductType } from "@/lib/graphql/product.graphql";
 import { NextPage } from "next";
-import { Query, getSdk } from "@/graphql/sdk";
-import { graphqlClient } from "@/graphql/index";
 import { ProductDetail } from "@/features/product/index";
 import Head from "next/head";
+import { gql } from "@apollo/client";
+import { initializeApollo } from "@/lib/apollo";
 
-const sdk = getSdk(graphqlClient);
+const client = initializeApollo();
+
+const productsQuery = gql`
+  query allProducts {
+    allProducts {
+      id
+      name
+      price
+      description
+      photo {
+        id
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+`;
+
+const productQuery = gql`
+  query product($id: ID!) {
+    Product(where: { id: $id }) {
+      name
+      price
+      description
+      photo {
+        altText
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+`;
 
 interface ProductProps {
-  product: Query["Product"];
+  product: ProductType;
 }
 
 const Product: NextPage<ProductProps> = ({ product }) => {
@@ -42,8 +77,16 @@ const Product: NextPage<ProductProps> = ({ product }) => {
   );
 };
 
+interface AllProducts {
+  data: {
+    allProducts: ProductsType[];
+  };
+}
+
 export const getStaticPaths = async () => {
-  const { allProducts } = await sdk.allProducts();
+  const {
+    data: { allProducts },
+  }: AllProducts = await client.query({ query: productsQuery });
   const ids = allProducts?.map((product) => product?.id);
   const paths = ids?.map((id) => ({ params: { id } }));
 
@@ -62,11 +105,12 @@ export const getStaticProps = async ({ params: { id } }: StaticProps) => {
     throw new Error("Parameter is invalid");
   }
 
-  let product = null;
+  let product;
 
   try {
-    product = await sdk.singleProduct({
-      id,
+    product = await client.query({
+      query: productQuery,
+      variables: { id },
     });
   } catch (err) {
     if (err.status !== 404) {
@@ -76,7 +120,7 @@ export const getStaticProps = async ({ params: { id } }: StaticProps) => {
 
   return {
     props: {
-      product: product?.Product,
+      product: product?.data?.Product,
     },
     revalidate: 60,
   };

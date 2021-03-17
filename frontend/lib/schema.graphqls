@@ -1,0 +1,775 @@
+#  A keystone list
+type User {
+  id: ID!
+  name: String
+  email: String
+  password_is_set: Boolean
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput]
+  OR: [UserWhereInput]
+  id: ID
+  id_not: ID
+  id_in: [ID]
+  id_not_in: [ID]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+  email: String
+  email_not: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  email_i: String
+  email_not_i: String
+  email_contains_i: String
+  email_not_contains_i: String
+  email_starts_with_i: String
+  email_not_starts_with_i: String
+  email_ends_with_i: String
+  email_not_ends_with_i: String
+  email_in: [String]
+  email_not_in: [String]
+  password_is_set: Boolean
+}
+
+input UserWhereUniqueInput {
+  id: ID!
+}
+
+enum SortUsersBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+}
+
+input UserUpdateInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UsersUpdateInput {
+  id: ID!
+  data: UserUpdateInput
+}
+
+input UserCreateInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UsersCreateInput {
+  data: UserCreateInput
+}
+
+input ProductImageRelateToOneInput {
+  create: ProductImageCreateInput
+  connect: ProductImageWhereUniqueInput
+  disconnect: ProductImageWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+#  A keystone list
+type Product {
+  id: ID!
+  name: String
+  description: String
+  photo: ProductImage
+  status: String
+  price: Int
+}
+
+input ProductWhereInput {
+  AND: [ProductWhereInput]
+  OR: [ProductWhereInput]
+  id: ID
+  id_not: ID
+  id_in: [ID]
+  id_not_in: [ID]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+  description: String
+  description_not: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  description_i: String
+  description_not_i: String
+  description_contains_i: String
+  description_not_contains_i: String
+  description_starts_with_i: String
+  description_not_starts_with_i: String
+  description_ends_with_i: String
+  description_not_ends_with_i: String
+  description_in: [String]
+  description_not_in: [String]
+  photo: ProductImageWhereInput
+  photo_is_null: Boolean
+  status: String
+  status_not: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  status_i: String
+  status_not_i: String
+  status_contains_i: String
+  status_not_contains_i: String
+  status_starts_with_i: String
+  status_not_starts_with_i: String
+  status_ends_with_i: String
+  status_not_ends_with_i: String
+  status_in: [String]
+  status_not_in: [String]
+  price: Int
+  price_not: Int
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  price_in: [Int]
+  price_not_in: [Int]
+}
+
+input ProductWhereUniqueInput {
+  id: ID!
+}
+
+enum SortProductsBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  photo_ASC
+  photo_DESC
+  status_ASC
+  status_DESC
+  price_ASC
+  price_DESC
+}
+
+input ProductUpdateInput {
+  name: String
+  description: String
+  photo: ProductImageRelateToOneInput
+  status: String
+  price: Int
+}
+
+input ProductsUpdateInput {
+  id: ID!
+  data: ProductUpdateInput
+}
+
+input ProductCreateInput {
+  name: String
+  description: String
+  photo: ProductImageRelateToOneInput
+  status: String
+  price: Int
+}
+
+input ProductsCreateInput {
+  data: ProductCreateInput
+}
+
+type CloudinaryImage_File {
+  id: ID
+  path: String
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+# Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+# All options are strings as they ultimately end up in a URL.
+input CloudinaryImageFormat {
+  #  Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input ProductRelateToOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+  disconnect: ProductWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+#  A keystone list
+type ProductImage {
+  id: ID!
+  image: CloudinaryImage_File
+  altText: String
+  product: Product
+}
+
+input ProductImageWhereInput {
+  AND: [ProductImageWhereInput]
+  OR: [ProductImageWhereInput]
+  id: ID
+  id_not: ID
+  id_in: [ID]
+  id_not_in: [ID]
+  image: String
+  image_not: String
+  image_in: [String]
+  image_not_in: [String]
+  altText: String
+  altText_not: String
+  altText_contains: String
+  altText_not_contains: String
+  altText_starts_with: String
+  altText_not_starts_with: String
+  altText_ends_with: String
+  altText_not_ends_with: String
+  altText_i: String
+  altText_not_i: String
+  altText_contains_i: String
+  altText_not_contains_i: String
+  altText_starts_with_i: String
+  altText_not_starts_with_i: String
+  altText_ends_with_i: String
+  altText_not_ends_with_i: String
+  altText_in: [String]
+  altText_not_in: [String]
+  product: ProductWhereInput
+  product_is_null: Boolean
+}
+
+input ProductImageWhereUniqueInput {
+  id: ID!
+}
+
+enum SortProductImagesBy {
+  id_ASC
+  id_DESC
+  altText_ASC
+  altText_DESC
+  product_ASC
+  product_DESC
+}
+
+input ProductImageUpdateInput {
+  image: Upload
+  altText: String
+  product: ProductRelateToOneInput
+}
+
+input ProductImagesUpdateInput {
+  id: ID!
+  data: ProductImageUpdateInput
+}
+
+input ProductImageCreateInput {
+  image: Upload
+  altText: String
+  product: ProductRelateToOneInput
+}
+
+input ProductImagesCreateInput {
+  data: ProductImageCreateInput
+}
+
+# The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+type _ListAccess {
+  # Access Control settings for the currently logged in (or anonymous)
+  # user when performing 'create' operations.
+  # NOTE: 'create' can only return a Boolean.
+  # It is not possible to specify a declarative Where clause for this
+  # operation
+  create: Boolean
+
+  # Access Control settings for the currently logged in (or anonymous)
+  # user when performing 'read' operations.
+  read: JSON
+
+  # Access Control settings for the currently logged in (or anonymous)
+  # user when performing 'update' operations.
+  update: JSON
+
+  # Access Control settings for the currently logged in (or anonymous)
+  # user when performing 'delete' operations.
+  delete: JSON
+
+  # Access Control settings for the currently logged in (or anonymous)
+  # user when performing 'auth' operations.
+  auth: JSON
+}
+
+type _ListQueries {
+  # Single-item query name
+  item: String
+
+  # All-items query name
+  list: String
+
+  # List metadata query name
+  meta: String
+}
+
+type _ListMutations {
+  # Create mutation name
+  create: String
+
+  # Create many mutation name
+  createMany: String
+
+  # Update mutation name
+  update: String
+
+  # Update many mutation name
+  updateMany: String
+
+  # Delete mutation name
+  delete: String
+
+  # Delete many mutation name
+  deleteMany: String
+}
+
+type _ListInputTypes {
+  # Input type for matching multiple items
+  whereInput: String
+
+  # Input type for matching a unique item
+  whereUniqueInput: String
+
+  # Create mutation input type name
+  createInput: String
+
+  # Create many mutation input type name
+  createManyInput: String
+
+  # Update mutation name input
+  updateInput: String
+
+  # Update many mutation name input
+  updateManyInput: String
+}
+
+type _ListSchemaFields {
+  # The path of the field in its list
+  path: String
+
+  # The name of the field in its list
+  name: String @deprecated(reason: "Use `path` instead")
+
+  # The field type (ie, Checkbox, Text, etc)
+  type: String
+}
+
+type _ListSchemaRelatedFields {
+  # The typename as used in GraphQL queries
+  type: String
+
+  # A list of GraphQL field names
+  fields: [String]
+}
+
+type _ListSchema {
+  # The typename as used in GraphQL queries
+  type: String
+
+  # Top level GraphQL query names which either return this type, or
+  # provide aggregate information about this type
+  queries: _ListQueries
+
+  # Top-level GraphQL mutation names
+  mutations: _ListMutations
+
+  # Top-level GraphQL input types
+  inputTypes: _ListInputTypes
+
+  # Information about fields defined on this list
+  fields(where: _ListSchemaFieldsInput): [_ListSchemaFields]
+
+  # Information about fields on other types which return this type, or
+  # provide aggregate information about this type
+  relatedFields: [_ListSchemaRelatedFields]
+}
+
+type _ListMeta {
+  # The Keystone list key
+  key: String
+
+  # The Keystone List name
+  name: String @deprecated(reason: "Use `key` instead")
+
+  # The list's user-facing description
+  description: String
+
+  # The list's display name in the Admin UI
+  label: String
+
+  # The list's singular display name
+  singular: String
+
+  # The list's plural display name
+  plural: String
+
+  # The list's data path
+  path: String
+
+  # Access control configuration for the currently authenticated request
+  access: _ListAccess
+
+  # Information on the generated GraphQL schema
+  schema: _ListSchema
+}
+
+type _QueryMeta {
+  count: Int
+}
+
+input _ksListsMetaInput {
+  key: String
+
+  # Whether this is an auxiliary helper list
+  auxiliary: Boolean
+}
+
+input _ListSchemaFieldsInput {
+  type: String
+}
+
+type Mutation {
+  #  Create a single User item.
+  createUser(data: UserCreateInput): User
+
+  #  Create multiple User items.
+  createUsers(data: [UsersCreateInput]): [User]
+
+  #  Update a single User item by ID.
+  updateUser(id: ID!, data: UserUpdateInput): User
+
+  #  Update multiple User items by ID.
+  updateUsers(data: [UsersUpdateInput]): [User]
+
+  #  Delete a single User item by ID.
+  deleteUser(id: ID!): User
+
+  #  Delete multiple User items by ID.
+  deleteUsers(ids: [ID!]): [User]
+
+  #  Create a single Product item.
+  createProduct(data: ProductCreateInput): Product
+
+  #  Create multiple Product items.
+  createProducts(data: [ProductsCreateInput]): [Product]
+
+  #  Update a single Product item by ID.
+  updateProduct(id: ID!, data: ProductUpdateInput): Product
+
+  #  Update multiple Product items by ID.
+  updateProducts(data: [ProductsUpdateInput]): [Product]
+
+  #  Delete a single Product item by ID.
+  deleteProduct(id: ID!): Product
+
+  #  Delete multiple Product items by ID.
+  deleteProducts(ids: [ID!]): [Product]
+
+  #  Create a single ProductImage item.
+  createProductImage(data: ProductImageCreateInput): ProductImage
+
+  #  Create multiple ProductImage items.
+  createProductImages(data: [ProductImagesCreateInput]): [ProductImage]
+
+  #  Update a single ProductImage item by ID.
+  updateProductImage(id: ID!, data: ProductImageUpdateInput): ProductImage
+
+  #  Update multiple ProductImage items by ID.
+  updateProductImages(data: [ProductImagesUpdateInput]): [ProductImage]
+
+  #  Delete a single ProductImage item by ID.
+  deleteProductImage(id: ID!): ProductImage
+
+  #  Delete multiple ProductImage items by ID.
+  deleteProductImages(ids: [ID!]): [ProductImage]
+  authenticateUserWithPassword(
+    email: String!
+    password: String!
+  ): UserAuthenticationWithPasswordResult!
+  createInitialUser(
+    data: CreateInitialUserInput!
+  ): UserAuthenticationWithPasswordSuccess!
+  endSession: Boolean!
+}
+
+# The `Upload` scalar type represents a file upload.
+scalar Upload
+
+union AuthenticatedItem = User
+
+union UserAuthenticationWithPasswordResult =
+    UserAuthenticationWithPasswordSuccess
+  | UserAuthenticationWithPasswordFailure
+
+type UserAuthenticationWithPasswordSuccess {
+  sessionToken: String!
+  item: User!
+}
+
+type UserAuthenticationWithPasswordFailure {
+  code: PasswordAuthErrorCode!
+  message: String!
+}
+
+enum PasswordAuthErrorCode {
+  FAILURE
+  IDENTITY_NOT_FOUND
+  SECRET_NOT_SET
+  MULTIPLE_IDENTITY_MATCHES
+  SECRET_MISMATCH
+}
+
+input CreateInitialUserInput {
+  name: String
+  email: String
+  password: String
+}
+
+type Query {
+  #  Search for all User items which match the where clause.
+  allUsers(
+    where: UserWhereInput
+    search: String
+    sortBy: [SortUsersBy!]
+    orderBy: String
+    first: Int
+    skip: Int
+  ): [User]
+
+  #  Search for the User item with the matching ID.
+  User(where: UserWhereUniqueInput!): User
+
+  #  Perform a meta-query on all User items which match the where clause.
+  _allUsersMeta(
+    where: UserWhereInput
+    search: String
+    sortBy: [SortUsersBy!]
+    orderBy: String
+    first: Int
+    skip: Int
+  ): _QueryMeta
+
+  #  Retrieve the meta-data for the User list.
+  _UsersMeta: _ListMeta
+
+  #  Search for all Product items which match the where clause.
+  allProducts(
+    where: ProductWhereInput
+    search: String
+    sortBy: [SortProductsBy!]
+    orderBy: String
+    first: Int
+    skip: Int
+  ): [Product]
+
+  #  Search for the Product item with the matching ID.
+  Product(where: ProductWhereUniqueInput!): Product
+
+  #  Perform a meta-query on all Product items which match the where clause.
+  _allProductsMeta(
+    where: ProductWhereInput
+    search: String
+    sortBy: [SortProductsBy!]
+    orderBy: String
+    first: Int
+    skip: Int
+  ): _QueryMeta
+
+  #  Retrieve the meta-data for the Product list.
+  _ProductsMeta: _ListMeta
+
+  #  Search for all ProductImage items which match the where clause.
+  allProductImages(
+    where: ProductImageWhereInput
+    search: String
+    sortBy: [SortProductImagesBy!]
+    orderBy: String
+    first: Int
+    skip: Int
+  ): [ProductImage]
+
+  #  Search for the ProductImage item with the matching ID.
+  ProductImage(where: ProductImageWhereUniqueInput!): ProductImage
+
+  #  Perform a meta-query on all ProductImage items which match the where clause.
+  _allProductImagesMeta(
+    where: ProductImageWhereInput
+    search: String
+    sortBy: [SortProductImagesBy!]
+    orderBy: String
+    first: Int
+    skip: Int
+  ): _QueryMeta
+
+  #  Retrieve the meta-data for the ProductImage list.
+  _ProductImagesMeta: _ListMeta
+
+  #  Retrieve the meta-data for all lists.
+  _ksListsMeta(where: _ksListsMetaInput): [_ListMeta]
+  authenticatedItem: AuthenticatedItem
+  keystone: KeystoneMeta!
+}
+
+type KeystoneMeta {
+  adminMeta: KeystoneAdminMeta!
+}
+
+type KeystoneAdminMeta {
+  enableSignout: Boolean!
+  enableSessionItem: Boolean!
+  lists: [KeystoneAdminUIListMeta!]!
+  list(key: String!): KeystoneAdminUIListMeta
+}
+
+type KeystoneAdminUIListMeta {
+  key: String!
+  itemQueryName: String!
+  listQueryName: String!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  path: String!
+  label: String!
+  singular: String!
+  plural: String!
+  description: String
+  initialColumns: [String!]!
+  pageSize: Int!
+  labelField: String!
+  fields: [KeystoneAdminUIFieldMeta!]!
+  initialSort: KeystoneAdminUISort
+  isHidden: Boolean!
+}
+
+type KeystoneAdminUIFieldMeta {
+  path: String!
+  label: String!
+  isOrderable: Boolean!
+  fieldMeta: JSON
+  viewsIndex: Int!
+  customViewsIndex: Int
+  createView: KeystoneAdminUIFieldMetaCreateView!
+  listView: KeystoneAdminUIFieldMetaListView!
+  itemView(id: ID!): KeystoneAdminUIFieldMetaItemView
+}
+
+type KeystoneAdminUIFieldMetaCreateView {
+  fieldMode: KeystoneAdminUIFieldMetaCreateViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
+  edit
+  hidden
+}
+
+type KeystoneAdminUIFieldMetaListView {
+  fieldMode: KeystoneAdminUIFieldMetaListViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaListViewFieldMode {
+  read
+  hidden
+}
+
+type KeystoneAdminUIFieldMetaItemView {
+  fieldMode: KeystoneAdminUIFieldMetaItemViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaItemViewFieldMode {
+  edit
+  read
+  hidden
+}
+
+type KeystoneAdminUISort {
+  field: String!
+  direction: KeystoneAdminUISortDirection!
+}
+
+enum KeystoneAdminUISortDirection {
+  ASC
+  DESC
+}

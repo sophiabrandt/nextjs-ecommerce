@@ -1,9 +1,9 @@
-import { Query } from "@/graphql/sdk";
 import { formatMoney } from "@/lib/index";
+import { Product as ProductDetailType } from "@/lib/graphql/product.graphql";
 import { Heading, Flex, Spacer, Text, Box, Image } from "@chakra-ui/react";
 
 interface ProductDetailProps {
-  product: Query["Product"];
+  product: ProductDetailType;
 }
 
 export const ProductDetail = ({ product }: ProductDetailProps) => {

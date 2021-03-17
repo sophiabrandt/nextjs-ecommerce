@@ -1,9 +1,9 @@
 import { Center, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { Product } from "./Product";
-import { Query } from "@/graphql/sdk";
+import { Product as ProductsType } from "@/lib/graphql/products.graphql";
 
 interface ProductsProps {
-  products: Query["allProducts"];
+  products: ProductsType[];
 }
 
 export const Products = ({ products }: ProductsProps) => {

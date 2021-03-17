@@ -1,4 +1,4 @@
-query allProducts {
+query products {
   allProducts {
     id
     name
@@ -12,3 +12,4 @@ query allProducts {
     }
   }
 }
+

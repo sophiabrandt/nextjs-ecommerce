@@ -42,7 +42,6 @@
     "paths": {
       "test_utils": ["./lib/test-utils"],
       "@/components/*": ["./components/*"],
-      "@/graphql/*": ["./graphql/*"],
       "@/features/*": ["./features/*"],
       "@/infrastructure/*": ["./infrastructure/*"],
       "@/lib/*": ["./lib/*"],

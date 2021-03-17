@@ -1,1 +1,3 @@
-graphql/sdk.ts
+__tests__
+__generated__
+lib/graphql

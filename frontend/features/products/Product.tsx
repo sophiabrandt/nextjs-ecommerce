@@ -1,4 +1,4 @@
-import { Query } from "@/graphql/sdk";
+import { Product as ProductType } from "@/lib/graphql/product.graphql";
 import { theme } from "@/infrastructure/theme";
 import { formatMoney } from "@/lib/index";
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
@@ -38,7 +38,7 @@ const Title = styled(Heading)<StyledTextProps>`
 `;
 
 interface ProductProps {
-  product: Query["Product"];
+  product: ProductType;
 }
 
 export const Product = ({ product }: ProductProps) => {

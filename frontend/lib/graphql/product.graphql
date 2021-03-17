@@ -1,4 +1,4 @@
-query singleProduct($id: ID!) {
+query product($id: ID!) {
   Product(where: { id: $id }) {
     name
     price
@@ -11,3 +11,4 @@ query singleProduct($id: ID!) {
     }
   }
 }
+
