@@ -1,10 +1,16 @@
 import { Products } from "@/features/products";
+import { Product as ProductsType } from "@/lib/graphql/allProducts.graphql";
 import { gql } from "@apollo/client";
-import { InferGetStaticPropsType } from "next";
-import { initializeApollo } from "@/lib/apollo";
+import { GetServerSidePropsContext, NextPage } from "next";
+import ErrorPage from "next/error";
+import { addApolloState, initializeApollo } from "@/lib/apollo";
 import Head from "next/head";
 
-const productsQuery = gql`
+export interface AllProductsProps {
+  allProducts: ProductsType[];
+}
+
+export const ALL_PRODUCTS_QUERY = gql`
   query allProducts {
     allProducts {
       id
@@ -21,27 +27,37 @@ const productsQuery = gql`
   }
 `;
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const client = initializeApollo();
-  const {
-    data: { allProducts: products },
-  } = await client.query({ query: productsQuery });
 
-  return {
-    props: {
-      products,
-    },
-    revalidate: 60,
-  };
+  try {
+    const {
+      data: { allProducts },
+    } = await client.query({ query: ALL_PRODUCTS_QUERY });
+
+    return addApolloState(client, {
+      props: {
+        allProducts,
+      },
+    });
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
 };
 
-const IndexPage = ({ products }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const IndexPage: NextPage<AllProductsProps> = ({ allProducts }) => {
+  if (!allProducts) {
+    return <ErrorPage statusCode={404} />;
+  }
+
   return (
     <div>
       <Head>
         <title>Shoppy</title>
       </Head>
-      <Products products={products} />
+      <Products allProducts={allProducts} />
     </div>
   );
 };

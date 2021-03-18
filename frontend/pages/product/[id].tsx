@@ -1,33 +1,32 @@
 import { useRouter } from "next/router";
+import ErrorPage from "next/error";
 import { Spinner, Center } from "@chakra-ui/react";
-import { Product as ProductsType } from "@/lib/graphql/products.graphql";
+import { Product as ProductsType } from "@/lib/graphql/allProducts.graphql";
 import { Product as ProductType } from "@/lib/graphql/product.graphql";
-import { NextPage } from "next";
+import { GetStaticPaths, NextPage } from "next";
 import { ProductDetail } from "@/features/product/index";
 import Head from "next/head";
 import { gql } from "@apollo/client";
 import { initializeApollo } from "@/lib/apollo";
+import { ALL_PRODUCTS_QUERY } from "@/pages/index";
+
+export interface ProductProps {
+  product: ProductType;
+}
+
+interface AllProductsReturnType {
+  data: {
+    allProducts: ProductsType[];
+  };
+}
+
+interface StaticProps {
+  params: { id: string | undefined };
+}
 
 const client = initializeApollo();
 
-const productsQuery = gql`
-  query allProducts {
-    allProducts {
-      id
-      name
-      price
-      description
-      photo {
-        id
-        image {
-          publicUrlTransformed
-        }
-      }
-    }
-  }
-`;
-
-const productQuery = gql`
+export const PRODUCT_QUERY = gql`
   query product($id: ID!) {
     Product(where: { id: $id }) {
       name
@@ -42,10 +41,6 @@ const productQuery = gql`
     }
   }
 `;
-
-interface ProductProps {
-  product: ProductType;
-}
 
 const Product: NextPage<ProductProps> = ({ product }) => {
   const router = useRouter();
@@ -64,7 +59,7 @@ const Product: NextPage<ProductProps> = ({ product }) => {
   }
 
   if (!product) {
-    return <Head>404 - Page not found</Head>;
+    return <ErrorPage statusCode={404} />;
   }
 
   return (
@@ -77,16 +72,10 @@ const Product: NextPage<ProductProps> = ({ product }) => {
   );
 };
 
-interface AllProducts {
-  data: {
-    allProducts: ProductsType[];
-  };
-}
-
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const {
     data: { allProducts },
-  }: AllProducts = await client.query({ query: productsQuery });
+  }: AllProductsReturnType = await client.query({ query: ALL_PRODUCTS_QUERY });
   const ids = allProducts?.map((product) => product?.id);
   const paths = ids?.map((id) => ({ params: { id } }));
 
@@ -95,10 +84,6 @@ export const getStaticPaths = async () => {
     fallback: true,
   };
 };
-
-interface StaticProps {
-  params: { id: string | undefined };
-}
 
 export const getStaticProps = async ({ params: { id } }: StaticProps) => {
   if (!id) {
@@ -109,7 +94,7 @@ export const getStaticProps = async ({ params: { id } }: StaticProps) => {
 
   try {
     product = await client.query({
-      query: productQuery,
+      query: PRODUCT_QUERY,
       variables: { id },
     });
   } catch (err) {
@@ -122,7 +107,7 @@ export const getStaticProps = async ({ params: { id } }: StaticProps) => {
     props: {
       product: product?.data?.Product,
     },
-    revalidate: 60,
+    revalidate: 1,
   };
 };
 

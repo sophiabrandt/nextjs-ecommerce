@@ -18,7 +18,7 @@ const customTheme = extendTheme({
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const apolloClient = useApollo(pageProps.initialApolloState);
+  const apolloClient = useApollo(pageProps);
 
   return (
     <ApolloProvider client={apolloClient}>

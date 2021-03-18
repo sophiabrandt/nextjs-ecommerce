@@ -1,16 +1,17 @@
-import { useForm } from "react-hook-form";
+import { useCreateProductMutation } from "@/lib/graphql/createProduct.graphql";
+import { ALL_PRODUCTS_QUERY } from "@/pages/index";
 import {
   Button,
+  Container,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
-  FormErrorMessage,
-  Textarea,
   Progress,
-  Container,
+  Textarea,
 } from "@chakra-ui/react";
-import { useCreateProductMutation } from "@/lib/graphql/createProduct.graphql";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 
 interface FormData {
   name: string;
@@ -25,7 +26,6 @@ export const CreateProduct = () => {
   const [createProduct, { loading }] = useCreateProductMutation();
 
   const onSubmit = async (inputData: FormData) => {
-    console.log(inputData.image[0]);
     const { data } = await createProduct({
       variables: {
         name: inputData.name,
@@ -33,6 +33,7 @@ export const CreateProduct = () => {
         description: inputData.description,
         image: inputData.image[0],
       },
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     });
 
     if (data?.createProduct) {
@@ -45,7 +46,7 @@ export const CreateProduct = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Progress mb={4} colorScheme="facebook" isIndeterminate={formState.isSubmitting} />
         <fieldset disabled={loading} aria-busy={loading}>
-          <FormControl isInvalid={errors.image as boolean | undefined}>
+          <FormControl isInvalid={Boolean(errors?.image)}>
             <FormLabel m="0" htmlFor="image">
               Image
               <Input
@@ -63,7 +64,7 @@ export const CreateProduct = () => {
             </FormLabel>
             <FormErrorMessage>{errors.image && errors.image.message}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={errors.name as boolean | undefined}>
+          <FormControl isInvalid={Boolean(errors.name)}>
             <FormLabel m="0" htmlFor="name">
               Name
               <Input
@@ -86,7 +87,7 @@ export const CreateProduct = () => {
             </FormLabel>
             <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={errors.price as boolean | undefined}>
+          <FormControl isInvalid={Boolean(errors.price)}>
             <FormLabel m="0" htmlFor="price">
               Price
               <Input
@@ -103,7 +104,7 @@ export const CreateProduct = () => {
             </FormLabel>
             <FormErrorMessage>{errors.price && errors.price.message}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={errors.description as boolean | undefined}>
+          <FormControl isInvalid={Boolean(errors.description)}>
             <FormLabel m="0" htmlFor="description">
               Description
               <Textarea

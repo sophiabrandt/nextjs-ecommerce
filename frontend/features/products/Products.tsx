@@ -1,28 +1,11 @@
-import { Center, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import { Product } from "./Product";
-import { Product as ProductsType } from "@/lib/graphql/products.graphql";
+import { AllProductsProps } from "@/pages/index";
 
-interface ProductsProps {
-  products: ProductsType[];
-}
-
-export const Products = ({ products }: ProductsProps) => {
-  if (!products)
-    return (
-      <Center>
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="brand.primary"
-          size="xl"
-        />
-      </Center>
-    );
-
+export const Products = ({ allProducts }: AllProductsProps) => {
   return (
     <SimpleGrid minChildWidth="400px" spacing={4}>
-      {products?.map((product) => (
+      {allProducts?.map((product) => (
         <Product product={product} key={product?.id} />
       ))}
     </SimpleGrid>
