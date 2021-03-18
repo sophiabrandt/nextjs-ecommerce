@@ -1,9 +1,8 @@
-import { ProductProps } from "@/pages/product/[id]";
 import { theme } from "@/infrastructure/theme";
-import { formatMoney } from "@/lib/index";
+import { formatMoney, IProduct } from "@/lib/index";
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
-import NextLink from "next/link";
 import styled from "@emotion/styled";
+import NextLink from "next/link";
 
 interface StyledTextProps {
   theme?: typeof theme;
@@ -37,7 +36,7 @@ const Title = styled(Heading)<StyledTextProps>`
   }
 `;
 
-export const Product = ({ product }: ProductProps) => {
+export const Product = ({ product }: IProduct) => {
   return (
     <Box>
       <Flex justify="flex-end">

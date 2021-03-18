@@ -1,20 +1,13 @@
-import { useRouter } from "next/router";
-import ErrorPage from "next/error";
-import { Spinner, Center } from "@chakra-ui/react";
-import { Product as ProductsType } from "@/lib/graphql/allProducts.graphql";
-import { Product as ProductType } from "@/lib/graphql/product.graphql";
-import { GetStaticPaths, NextPage } from "next";
 import { ProductDetail } from "@/features/product/index";
+import { Product as ProductsType } from "@/lib/graphql/allProducts.graphql";
+import { ALL_PRODUCTS_QUERY, initializeApollo, IProduct, PRODUCT_QUERY } from "@/lib/index";
+import { Center, Spinner } from "@chakra-ui/react";
+import { GetStaticPaths, NextPage } from "next";
+import ErrorPage from "next/error";
 import Head from "next/head";
-import { gql } from "@apollo/client";
-import { initializeApollo } from "@/lib/apollo";
-import { ALL_PRODUCTS_QUERY } from "@/pages/index";
+import { useRouter } from "next/router";
 
-export interface ProductProps {
-  product: ProductType;
-}
-
-interface AllProductsReturnType {
+interface IAllProductsReturnType {
   data: {
     allProducts: ProductsType[];
   };
@@ -26,23 +19,7 @@ interface StaticProps {
 
 const client = initializeApollo();
 
-export const PRODUCT_QUERY = gql`
-  query product($id: ID!) {
-    Product(where: { id: $id }) {
-      name
-      price
-      description
-      photo {
-        altText
-        image {
-          publicUrlTransformed
-        }
-      }
-    }
-  }
-`;
-
-const Product: NextPage<ProductProps> = ({ product }) => {
+const Product: NextPage<IProduct> = ({ product }) => {
   const router = useRouter();
   if (router.isFallback) {
     return (
@@ -75,7 +52,7 @@ const Product: NextPage<ProductProps> = ({ product }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const {
     data: { allProducts },
-  }: AllProductsReturnType = await client.query({ query: ALL_PRODUCTS_QUERY });
+  }: IAllProductsReturnType = await client.query({ query: ALL_PRODUCTS_QUERY });
   const ids = allProducts?.map((product) => product?.id);
   const paths = ids?.map((id) => ({ params: { id } }));
 

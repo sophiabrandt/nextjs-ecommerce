@@ -1,31 +1,8 @@
 import { Products } from "@/features/products";
-import { Product as ProductsType } from "@/lib/graphql/allProducts.graphql";
-import { gql } from "@apollo/client";
+import { addApolloState, ALL_PRODUCTS_QUERY, IAllProducts, initializeApollo } from "@/lib/index";
 import { GetServerSidePropsContext, NextPage } from "next";
 import ErrorPage from "next/error";
-import { addApolloState, initializeApollo } from "@/lib/apollo";
 import Head from "next/head";
-
-export interface AllProductsProps {
-  allProducts: ProductsType[];
-}
-
-export const ALL_PRODUCTS_QUERY = gql`
-  query allProducts {
-    allProducts {
-      id
-      name
-      price
-      description
-      photo {
-        id
-        image {
-          publicUrlTransformed
-        }
-      }
-    }
-  }
-`;
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const client = initializeApollo();
@@ -47,7 +24,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 };
 
-const IndexPage: NextPage<AllProductsProps> = ({ allProducts }) => {
+const IndexPage: NextPage<IAllProducts> = ({ allProducts }) => {
   if (!allProducts) {
     return <ErrorPage statusCode={404} />;
   }

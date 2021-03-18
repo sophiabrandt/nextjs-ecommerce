@@ -1,9 +1,9 @@
 import { Page } from "@/components/Page";
 import { Fonts, theme } from "@/infrastructure/theme";
 import "@/infrastructure/theme/nprogress.css";
+import { useApollo } from "@/lib/index";
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { useApollo } from "@/lib/apollo";
 import type { AppProps } from "next/app";
 import Router from "next/router";
 import NProgress from "nprogress";

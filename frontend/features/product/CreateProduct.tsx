@@ -1,5 +1,5 @@
 import { useCreateProductMutation } from "@/lib/graphql/createProduct.graphql";
-import { ALL_PRODUCTS_QUERY } from "@/pages/index";
+import { ALL_PRODUCTS_QUERY, IAllProducts } from "@/lib/index";
 import {
   Button,
   Container,
@@ -33,7 +33,22 @@ export const CreateProduct = () => {
         description: inputData.description,
         image: inputData.image[0],
       },
-      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+      update(cache, { data }) {
+        const newProduct = data?.createProduct;
+        // eslint-disable-next-line
+        const existingProducts = cache.readQuery<IAllProducts>({
+          query: ALL_PRODUCTS_QUERY,
+        })!.allProducts;
+
+        if (existingProducts && newProduct) {
+          cache.writeQuery({
+            query: ALL_PRODUCTS_QUERY,
+            data: {
+              allProducts: [...existingProducts, newProduct],
+            },
+          });
+        }
+      },
     });
 
     if (data?.createProduct) {

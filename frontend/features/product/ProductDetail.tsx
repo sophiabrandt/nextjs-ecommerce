@@ -1,12 +1,7 @@
-import { formatMoney } from "@/lib/index";
-import { Product as ProductDetailType } from "@/lib/graphql/product.graphql";
-import { Stack, Button, Heading, Flex, Spacer, Text, Box, Image } from "@chakra-ui/react";
+import { formatMoney, IProduct } from "@/lib/index";
+import { Box, Button, Flex, Heading, Image, Spacer, Stack, Text } from "@chakra-ui/react";
 
-interface ProductDetailProps {
-  product: ProductDetailType;
-}
-
-export const ProductDetail = ({ product }: ProductDetailProps) => {
+export const ProductDetail = ({ product }: IProduct) => {
   return (
     <Flex>
       <Image
