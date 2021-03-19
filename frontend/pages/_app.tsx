@@ -1,4 +1,4 @@
-import { Page } from "@/components/Page";
+import { Page } from "@/components/index";
 import { Fonts, theme } from "@/infrastructure/theme";
 import "@/infrastructure/theme/nprogress.css";
 import { useApollo } from "@/lib/index";

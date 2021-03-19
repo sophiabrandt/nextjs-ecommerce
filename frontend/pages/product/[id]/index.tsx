@@ -1,5 +1,5 @@
 import { ProductDetail } from "@/features/product/index";
-import { Product as ProductsType } from "@/lib/graphql/allProducts.graphql";
+import type { ProductsType } from "@/lib/index";
 import { ALL_PRODUCTS_QUERY, initializeApollo, IProduct, PRODUCT_QUERY } from "@/lib/index";
 import { Center, Spinner } from "@chakra-ui/react";
 import { GetStaticPaths, NextPage } from "next";
@@ -84,7 +84,7 @@ export const getStaticProps = async ({ params: { id } }: StaticProps) => {
     props: {
       product: product?.data?.Product,
     },
-    revalidate: 1,
+    revalidate: 60,
   };
 };
 

@@ -1,4 +1,5 @@
 import { useUpdateProductMutation } from "@/lib/graphql/updateProduct.graphql";
+import { DisplayError } from "@/components/index";
 import { EditIcon } from "@chakra-ui/icons";
 import { IProduct } from "@/lib/index";
 import {
@@ -40,7 +41,7 @@ export const UpdateProduct = ({ product }: IProduct) => {
       image: "",
     },
   });
-  const [updateProduct, { loading }] = useUpdateProductMutation();
+  const [updateProduct, { error, loading }] = useUpdateProductMutation();
 
   const onSubmit = async (inputData: IFormData) => {
     let variables: IVariables = {
@@ -59,6 +60,7 @@ export const UpdateProduct = ({ product }: IProduct) => {
     const { data } = await updateProduct({
       variables,
     });
+
     if (data?.updateProduct) {
       router.push(`/product/${data.updateProduct.id}`);
     }
@@ -67,6 +69,7 @@ export const UpdateProduct = ({ product }: IProduct) => {
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <DisplayError error={error} />
         <Progress mb={4} colorScheme="facebook" isIndeterminate={formState.isSubmitting} />
         <fieldset disabled={loading} aria-busy={loading}>
           <FormControl isInvalid={Boolean(errors?.image)}>

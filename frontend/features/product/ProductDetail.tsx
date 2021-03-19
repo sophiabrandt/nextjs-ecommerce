@@ -5,8 +5,11 @@ import styled from "@emotion/styled";
 import NextLink from "next/link";
 
 const StyledEditButton = styled(Button)<IStyledTheme>`
-  background-color: ${(props) => props.theme.colors.brand.tertiary};
+  background-color: ${(props) => props.theme.colors.brand.primary};
   color: ${(props) => props.theme.colors.text.inverse};
+  &:hover {
+    background-color: ${(props) => props.theme.colors.brand.tertiary};
+  }
 `;
 
 export const ProductDetail = ({ product }: IProduct) => {

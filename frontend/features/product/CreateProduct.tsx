@@ -1,4 +1,5 @@
 import { useCreateProductMutation } from "@/lib/graphql/createProduct.graphql";
+import { DisplayError } from "@/components/index";
 import { ALL_PRODUCTS_QUERY, IAllProducts } from "@/lib/index";
 import { AddIcon } from "@chakra-ui/icons";
 import {
@@ -60,6 +61,7 @@ export const CreateProduct = () => {
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <DisplayError error={error} />
         <Progress mb={4} colorScheme="facebook" isIndeterminate={formState.isSubmitting} />
         <fieldset disabled={loading} aria-busy={loading}>
           <FormControl isInvalid={Boolean(errors?.image)}>
