@@ -11,7 +11,7 @@ export function Nav() {
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink as={NextLink} href="/sell">
+          <BreadcrumbLink as={NextLink} href="/product/sell">
             <Link _hover={{ color: "brand.tertiary" }}>Sell</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>

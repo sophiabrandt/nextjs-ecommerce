@@ -1,14 +1,9 @@
-import { theme } from "@/infrastructure/theme";
-import { formatMoney, IProduct } from "@/lib/index";
+import { formatMoney, IProduct, IStyledTheme } from "@/lib/index";
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
 
-interface StyledTextProps {
-  theme?: typeof theme;
-}
-
-const PriceTag = styled(Heading)<StyledTextProps>`
+const PriceTag = styled(Heading)<IStyledTheme>`
   background: ${(props) => props.theme.colors.brand.primary};
   transform: rotate(3deg);
   color: ${(props) => props.theme.colors.text.inverse};
@@ -19,7 +14,7 @@ const PriceTag = styled(Heading)<StyledTextProps>`
   display: inline-block;
 `;
 
-const Title = styled(Heading)<StyledTextProps>`
+const Title = styled(Heading)<IStyledTheme>`
   margin: 0 1rem;
   text-align: center;
   transform: skew(-5deg) rotate(-1deg);

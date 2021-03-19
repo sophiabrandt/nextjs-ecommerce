@@ -1,9 +1,11 @@
 query product($id: ID!) {
   Product(where: { id: $id }) {
+    id
     name
     price
     description
     photo {
+      id
       altText
       image {
         publicUrlTransformed
@@ -11,4 +13,3 @@ query product($id: ID!) {
     }
   }
 }
-

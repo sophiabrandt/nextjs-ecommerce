@@ -5,7 +5,7 @@ useRouter.mockImplementation(() => ({
   pathname: "/",
 }));
 
-import DetailPage from "@/pages/product/[id].tsx";
+import DetailPage from "@/pages/product/[id]/index.tsx";
 
 describe("Product detail page", () => {
   it("should match the snapshot", () => {

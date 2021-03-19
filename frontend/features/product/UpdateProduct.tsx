@@ -1,6 +1,6 @@
-import { useCreateProductMutation } from "@/lib/graphql/createProduct.graphql";
-import { ALL_PRODUCTS_QUERY, IAllProducts } from "@/lib/index";
-import { AddIcon } from "@chakra-ui/icons";
+import { useUpdateProductMutation } from "@/lib/graphql/updateProduct.graphql";
+import { EditIcon } from "@chakra-ui/icons";
+import { IProduct } from "@/lib/index";
 import {
   Button,
   Container,
@@ -21,39 +21,46 @@ interface IFormData {
   image: FileList;
 }
 
-export const CreateProduct = () => {
+interface IVariables {
+  id: string;
+  imageId: string;
+  name: string;
+  description: string;
+  price: number;
+  image?: File;
+}
+
+export const UpdateProduct = ({ product }: IProduct) => {
   const router = useRouter();
-  const { register, handleSubmit, errors, formState } = useForm<IFormData>();
-  const [createProduct, { error, loading }] = useCreateProductMutation();
+  const { register, handleSubmit, errors, formState } = useForm<IFormData>({
+    defaultValues: {
+      name: product?.name || "",
+      price: String(product?.price) || "",
+      description: product?.description || "",
+      image: "",
+    },
+  });
+  const [updateProduct, { loading }] = useUpdateProductMutation();
 
   const onSubmit = async (inputData: IFormData) => {
-    const { data } = await createProduct({
-      variables: {
-        name: inputData.name,
-        price: parseInt(inputData.price, 10),
-        description: inputData.description,
+    let variables: IVariables = {
+      id: product?.id,
+      imageId: product?.photo?.id as string,
+      name: inputData.name,
+      description: inputData.description,
+      price: parseInt(inputData.price, 10),
+    };
+    if (inputData.image) {
+      variables = {
+        ...variables,
         image: inputData.image[0],
-      },
-      update(cache, { data }) {
-        const newProduct = data?.createProduct;
-        // eslint-disable-next-line
-        const existingProducts = cache.readQuery<IAllProducts>({
-          query: ALL_PRODUCTS_QUERY,
-        })!.allProducts;
-
-        if (existingProducts && newProduct) {
-          cache.writeQuery({
-            query: ALL_PRODUCTS_QUERY,
-            data: {
-              allProducts: [...existingProducts, newProduct],
-            },
-          });
-        }
-      },
+      };
+    }
+    const { data } = await updateProduct({
+      variables,
     });
-
-    if (data?.createProduct) {
-      router.push(`/product/${data.createProduct.id}`);
+    if (data?.updateProduct) {
+      router.push(`/product/${data.updateProduct.id}`);
     }
   };
 
@@ -71,10 +78,7 @@ export const CreateProduct = () => {
                 id="image"
                 name="image"
                 ref={register({
-                  validate: (fileList: FileList) => {
-                    if (fileList.length === 1) return true;
-                    return "Please upload one file";
-                  },
+                  required: false,
                 })}
               />
             </FormLabel>
@@ -110,9 +114,9 @@ export const CreateProduct = () => {
                 type="number"
                 id="price"
                 name="price"
-                placeholder="Price for the product in cents"
+                placeholder="Price for the product"
                 ref={register({
-                  required: "Please enter a price (in cents)",
+                  required: "Please enter a price",
                   max: { value: 1000000, message: "Wooahh, too expensive!" },
                   min: { value: 1, message: "Woooah, is that for free?" },
                 })}
@@ -143,8 +147,7 @@ export const CreateProduct = () => {
             <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
           </FormControl>
           <Button mt={4} colorScheme="whatsapp" isDisabled={loading} type="submit">
-            <AddIcon mr={2} />
-            Add Product
+            <EditIcon mr={2} /> Edit
           </Button>
         </fieldset>
       </form>

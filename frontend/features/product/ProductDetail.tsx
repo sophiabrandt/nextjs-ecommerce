@@ -1,5 +1,13 @@
-import { formatMoney, IProduct } from "@/lib/index";
-import { Box, Button, Flex, Heading, Image, Spacer, Stack, Text } from "@chakra-ui/react";
+import { formatMoney, IProduct, IStyledTheme } from "@/lib/index";
+import { EditIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Heading, Image, Link, Spacer, Stack, Text } from "@chakra-ui/react";
+import styled from "@emotion/styled";
+import NextLink from "next/link";
+
+const StyledEditButton = styled(Button)<IStyledTheme>`
+  background-color: ${(props) => props.theme.colors.brand.tertiary};
+  color: ${(props) => props.theme.colors.text.inverse};
+`;
 
 export const ProductDetail = ({ product }: IProduct) => {
   return (
@@ -23,9 +31,14 @@ export const ProductDetail = ({ product }: IProduct) => {
             {formatMoney(product?.price as number | undefined)}
           </Text>
           <Flex justify="center">
-            <Button m={2} colorScheme="blue">
-              Edit
-            </Button>
+            <StyledEditButton m={2}>
+              <NextLink href="/product/[id]/update" as={`/product/${product?.id}/update`}>
+                <Link>
+                  <EditIcon mr={2} />
+                  Edit
+                </Link>
+              </NextLink>
+            </StyledEditButton>
             <Button m={2} colorScheme="blue">
               Delete
             </Button>

@@ -12,10 +12,12 @@ export interface IAllProducts {
 export const PRODUCT_QUERY = gql`
   query product($id: ID!) {
     Product(where: { id: $id }) {
+      id
       name
       price
       description
       photo {
+        id
         altText
         image {
           publicUrlTransformed

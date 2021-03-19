@@ -1,7 +1,7 @@
 import { render } from "test-utils";
 import { MockedProvider } from "@apollo/client/testing";
 
-import SellPage from "@/pages/sell";
+import SellPage from "@/pages/product/sell";
 
 describe("Sell page", () => {
   it("should match the snapshot", () => {
