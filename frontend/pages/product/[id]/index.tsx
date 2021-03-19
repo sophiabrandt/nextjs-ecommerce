@@ -1,7 +1,7 @@
+import { Loading } from "@/components/index";
 import { ProductDetail } from "@/features/product/index";
 import type { ProductsType } from "@/lib/index";
-import { ALL_PRODUCTS_QUERY, initializeApollo, IProduct, PRODUCT_QUERY } from "@/lib/index";
-import { Center, Spinner } from "@chakra-ui/react";
+import { ALL_PRODUCTS_QUERY, initializeApollo, PRODUCT_QUERY } from "@/lib/index";
 import { GetStaticPaths, NextPage } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";
@@ -13,38 +13,33 @@ interface IAllProductsReturnType {
   };
 }
 
-interface StaticProps {
+interface IStaticProps {
   params: { id: string | undefined };
+}
+
+interface IProductPage {
+  id?: string;
+  title?: string;
 }
 
 const client = initializeApollo();
 
-const Product: NextPage<IProduct> = ({ product }) => {
+const Product: NextPage<IProductPage> = ({ id, title }) => {
   const router = useRouter();
   if (router.isFallback) {
-    return (
-      <Center>
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="brand.primary"
-          size="xl"
-        />
-      </Center>
-    );
+    return <Loading />;
   }
 
-  if (!product) {
+  if (!id) {
     return <ErrorPage statusCode={404} />;
   }
 
   return (
     <div>
       <Head>
-        <title>Shoppy | {product.name}</title>
+        <title>Shoppy | {title}</title>
       </Head>
-      <ProductDetail product={product} />
+      <ProductDetail id={id} />
     </div>
   );
 };
@@ -62,30 +57,33 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params: { id } }: StaticProps) => {
+export const getStaticProps = async ({ params: { id } }: IStaticProps) => {
   if (!id) {
     throw new Error("Parameter is invalid");
   }
 
-  let product;
-
   try {
-    product = await client.query({
+    const {
+      data: { Product: product },
+    } = await client.query({
       query: PRODUCT_QUERY,
       variables: { id },
     });
+    return {
+      props: {
+        id: product?.id,
+        title: product?.name,
+      },
+      revalidate: 60,
+    };
   } catch (err) {
     if (err.status !== 404) {
       throw err;
     }
+    return {
+      props: {},
+    };
   }
-
-  return {
-    props: {
-      product: product?.data?.Product,
-    },
-    revalidate: 60,
-  };
 };
 
 export default Product;

@@ -1,36 +1,31 @@
 import { Products } from "@/features/products";
-import { addApolloState, ALL_PRODUCTS_QUERY, IAllProducts, initializeApollo } from "@/lib/index";
+import { addApolloState, ALL_PRODUCTS_QUERY, initializeApollo } from "@/lib/index";
 import { NextPage } from "next";
-import ErrorPage from "next/error";
 import Head from "next/head";
 
-const IndexPage: NextPage<IAllProducts> = ({ allProducts }) => {
-  if (!allProducts) {
-    return <ErrorPage statusCode={404} />;
-  }
-
+const IndexPage: NextPage = () => {
   return (
     <div>
       <Head>
         <title>Shoppy</title>
       </Head>
-      <Products allProducts={allProducts} />
+      <Products />
     </div>
   );
 };
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const client = initializeApollo();
 
   try {
-    const {
-      data: { allProducts },
-    } = await client.query({ query: ALL_PRODUCTS_QUERY });
+    await client.query({ query: ALL_PRODUCTS_QUERY });
 
+    // add all products to the Apollo cache;
+    // but not the page props
+    // the client will query the Apollo cache
     return addApolloState(client, {
-      props: {
-        allProducts,
-      },
+      props: {},
+      revalidate: 60,
     });
   } catch {
     return {
