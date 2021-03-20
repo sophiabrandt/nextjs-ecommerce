@@ -1,7 +1,5 @@
-import { AllProductsQuery } from "@/generated/AllProductsQuery";
 import { IStyledTheme } from "@/lib/index";
 import { useMutation } from "@apollo/client";
-import { ALL_PRODUCTS_QUERY } from "@/graphql/index";
 import {
   DeleteProductMutation,
   DeleteProductMutationVariables,
@@ -78,29 +76,7 @@ export const DeleteProduct = ({ id }: IProductDeleteProps) => {
                         update(cache) {
                           cache.evict({
                             fieldName: "allProducts",
-                            broadcast: false,
                           });
-                          const existingProducts = cache.readQuery<AllProductsQuery>({
-                            query: ALL_PRODUCTS_QUERY,
-                          });
-                          if (
-                            existingProducts?.allProducts &&
-                            existingProducts?.allProducts[0] !== null
-                          ) {
-                            const existing = existingProducts.allProducts;
-                            // eslint-disable-next-line
-                            const updatedProducts = existing!.filter(
-                              // eslint-disable-next-line
-                              (product) => product!.id != id
-                            );
-                            console.log(`updatedProducts`, updatedProducts);
-                            cache.writeQuery({
-                              query: ALL_PRODUCTS_QUERY,
-                              data: {
-                                allProducts: updatedProducts,
-                              },
-                            });
-                          }
                         },
                       });
                       onClose;

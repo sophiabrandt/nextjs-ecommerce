@@ -6,7 +6,10 @@ import { AllProductsQuery } from "@/generated/AllProductsQuery";
 import { ALL_PRODUCTS_QUERY } from "@/graphql/index";
 
 export const Products = () => {
-  const { data, loading, error } = useQuery<AllProductsQuery>(ALL_PRODUCTS_QUERY);
+  const { data, loading, error } = useQuery<AllProductsQuery>(ALL_PRODUCTS_QUERY, {
+    fetchPolicy: "cache-and-network",
+    nextFetchPolicy: "cache-first",
+  });
 
   if (loading) return <Loading />;
   if (error) return <DisplayError error={error} />;
