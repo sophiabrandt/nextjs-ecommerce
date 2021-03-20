@@ -155,4 +155,3 @@ tags
 *.graphql.d.ts
 *.graphqls.d.ts
 __snapshots__
-__generated__

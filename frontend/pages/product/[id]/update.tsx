@@ -1,8 +1,18 @@
 import { UpdateProduct } from "@/features/product/index";
-import { PRODUCT_QUERY, IProduct, initializeApollo, addApolloState } from "@/lib/index";
+import {
+  ProductQuery,
+  ProductQueryVariables,
+  ProductQuery_Product,
+} from "@/generated/ProductQuery";
+import { PRODUCT_QUERY } from "@/graphql/index";
+import { addApolloState, initializeApollo } from "@/lib/index";
 import { GetServerSidePropsContext } from "next";
 
-const UpdatePage = ({ product }: IProduct) => {
+interface IUpdatePageProps {
+  product: ProductQuery_Product;
+}
+
+const UpdatePage = ({ product }: IUpdatePageProps) => {
   return <UpdateProduct product={product} />;
 };
 
@@ -12,7 +22,10 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   try {
     const {
       data: { Product: product },
-    } = await client.query({ query: PRODUCT_QUERY, variables: { id: context?.query?.id } });
+    } = await client.query<ProductQuery, ProductQueryVariables>({
+      query: PRODUCT_QUERY,
+      variables: { id: context?.query?.id as string },
+    });
 
     return addApolloState(client, {
       props: {

@@ -1,7 +1,12 @@
-import { formatMoney, IProduct, IStyledTheme } from "@/lib/index";
+import { formatMoney, IStyledTheme } from "@/lib/index";
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
+import { AllProductsQuery_allProducts } from "@/generated/AllProductsQuery";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
+
+interface IProductProps {
+  product: AllProductsQuery_allProducts;
+}
 
 const PriceTag = styled(Heading)<IStyledTheme>`
   background: ${(props) => props.theme.colors.brand.primary};
@@ -31,18 +36,18 @@ const Title = styled(Heading)<IStyledTheme>`
   }
 `;
 
-export const Product = ({ product }: IProduct) => {
+export const Product = ({ product }: IProductProps) => {
   return (
     <Box>
       <Flex justify="flex-end">
-        <PriceTag>{formatMoney(product?.price as number | undefined)}</PriceTag>
+        <PriceTag>{formatMoney(product?.price || 0)}</PriceTag>
       </Flex>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <Image
           boxSize="400px"
           objectFit="cover"
-          src={product?.photo?.image?.publicUrlTransformed as string | undefined}
-          alt={product?.photo?.altText as string | undefined}
+          src={product?.photo?.image?.publicUrlTransformed || ""}
+          alt={product?.photo?.altText || ""}
           fallbackSrc="https://via.placeholder.com/400"
         />
         <Title>

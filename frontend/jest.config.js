@@ -9,7 +9,6 @@ module.exports = {
   transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$"],
   transform: {
     "^.+\\.(ts|tsx)$": "babel-jest",
-    "\\.graphql$": "graphql-let/jestTransformer",
   },
   watchPlugins: ["jest-watch-typeahead/filename", "jest-watch-typeahead/testname"],
   modulePaths: ["<rootDir>"],
@@ -18,6 +17,8 @@ module.exports = {
     "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMock.js",
     "^@/components/(.*)$": resolve(__dirname, "./components/$1"),
     "^@/features/(.*)$": resolve(__dirname, "./features/$1"),
+    "^@/generated/(.*)$": resolve(__dirname, "./lib/graphql/generated/$1"),
+    "^@/graphql/(.*)$": resolve(__dirname, "./lib/graphql/$1"),
     "^@/infrastructure/(.*)$": resolve(__dirname, "./infrastructure/$1"),
     "^@/lib/(.*)$": resolve(__dirname, "./lib/$1"),
     "^@/pages/(.*)$": resolve(__dirname, "./pages/$1"),

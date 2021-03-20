@@ -43,6 +43,8 @@
       "test_utils": ["./lib/test-utils"],
       "@/components/*": ["./components/*"],
       "@/features/*": ["./features/*"],
+      "@/generated/*": ["./lib/graphql/generated/*"],
+      "@/graphql/*": ["./lib/graphql/*"],
       "@/infrastructure/*": ["./infrastructure/*"],
       "@/lib/*": ["./lib/*"],
       "@/pages/*": ["./pages/*"],

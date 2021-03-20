@@ -1,7 +1,12 @@
-import { useUpdateProductMutation } from "@/lib/graphql/updateProduct.graphql";
 import { DisplayError } from "@/components/index";
+import { useMutation } from "@apollo/client";
+import { UPDATE_PRODUCT_MUTATION } from "@/graphql/index";
+import { ProductQuery_Product } from "@/generated/ProductQuery";
+import {
+  UpdateProductMutation,
+  UpdateProductMutationVariables,
+} from "@/generated/UpdateProductMutation";
 import { EditIcon } from "@chakra-ui/icons";
-import { IProduct } from "@/lib/index";
 import {
   Button,
   Container,
@@ -31,7 +36,11 @@ interface IVariables {
   image?: File;
 }
 
-export const UpdateProduct = ({ product }: IProduct) => {
+interface IUpdateProductProps {
+  product: ProductQuery_Product;
+}
+
+export const UpdateProduct = ({ product }: IUpdateProductProps) => {
   const router = useRouter();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>({
     defaultValues: {
@@ -41,7 +50,10 @@ export const UpdateProduct = ({ product }: IProduct) => {
       image: "",
     },
   });
-  const [updateProduct, { error, loading }] = useUpdateProductMutation();
+  const [updateProduct, { error, loading }] = useMutation<
+    UpdateProductMutation,
+    UpdateProductMutationVariables
+  >(UPDATE_PRODUCT_MUTATION);
 
   const onSubmit = async (inputData: IFormData) => {
     let variables: IVariables = {

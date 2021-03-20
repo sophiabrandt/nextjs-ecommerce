@@ -1,17 +1,12 @@
 import { Loading } from "@/components/index";
 import { ProductDetail } from "@/features/product/index";
-import type { ProductsType } from "@/lib/index";
-import { ALL_PRODUCTS_QUERY, initializeApollo, PRODUCT_QUERY } from "@/lib/index";
-import { GetStaticPaths, NextPage } from "next";
+import { AllProductsQuery } from "@/generated/AllProductsQuery";
+import { ALL_PRODUCTS_QUERY, PRODUCT_QUERY } from "@/graphql/index";
+import { initializeApollo } from "@/lib/index";
+import { NextPage } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
-interface IAllProductsReturnType {
-  data: {
-    allProducts: ProductsType[];
-  };
-}
 
 interface IStaticProps {
   params: { id: string | undefined };
@@ -44,10 +39,10 @@ const Product: NextPage<IProductPage> = ({ id, title }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   const {
     data: { allProducts },
-  }: IAllProductsReturnType = await client.query({ query: ALL_PRODUCTS_QUERY });
+  } = await client.query<AllProductsQuery>({ query: ALL_PRODUCTS_QUERY });
   const ids = allProducts?.map((product) => product?.id);
   const paths = ids?.map((id) => ({ params: { id } }));
 

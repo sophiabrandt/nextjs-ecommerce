@@ -1,6 +1,0 @@
-mutation deleteProduct($id: ID!) {
-  deleteProduct(id: $id) {
-    id
-    name
-  }
-}

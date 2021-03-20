@@ -1,6 +1,11 @@
-import { useCreateProductMutation } from "@/lib/graphql/createProduct.graphql";
 import { DisplayError } from "@/components/index";
-import { ALL_PRODUCTS_QUERY, IAllProducts } from "@/lib/index";
+import { ALL_PRODUCTS_QUERY, CREATE_PRODUCT_MUTATION } from "@/graphql/index";
+import { useMutation } from "@apollo/client";
+import {
+  CreateProductMutation,
+  CreateProductMutationVariables,
+} from "@/generated/CreateProductMutation";
+import { AllProductsQuery } from "@/generated/AllProductsQuery";
 import { AddIcon } from "@chakra-ui/icons";
 import {
   Button,
@@ -25,7 +30,10 @@ interface IFormData {
 export const CreateProduct = () => {
   const router = useRouter();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
-  const [createProduct, { error, loading }] = useCreateProductMutation();
+  const [createProduct, { error, loading }] = useMutation<
+    CreateProductMutation,
+    CreateProductMutationVariables
+  >(CREATE_PRODUCT_MUTATION);
 
   const onSubmit = async (inputData: IFormData) => {
     try {
@@ -38,16 +46,15 @@ export const CreateProduct = () => {
         },
         update(cache, { data }) {
           const newProduct = data?.createProduct;
-          // eslint-disable-next-line
-          const existingProducts = cache.readQuery<IAllProducts>({
+          const existingProducts = cache.readQuery<AllProductsQuery>({
             query: ALL_PRODUCTS_QUERY,
-          })!.allProducts;
+          });
 
-          if (existingProducts && newProduct) {
+          if (existingProducts?.allProducts && newProduct) {
             cache.writeQuery({
               query: ALL_PRODUCTS_QUERY,
               data: {
-                allProducts: [...existingProducts, newProduct],
+                allProducts: [...existingProducts?.allProducts, newProduct],
               },
             });
           }
