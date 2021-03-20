@@ -14,6 +14,7 @@ export const colors = {
     quaternary: "#FFFFFF",
     disabled: "#DEDEDE",
     error: "#E63946",
+    error_secondary: "#B82D38",
     success: "#ACD8AA",
   },
   bg: {

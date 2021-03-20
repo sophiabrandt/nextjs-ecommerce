@@ -1,8 +1,9 @@
 import { formatMoney, IStyledTheme } from "@/lib/index";
+import { ProductDelete } from "./ProductDelete";
 import { useProductQuery } from "@/lib/graphql/product.graphql";
 import { EditIcon } from "@chakra-ui/icons";
 import { DisplayError, Loading } from "@/components/index";
-import { Box, Button, Flex, Heading, Image, Link, Spacer, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Image, Spacer, Stack, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
 
@@ -43,15 +44,13 @@ export const ProductDetail = ({ id }: { id: string }) => {
           <Flex justify="center">
             <StyledEditButton m={2}>
               <NextLink href="/product/[id]/update" as={`/product/${data?.Product?.id}/update`}>
-                <Link>
+                <Flex alignItems="center">
                   <EditIcon mr={2} />
                   Edit
-                </Link>
+                </Flex>
               </NextLink>
             </StyledEditButton>
-            <Button m={2} colorScheme="blue">
-              Delete
-            </Button>
+            <ProductDelete id={data?.Product?.id} />
           </Flex>
         </Stack>
       </Box>

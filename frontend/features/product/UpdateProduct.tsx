@@ -57,12 +57,15 @@ export const UpdateProduct = ({ product }: IProduct) => {
         image: inputData.image[0],
       };
     }
-    const { data } = await updateProduct({
-      variables,
-    });
-
-    if (data?.updateProduct) {
-      router.push(`/product/${data.updateProduct.id}`);
+    try {
+      const { data } = await updateProduct({
+        variables,
+      });
+      if (data?.updateProduct) {
+        router.push(`/product/${data.updateProduct.id}`);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 

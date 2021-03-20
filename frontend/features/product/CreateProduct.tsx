@@ -28,33 +28,37 @@ export const CreateProduct = () => {
   const [createProduct, { error, loading }] = useCreateProductMutation();
 
   const onSubmit = async (inputData: IFormData) => {
-    const { data } = await createProduct({
-      variables: {
-        name: inputData.name,
-        price: parseInt(inputData.price, 10),
-        description: inputData.description,
-        image: inputData.image[0],
-      },
-      update(cache, { data }) {
-        const newProduct = data?.createProduct;
-        // eslint-disable-next-line
-        const existingProducts = cache.readQuery<IAllProducts>({
-          query: ALL_PRODUCTS_QUERY,
-        })!.allProducts;
-
-        if (existingProducts && newProduct) {
-          cache.writeQuery({
+    try {
+      const { data } = await createProduct({
+        variables: {
+          name: inputData.name,
+          price: parseInt(inputData.price, 10),
+          description: inputData.description,
+          image: inputData.image[0],
+        },
+        update(cache, { data }) {
+          const newProduct = data?.createProduct;
+          // eslint-disable-next-line
+          const existingProducts = cache.readQuery<IAllProducts>({
             query: ALL_PRODUCTS_QUERY,
-            data: {
-              allProducts: [...existingProducts, newProduct],
-            },
-          });
-        }
-      },
-    });
+          })!.allProducts;
 
-    if (data?.createProduct) {
-      router.push(`/product/${data.createProduct.id}`);
+          if (existingProducts && newProduct) {
+            cache.writeQuery({
+              query: ALL_PRODUCTS_QUERY,
+              data: {
+                allProducts: [...existingProducts, newProduct],
+              },
+            });
+          }
+        },
+      });
+
+      if (data?.createProduct) {
+        router.push(`/product/${data.createProduct.id}`);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
