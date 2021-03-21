@@ -54,7 +54,7 @@ export const DeleteProduct = ({ id }: IProductDeleteProps) => {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Delete Customer
+                Delete Product
               </AlertDialogHeader>
 
               <AlertDialogBody>
