@@ -10,7 +10,6 @@ describe("Index page", () => {
         <IndexPage />
       </MockedProvider>
     );
-    const { container } = render(<IndexPage allProducts={allProducts} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 });
