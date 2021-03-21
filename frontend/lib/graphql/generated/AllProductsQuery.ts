@@ -30,7 +30,12 @@ export interface AllProductsQuery_allProducts {
 
 export interface AllProductsQuery {
   /**
-   *  Search for all Product items which match the where clause.
+   *  Search for all Product items which match the where clause. 
    */
   allProducts: (AllProductsQuery_allProducts | null)[] | null;
+}
+
+export interface AllProductsQueryVariables {
+  skip?: number | null;
+  first?: number | null;
 }

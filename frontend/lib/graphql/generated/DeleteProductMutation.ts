@@ -15,7 +15,7 @@ export interface DeleteProductMutation_deleteProduct {
 
 export interface DeleteProductMutation {
   /**
-   *  Delete a single Product item by ID.
+   *  Delete a single Product item by ID. 
    */
   deleteProduct: DeleteProductMutation_deleteProduct | null;
 }

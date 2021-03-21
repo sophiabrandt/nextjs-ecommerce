@@ -1,9 +1,4 @@
-import { render } from "test-utils";
-
-const useRouter = jest.spyOn(require("next/router"), "useRouter");
-useRouter.mockImplementation(() => ({
-  pathname: "/",
-}));
+import { render, useRouter } from "test-utils";
 
 import DetailPage from "@/pages/product/[id]/index.tsx";
 

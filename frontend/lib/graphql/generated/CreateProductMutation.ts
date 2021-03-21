@@ -17,7 +17,7 @@ export interface CreateProductMutation_createProduct {
 
 export interface CreateProductMutation {
   /**
-   *  Create a single Product item.
+   *  Create a single Product item. 
    */
   createProduct: CreateProductMutation_createProduct | null;
 }

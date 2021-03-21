@@ -1,15 +1,29 @@
 import { useQuery } from "@apollo/client";
+import { accessEnv } from "@/lib/index";
 import { SimpleGrid } from "@chakra-ui/react";
 import { DisplayError, Loading } from "@/components/index";
 import { Product } from "./Product";
-import { AllProductsQuery } from "@/generated/AllProductsQuery";
+import { AllProductsQuery, AllProductsQueryVariables } from "@/generated/AllProductsQuery";
 import { ALL_PRODUCTS_QUERY } from "@/graphql/index";
 
-export const Products = () => {
-  const { data, loading, error } = useQuery<AllProductsQuery>(ALL_PRODUCTS_QUERY, {
-    fetchPolicy: "cache-and-network",
-    nextFetchPolicy: "cache-first",
-  });
+interface IProductsProps {
+  page: number;
+}
+
+const perPage = parseInt(accessEnv("PER_PAGE", "4"), 10);
+
+export const Products = ({ page }: IProductsProps) => {
+  const { data, loading, error } = useQuery<AllProductsQuery, AllProductsQueryVariables>(
+    ALL_PRODUCTS_QUERY,
+    {
+      fetchPolicy: "cache-and-network",
+      nextFetchPolicy: "cache-first",
+      variables: {
+        skip: page * perPage - perPage,
+        first: perPage,
+      },
+    }
+  );
 
   if (loading) return <Loading />;
   if (error) return <DisplayError error={error} />;

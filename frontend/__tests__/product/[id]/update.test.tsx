@@ -1,10 +1,5 @@
-import { render } from "test-utils";
+import { render, useRouter } from "test-utils";
 import { MockedProvider } from "@apollo/client/testing";
-
-const useRouter = jest.spyOn(require("next/router"), "useRouter");
-useRouter.mockImplementation(() => ({
-  pathname: "/",
-}));
 
 import UpdatePage from "@/pages/product/[id]/update.tsx";
 

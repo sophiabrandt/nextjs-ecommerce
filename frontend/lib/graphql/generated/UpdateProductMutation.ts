@@ -29,11 +29,11 @@ export interface UpdateProductMutation_updateProductImage {
 
 export interface UpdateProductMutation {
   /**
-   *  Update a single Product item by ID.
+   *  Update a single Product item by ID. 
    */
   updateProduct: UpdateProductMutation_updateProduct | null;
   /**
-   *  Update a single ProductImage item by ID.
+   *  Update a single ProductImage item by ID. 
    */
   updateProductImage: UpdateProductMutation_updateProductImage | null;
 }

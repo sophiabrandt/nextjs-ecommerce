@@ -30,7 +30,7 @@ export interface ProductQuery_Product {
 
 export interface ProductQuery {
   /**
-   *  Search for the Product item with the matching ID.
+   *  Search for the Product item with the matching ID. 
    */
   Product: ProductQuery_Product | null;
 }

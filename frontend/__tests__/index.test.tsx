@@ -1,13 +1,13 @@
-import { render } from "test-utils";
+import { render, useRouter } from "test-utils";
 import { MockedProvider } from "@apollo/client/testing";
 
-import IndexPage from "@/pages/index";
+import ProductsPage from "@/pages/index";
 
 describe("Index page", () => {
   it("should match the snapshot", () => {
     const { container } = render(
       <MockedProvider>
-        <IndexPage />
+        <ProductsPage />
       </MockedProvider>
     );
     expect(container.firstChild).toMatchSnapshot();
