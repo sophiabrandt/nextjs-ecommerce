@@ -5,6 +5,7 @@ export { CREATE_PRODUCT_MUTATION } from "./createProduct";
 export { DELETE_PRODUCT_MUTATION } from "./deleteProduct";
 export { PAGINATION_QUERY } from "./pagination";
 export { PRODUCT_QUERY } from "./product";
+export { CURRENT_USER_QUERY } from "./currentUser";
 export { UPDATE_PRODUCT_MUTATION } from "./updateProduct";
 
 export type CustomQueryHook<T, R extends QueryResult> = (input: T) => R;
