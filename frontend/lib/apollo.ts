@@ -5,6 +5,7 @@ import { onError } from "@apollo/link-error";
 import { createUploadLink } from "apollo-upload-client";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
+import { paginationField } from "./paginationField";
 
 interface PageProps {
   // eslint-disable-next-line
@@ -39,7 +40,15 @@ function createApolloClient() {
         },
       }),
     ]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            allProducts: paginationField(),
+          },
+        },
+      },
+    }),
   });
 }
 

@@ -1,5 +1,6 @@
 import { DisplayError } from "@/components/index";
-import { ALL_PRODUCTS_QUERY, CREATE_PRODUCT_MUTATION } from "@/graphql/index";
+import { PAGINATION_QUERY, ALL_PRODUCTS_QUERY, CREATE_PRODUCT_MUTATION } from "@/graphql/index";
+import { PaginationQuery } from "@/generated/PaginationQuery";
 import { useMutation } from "@apollo/client";
 import {
   CreateProductMutation,
@@ -45,6 +46,7 @@ export const CreateProduct = () => {
           image: inputData.image[0],
         },
         update(cache, { data }) {
+          // update the allProducts Query
           const newProduct = data?.createProduct;
           const existingProducts = cache.readQuery<AllProductsQuery>({
             query: ALL_PRODUCTS_QUERY,
@@ -57,6 +59,19 @@ export const CreateProduct = () => {
                 allProducts: [...existingProducts?.allProducts, newProduct],
               },
             });
+          }
+          // update the pagination query
+          const existingPagination = cache.readQuery<PaginationQuery>({ query: PAGINATION_QUERY });
+          if (existingPagination?._allProductsMeta && newProduct) {
+            const existingCount = existingPagination?._allProductsMeta?.count;
+            if (existingCount) {
+              cache.writeQuery({
+                query: PAGINATION_QUERY,
+                data: {
+                  _allProductsMeta: { count: existingCount + 1 },
+                },
+              });
+            }
           }
         },
       });

@@ -77,6 +77,9 @@ export const DeleteProduct = ({ id }: IProductDeleteProps) => {
                           cache.evict({
                             fieldName: "allProducts",
                           });
+                          cache.evict({
+                            fieldName: "_allProductsMeta",
+                          });
                         },
                       });
                       onClose;
