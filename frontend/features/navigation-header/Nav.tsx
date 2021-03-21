@@ -1,4 +1,4 @@
-import { useUser } from "@/features/authentication/index";
+import { useUser } from "@/features/authentication";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -36,7 +36,7 @@ export function Nav() {
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink as={NextLink} href="/signout">
-              <Link _hover={{ color: "brand.tertiary" }}>Signout</Link>
+              <Link _hover={{ color: "brand.tertiary" }}>Sign Out</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>

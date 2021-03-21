@@ -18,13 +18,20 @@ const ErrorStyles = styled(Box)<IStyledTheme>`
   }
 `;
 
+interface MutationError {
+  __typename: string;
+  code: string;
+  message: string;
+}
+
 interface IDisplayErrorProps {
-  error?: ApolloError;
+  error?: ApolloError | MutationError;
 }
 
 export const DisplayError = ({ error }: IDisplayErrorProps) => {
   if (!error || !error.message) return null;
   if (
+    error instanceof ApolloError &&
     error.networkError &&
     "result" in error.networkError &&
     error.networkError.result?.errors?.length
