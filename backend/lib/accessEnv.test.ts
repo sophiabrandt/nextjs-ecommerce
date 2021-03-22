@@ -6,17 +6,17 @@ describe("Access Env", () => {
     expect(test_env).toEqual("env");
   });
 
+  test("it should return the correct key from env even if default value is provided", () => {
+    const test_env = accessEnv("TEST_ENV", "this is wrong");
+    expect(test_env).toEqual("env");
+  });
+
   test("it should return a default value for a non-existing key when a default value was provided", () => {
     const test_env = accessEnv("DOES_NOT_EXIST", "fallback value");
     expect(test_env).toEqual("fallback value");
   });
 
-  test("it should throw an error for a non-existing key when no value was provided", () => {
+  test("it should throw an error for a non-existing key when no default value is provided", () => {
     expect(() => accessEnv("DOES_NOT_EXIST")).toThrowError();
-  });
-
-  test("it should throw an error for an existing key with empty property and no default value", () => {
-    const test_env = accessEnv("EMPTY_TEST_ENV");
-    expect(() => accessEnv("DOES_EXIST")).toThrowError();
   });
 });

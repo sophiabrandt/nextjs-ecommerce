@@ -1,6 +1,6 @@
 const cache: { [key: string]: string } = {};
 
-export const accessEnv = (key: string, defaultValue: string): string => {
+export const accessEnv = (key: string, defaultValue?: string): string => {
   if (!(key in process.env) || typeof process.env[key] === undefined) {
     if (defaultValue) return defaultValue;
     throw new Error(`${key} not found in process.env!`);
