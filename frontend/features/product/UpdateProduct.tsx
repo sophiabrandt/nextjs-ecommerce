@@ -164,7 +164,13 @@ export const UpdateProduct = ({ product }: IUpdateProductProps) => {
             </FormLabel>
             <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
           </FormControl>
-          <Button mt={4} colorScheme="whatsapp" isDisabled={loading} type="submit">
+          <Button
+            mt={4}
+            backgroundColor="ui.success"
+            _hover={{ backgroundColor: "green.300" }}
+            isDisabled={loading}
+            type="submit"
+          >
             <EditIcon mr={2} /> Edit
           </Button>
         </fieldset>

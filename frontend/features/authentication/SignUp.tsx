@@ -1,6 +1,6 @@
 import { DisplayError } from "@/components/index";
-import { SignInMutation, SignInMutationVariables } from "@/generated/SignInMutation";
-import { CURRENT_USER_QUERY, SIGNIN_MUTATION } from "@/graphql/index";
+import { SignUpMutation, SignUpMutationVariables } from "@/generated/SignUpMutation";
+import { CURRENT_USER_QUERY, SIGNUP_MUTATION } from "@/graphql/index";
 import { useMutation } from "@apollo/client";
 import { CheckIcon } from "@chakra-ui/icons";
 import {
@@ -17,33 +17,33 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 interface IFormData {
+  name: string;
   email: string;
   password: string;
 }
 
-export const SignIn = () => {
+export const SignUp = () => {
   const router = useRouter();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
-  const [signin, { data, loading, error }] = useMutation<SignInMutation, SignInMutationVariables>(
-    SIGNIN_MUTATION
+  const [signup, { loading, error }] = useMutation<SignUpMutation, SignUpMutationVariables>(
+    SIGNUP_MUTATION
   );
 
   const onSubmit = async (inputData: IFormData) => {
     try {
-      const { data } = await signin({
+      const { data } = await signup({
         variables: {
+          name: inputData.name,
           email: inputData.email,
           password: inputData.password,
         },
         update(cache, { data }) {
-          const user = data?.authenticateUserWithPassword;
-          // is authentication successful?
-          if (user?.__typename === "UserAuthenticationWithPasswordSuccess") {
-            const authenticatedUser = user.item;
+          const newUser = data?.createUser;
+          if (newUser) {
             cache.writeQuery({
               query: CURRENT_USER_QUERY,
               data: {
-                authenticatedItem: authenticatedUser,
+                authenticatedItem: newUser,
               },
             });
           }
@@ -51,55 +51,66 @@ export const SignIn = () => {
       });
 
       // go back to previous page after sucessful login
-      if (
-        data?.authenticateUserWithPassword?.__typename === "UserAuthenticationWithPasswordSuccess"
-      ) {
+      if (data?.createUser) {
         router.back();
       }
     } catch (err) {
       console.error(err);
     }
   };
-  // did authentication fail?
-  const authenticationError =
-    data?.authenticateUserWithPassword.__typename === "UserAuthenticationWithPasswordFailure"
-      ? data?.authenticateUserWithPassword
-      : undefined;
 
   return (
     <Container>
       <Heading mb={4} as="h3">
-        Sign Into Your Account
+        Sign Up
       </Heading>
       <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-        <DisplayError error={error || authenticationError} />
+        <DisplayError error={error} />
         <Progress mb={4} colorScheme="facebook" isIndeterminate={formState.isSubmitting} />
         <fieldset disabled={loading} aria-busy={loading}>
+          <FormControl isInvalid={Boolean(errors.name)}>
+            <FormLabel m="0" htmlFor="name">
+              Name
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your name"
+                ref={register({
+                  required: "Please enter your name",
+                  minLength: { value: 3, message: "Must be at least 3 characters long" },
+                })}
+              />
+            </FormLabel>
+            <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          </FormControl>
           <FormControl isInvalid={Boolean(errors.email)}>
-            <FormLabel m="0" htmlFor="signin_email">
+            <FormLabel m="0" htmlFor="signup_email">
               Email
               <Input
                 type="email"
-                id="signin_email"
+                id="signup_email"
                 name="email"
                 placeholder="example@example.com"
                 ref={register({
                   required: "Please enter a valid email address",
+                  pattern: { value: /^\S+@\S+$/, message: "Must be a valid email address" },
                 })}
               />
             </FormLabel>
             <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={Boolean(errors.password)}>
-            <FormLabel m="0" htmlFor="signin_password">
+            <FormLabel m="0" htmlFor="signup_password">
               Password
               <Input
                 type="password"
-                id="signin_password"
+                id="signup_password"
                 name="password"
                 placeholder="Password"
                 ref={register({
                   required: "Please enter a password",
+                  minLength: { value: 8, message: "Must be at least 8 characters long" },
                 })}
               />
             </FormLabel>
@@ -113,7 +124,7 @@ export const SignIn = () => {
             type="submit"
           >
             <CheckIcon mr={2} />
-            Sign In
+            Sign Up
           </Button>
         </fieldset>
       </form>
