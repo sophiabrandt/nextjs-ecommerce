@@ -41,7 +41,7 @@ export const Reset = ({ token }: IResetProps) => {
 
   const onSubmit = async (inputData: IFormData) => {
     try {
-      await reset({
+      const { data } = await reset({
         variables: {
           email: inputData.email,
           password: inputData.password,
@@ -49,7 +49,8 @@ export const Reset = ({ token }: IResetProps) => {
         },
       });
 
-      if (resetError) {
+      // A null response signals a successful response
+      if (!data?.redeemUserPasswordResetToken) {
         toast({
           position: "top",
           title: "Success!",

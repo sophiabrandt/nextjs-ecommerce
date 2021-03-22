@@ -38,7 +38,7 @@ export const CreateProduct = () => {
 
   const onSubmit = async (inputData: IFormData) => {
     try {
-      const { data } = await createProduct({
+      await createProduct({
         variables: {
           name: inputData.name,
           price: parseInt(inputData.price, 10),
@@ -71,14 +71,11 @@ export const CreateProduct = () => {
                   _allProductsMeta: { count: existingCount + 1 },
                 },
               });
+              router.push(`/product/${newProduct.id}`);
             }
           }
         },
       });
-
-      if (data?.createProduct) {
-        router.push(`/product/${data.createProduct.id}`);
-      }
     } catch (err) {
       console.error(err);
     }

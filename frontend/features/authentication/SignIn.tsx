@@ -29,8 +29,6 @@ export const SignIn = () => {
   );
 
   const onSubmit = async (inputData: IFormData) => {
-    const authenticationSuccess =
-      data?.authenticateUserWithPassword?.__typename === "UserAuthenticationWithPasswordSuccess";
     try {
       await signin({
         variables: {
@@ -48,14 +46,11 @@ export const SignIn = () => {
                 authenticatedItem: authenticatedUser,
               },
             });
+            // route to home page after successful login
+            router.push("/");
           }
         },
       });
-
-      // route to home page after successful login
-      if (authenticationSuccess) {
-        router.push("/");
-      }
     } catch (err) {
       console.error(err);
     }
