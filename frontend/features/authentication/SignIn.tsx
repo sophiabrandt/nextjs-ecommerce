@@ -32,7 +32,7 @@ export const SignIn = () => {
     const authenticationSuccess =
       data?.authenticateUserWithPassword?.__typename === "UserAuthenticationWithPasswordSuccess";
     try {
-      const { data } = await signin({
+      await signin({
         variables: {
           email: inputData.email,
           password: inputData.password,
