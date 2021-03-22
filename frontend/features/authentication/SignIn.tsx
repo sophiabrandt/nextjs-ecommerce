@@ -52,9 +52,9 @@ export const SignIn = () => {
         },
       });
 
-      // go back to previous page after sucessful login
+      // route to home page after successful login
       if (authenticationSuccess) {
-        router.back();
+        router.push("/");
       }
     } catch (err) {
       console.error(err);
