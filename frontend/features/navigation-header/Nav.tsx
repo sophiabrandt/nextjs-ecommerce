@@ -1,4 +1,5 @@
 import { SignOut, useUser } from "@/features/authentication";
+import { Cart } from "@/features/cart";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -36,6 +37,9 @@ export function Nav() {
           </BreadcrumbItem>
           <BreadcrumbItem>
             <SignOut />
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Cart />
           </BreadcrumbItem>
         </Breadcrumb>
       )}
