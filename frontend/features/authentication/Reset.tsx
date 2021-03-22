@@ -1,7 +1,8 @@
 import { DisplayError } from "@/components/index";
-import { SignInMutation, SignInMutationVariables } from "@/generated/SignInMutation";
-import { CURRENT_USER_QUERY, SIGNIN_MUTATION } from "@/graphql/index";
+import { ResetMutation, ResetMutationVariables } from "@/generated/ResetMutation";
+import { RESET_MUTATION } from "@/graphql/index";
 import { useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { CheckIcon } from "@chakra-ui/icons";
 import {
   Button,
@@ -12,75 +13,73 @@ import {
   Heading,
   Input,
   Progress,
+  useToast,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 interface IFormData {
   email: string;
   password: string;
+  token: string;
 }
 
-export const SignIn = () => {
+interface IResetProps {
+  token: string;
+}
+
+export const Reset = ({ token }: IResetProps) => {
   const router = useRouter();
+  const toast = useToast();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
-  const [signin, { data, loading, error }] = useMutation<SignInMutation, SignInMutationVariables>(
-    SIGNIN_MUTATION
+  const [reset, { data, loading, error }] = useMutation<ResetMutation, ResetMutationVariables>(
+    RESET_MUTATION
   );
 
+  const resetError = data?.redeemUserPasswordResetToken?.code
+    ? data?.redeemUserPasswordResetToken
+    : undefined;
+
   const onSubmit = async (inputData: IFormData) => {
-    const authenticationSuccess =
-      data?.authenticateUserWithPassword?.__typename === "UserAuthenticationWithPasswordSuccess";
     try {
-      const { data } = await signin({
+      await reset({
         variables: {
           email: inputData.email,
           password: inputData.password,
-        },
-        update(cache, { data }) {
-          const user = data?.authenticateUserWithPassword;
-          // is authentication successful?
-          if (authenticationSuccess) {
-            const authenticatedUser = user.item;
-            cache.writeQuery({
-              query: CURRENT_USER_QUERY,
-              data: {
-                authenticatedItem: authenticatedUser,
-              },
-            });
-          }
+          token,
         },
       });
 
-      // go back to previous page after sucessful login
-      if (authenticationSuccess) {
-        router.back();
+      if (resetError) {
+        toast({
+          position: "top",
+          title: "Success!",
+          description: "You can now sign in.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        router.push("/signin");
       }
     } catch (err) {
       console.error(err);
     }
   };
-  // did authentication fail?
-  const authenticationError =
-    data?.authenticateUserWithPassword.__typename === "UserAuthenticationWithPasswordFailure"
-      ? data?.authenticateUserWithPassword
-      : undefined;
 
   return (
     <Container>
       <Heading mb={4} as="h3">
-        Sign Into Your Account
+        Reset Email
       </Heading>
       <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-        <DisplayError error={error || authenticationError} />
+        <DisplayError error={error || resetError} />
         <Progress mb={4} colorScheme="facebook" isIndeterminate={formState.isSubmitting} />
         <fieldset disabled={loading} aria-busy={loading}>
           <FormControl isInvalid={Boolean(errors.email)}>
-            <FormLabel m="0" htmlFor="signin_email">
+            <FormLabel m="0" htmlFor="reset_email_with_token">
               Email
               <Input
                 type="email"
-                id="signin_email"
+                id="reset_email_with_token"
                 name="email"
                 placeholder="example@example.com"
                 ref={register({
@@ -91,15 +90,16 @@ export const SignIn = () => {
             <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={Boolean(errors.password)}>
-            <FormLabel m="0" htmlFor="signin_password">
+            <FormLabel m="0" htmlFor="reset_password_with_token">
               Password
               <Input
                 type="password"
-                id="signin_password"
+                id="reset_password_with_token"
                 name="password"
                 placeholder="Password"
                 ref={register({
                   required: "Please enter a password",
+                  minLength: { value: 8, message: "Must be at least 8 characters long" },
                 })}
               />
             </FormLabel>
@@ -113,7 +113,7 @@ export const SignIn = () => {
             type="submit"
           >
             <CheckIcon mr={2} />
-            Sign In
+            Reset
           </Button>
         </fieldset>
       </form>

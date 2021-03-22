@@ -7,6 +7,7 @@ export { DELETE_PRODUCT_MUTATION } from "./deleteProduct";
 export { PAGINATION_QUERY } from "./pagination";
 export { PRODUCT_QUERY } from "./product";
 export { REQUEST_RESET_MUTATION } from "./requestReset";
+export { RESET_MUTATION } from "./reset";
 export { SIGNIN_MUTATION } from "./signin";
 export { SIGNOUT_MUTATION } from "./signout";
 export { SIGNUP_MUTATION } from "./signup";
