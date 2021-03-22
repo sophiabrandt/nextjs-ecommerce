@@ -15,6 +15,11 @@ export enum PasswordAuthErrorCode {
   SECRET_NOT_SET = "SECRET_NOT_SET",
 }
 
+export enum PasswordResetRequestErrorCode {
+  IDENTITY_NOT_FOUND = "IDENTITY_NOT_FOUND",
+  MULTIPLE_IDENTITY_MATCHES = "MULTIPLE_IDENTITY_MATCHES",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

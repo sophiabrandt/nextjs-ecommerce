@@ -2,13 +2,13 @@ import { createAuth } from "@keystone-next/auth";
 import { config, createSchema } from "@keystone-next/keystone/schema";
 import { statelessSessions, withItemData } from "@keystone-next/keystone/session";
 import "dotenv/config";
-import { accessEnv } from "./lib";
-import { User, Product, ProductImage } from "./schemas";
+import { accessEnv, sendPasswordResetEmail } from "./lib";
+import { Product, ProductImage, User } from "./schemas";
 
-const databaseURL = accessEnv(<string>"DATABASE_URL", "mongodb://localhost/keystone");
-const frontendURL = accessEnv(<string>"FRONTEND_URL", "http://localhost:7777");
+const databaseURL = accessEnv("DATABASE_URL", "mongodb://localhost/keystone");
+const frontendURL = accessEnv("FRONTEND_URL", "http://localhost:7777");
 const sessionSecret = accessEnv(
-  <string>"COOKIE_SECRET",
+  "COOKIE_SECRET",
   "8r5a4LVRBiZtz8Uca7jfnHjll31ctXnZVIxOHWhqQLlVOWUGGc3lxVGQjFqVgD9uUboRWCDqoKbl4Zp4GOC7lFAURatavdUMucOLzi0Ps6PI9Ho0LGViDeejX99VLn0G"
 );
 
@@ -23,6 +23,11 @@ const { withAuth } = createAuth({
   secretField: "password",
   initFirstItem: {
     fields: ["name", "email", "password"],
+  },
+  passwordResetLink: {
+    async sendToken(args) {
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
   },
 });
 

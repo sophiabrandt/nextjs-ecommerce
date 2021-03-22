@@ -1,11 +1,13 @@
-import { SignIn, SignUp } from "@/features/authentication";
+import { RequestReset, SignIn, SignUp } from "@/features/authentication";
 import { SimpleGrid } from "@chakra-ui/react";
+import { NextPage } from "next";
 
-const SignInPage = () => {
+const SignInPage: NextPage = () => {
   return (
     <SimpleGrid minChildWidth="300px" spacing={16}>
       <SignIn />
       <SignUp />
+      <RequestReset />
     </SimpleGrid>
   );
 };
