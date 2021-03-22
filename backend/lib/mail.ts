@@ -30,31 +30,16 @@ const makeANiceEmail = (text: string): string => {
   `;
 };
 
-export interface MailResponse {
-  accepted?: string[] | null;
-  rejected?: null[] | null;
-  envelopeTime: number;
-  messageTime: number;
-  messageSize: number;
-  response: string;
-  envelope: Envelope;
-  messageId: string;
-}
-export interface Envelope {
-  from: string;
-  to?: string[] | null;
-}
-
 export const sendPasswordResetEmail = async (resetToken: string, to: string): Promise<void> => {
   // email the user a token
-  const info = (await transport.sendMail({
+  const info = await transport.sendMail({
     to,
     from: "example@example.com",
     subject: "Your password reset token!",
     html: makeANiceEmail(`Your Password Reset Token is here!
       <a href="${targetURL}/reset?token=${resetToken}">Click Here to reset</a>
     `),
-  })) as MailResponse;
+  });
   if (info && mailUser.includes("ethereal.email")) {
     console.log(`💌 Message Sent!  Preview it at ${getTestMessageUrl(info)}`);
   }
