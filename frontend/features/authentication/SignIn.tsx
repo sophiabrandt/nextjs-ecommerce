@@ -40,7 +40,7 @@ export const SignIn = () => {
         update(cache, { data }) {
           const user = data?.authenticateUserWithPassword;
           // is authentication successful?
-          if (authenticationSuccess) {
+          if (user?.__typename === "UserAuthenticationWithPasswordSuccess") {
             const authenticatedUser = user.item;
             cache.writeQuery({
               query: CURRENT_USER_QUERY,
