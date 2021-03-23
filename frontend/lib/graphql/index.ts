@@ -10,6 +10,7 @@ export { PRODUCT_QUERY } from "./product";
 export { REMOVE_FROM_CART_MUTATION } from "./removeFromCart";
 export { REQUEST_RESET_MUTATION } from "./requestReset";
 export { RESET_MUTATION } from "./reset";
+export { SEARCH_PRODUCTS_QUERY } from "./search";
 export { SIGNIN_MUTATION } from "./signin";
 export { SIGNOUT_MUTATION } from "./signout";
 export { SIGNUP_MUTATION } from "./signup";
