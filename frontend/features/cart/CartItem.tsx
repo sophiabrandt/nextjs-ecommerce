@@ -15,6 +15,9 @@ const CartItemStyles = styled(ListItem)<IStyledTheme>`
   grid-template-columns: auto 1fr auto;
   img {
     margin-right: 1rem;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
   }
   h3,
   p {
@@ -28,19 +31,17 @@ export const CartItem = ({ cartItem }: ICartItemProps) => {
   if (product) {
     return (
       <CartItemStyles>
-        <img
-          width="100"
-          src={product?.photo?.image?.publicUrlTransformed ?? ""}
-          alt={product?.name ?? ""}
-        />
+        <img src={product?.photo?.image?.publicUrlTransformed ?? ""} alt={product?.name ?? ""} />
         <div>
           <Heading as="h4" size="sm">
             {product?.name}
           </Heading>
           <Text>
-            {formatMoney((product?.price ?? 0) * (cartItem.quantity ?? 0))} —
+            {formatMoney((product?.price ?? 0) * (cartItem.quantity ?? 0))}
+          </Text>
+          <Text>
             <em>
-              {cartItem.quantity} &times; {formatMoney(product.price ?? 0)} each
+              ({cartItem.quantity} &times; {formatMoney(product.price ?? 0)} each)
             </em>
           </Text>
         </div>
