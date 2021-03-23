@@ -1,5 +1,5 @@
 import { formatMoney, IStyledTheme } from "@/lib/index";
-import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Heading, Image, Link, Text } from "@chakra-ui/react";
 import { AllProductsQuery_allProducts } from "@/generated/AllProductsQuery";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
@@ -38,10 +38,10 @@ const Title = styled(Heading)<IStyledTheme>`
 
 export const Product = ({ product }: IProductProps) => {
   return (
-    <Box>
-      <Flex justify="flex-end">
-        <PriceTag>{formatMoney(product?.price || 0)}</PriceTag>
-      </Flex>
+    <Box mt={6} pos="relative">
+      <PriceTag pos="absolute" top="-8" left="250">
+        {formatMoney(product?.price || 0)}
+      </PriceTag>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <Image
           boxSize="400px"
@@ -55,7 +55,7 @@ export const Product = ({ product }: IProductProps) => {
             <Link>{product?.name}</Link>
           </NextLink>
         </Title>
-        <Text p="1" isTruncated>
+        <Text p={3} isTruncated>
           {product?.description}
         </Text>
       </Box>

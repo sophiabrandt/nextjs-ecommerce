@@ -1,6 +1,6 @@
 import { PaginationQuery } from "@/generated/PaginationQuery";
 import { PAGINATION_QUERY } from "@/graphql/index";
-import { accessEnv, IStyledTheme } from "@/lib/index";
+import { IStyledTheme } from "@/lib/index";
 import { useQuery } from "@apollo/client";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, Center, Link } from "@chakra-ui/react";
@@ -13,7 +13,7 @@ interface IPaginationProps {
   page: number;
 }
 
-const perPage = parseInt(accessEnv("PER_PAGE", "4"), 10);
+const perPage = parseInt(process.env.NEXT_PUBLIC_PER_PAGE || "6");
 
 const PaginationStyles = styled(Box)<IStyledTheme>`
   text-align: center;

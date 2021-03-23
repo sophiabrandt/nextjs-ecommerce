@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import { accessEnv } from "@/lib/index";
 import { SimpleGrid } from "@chakra-ui/react";
 import { DisplayError, Loading } from "@/components/index";
 import { Product } from "./Product";
@@ -10,7 +9,7 @@ interface IProductsProps {
   page: number;
 }
 
-const perPage = parseInt(accessEnv("PER_PAGE", "4"), 10);
+const perPage = parseInt(process.env.NEXT_PUBLIC_PER_PAGE || "6");
 
 export const Products = ({ page }: IProductsProps) => {
   const { data, loading, error } = useQuery<AllProductsQuery, AllProductsQueryVariables>(
@@ -29,7 +28,7 @@ export const Products = ({ page }: IProductsProps) => {
   if (error) return <DisplayError error={error} />;
 
   return (
-    <SimpleGrid minChildWidth="400px" spacing={4}>
+    <SimpleGrid minChildWidth="350px" spacing={4}>
       {data?.allProducts?.map((product) => {
         if (!product) return null;
         return <Product product={product} key={product.id} />;

@@ -61,7 +61,7 @@ export const Search = () => {
             <DropDownItem
               key={item?.id ?? Math.random()}
               highlighted={index === highlightedIndex}
-              {...getItemProps({ item, index})}
+              {...getItemProps({ item, index })}
             >
               <Image
                 fallbackSrc="https://via.placeholder.com/50"

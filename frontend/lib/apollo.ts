@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { accessEnv } from "@/lib/index";
 import { ApolloClient, ApolloLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import { onError } from "@apollo/link-error";
 import { createUploadLink } from "apollo-upload-client";
@@ -34,7 +33,7 @@ function createApolloClient() {
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
-        uri: accessEnv("NEXT_PUBLIC_BACKEND_URL", "http://localhost:3000/api/graphql"),
+        uri: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api/graphql",
         fetchOptions: {
           credentials: "include",
         },

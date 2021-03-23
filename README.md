@@ -90,9 +90,9 @@ To get a local copy up and running follow these steps.
    ```sh
    docker-compose up -d
    ```
-4. Create configuration file for the backend (`backend/.env`), see [`backend/sample.env`](backend/sample.env).
+4. Create configuration file for the backend (`backend/.env`), see [`backend/sample.env`](./backend/sample.env).
 
-5. Create configuration file for the frontend (`frontend/.env.local`), see [`frontend/sample.env`](frontend/sample.env).
+5. Create configuration file for the frontend (`frontend/.env.local`), see [`frontend/sample.env`](./frontend/sample.env).
 
 <!-- USAGE EXAMPLES -->
 
