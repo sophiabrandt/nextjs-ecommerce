@@ -36,9 +36,7 @@ export const CartItem = ({ cartItem }: ICartItemProps) => {
           <Heading as="h4" size="sm">
             {product?.name}
           </Heading>
-          <Text>
-            {formatMoney((product?.price ?? 0) * (cartItem.quantity ?? 0))}
-          </Text>
+          <Text>{formatMoney((product?.price ?? 0) * (cartItem.quantity ?? 0))}</Text>
           <Text>
             <em>
               ({cartItem.quantity} &times; {formatMoney(product.price ?? 0)} each)

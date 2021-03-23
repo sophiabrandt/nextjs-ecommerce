@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useUser } from "@/features/authentication";
+import { CartCountIndicator } from "./CartCountIndicator";
 
 export const Cart = () => {
   const me = useUser();
@@ -26,7 +27,12 @@ export const Cart = () => {
   if (!me) return null;
 
   return (
-    <BreadcrumbLink ref={cartRef} onClick={onOpen} _hover={{ color: "brand.tertiary" }}>
+    <BreadcrumbLink
+      pos="relative"
+      ref={cartRef}
+      onClick={onOpen}
+      _hover={{ color: "brand.tertiary" }}
+    >
       Cart
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={cartRef}>
         <DrawerOverlay>
@@ -52,6 +58,12 @@ export const Cart = () => {
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
+      <CartCountIndicator
+        count={me.cart.reduce((sum, cartItem) => {
+          if (!cartItem) return sum;
+          return sum + (cartItem?.product ? cartItem?.quantity ?? 0 : 0);
+        }, 0)}
+      />
     </BreadcrumbLink>
   );
 };
