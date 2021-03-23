@@ -1,15 +1,17 @@
 import { CloseIcon } from "@chakra-ui/icons";
+import { calcCart, formatMoney } from "@/lib/index";
 import { CartItem } from "./CartItem";
 import {
+  Flex,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
   BreadcrumbLink,
+  Text,
   Button,
   List,
 } from "@chakra-ui/react";
@@ -40,12 +42,13 @@ export const Cart = () => {
               </List>
             </DrawerBody>
 
-            <DrawerFooter>
+            <Flex as="footer" m={4} justify="space-between" align="center">
+              <Text fontSize="xl">{formatMoney(calcCart(me.cart))}</Text>
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 <CloseIcon mr={2} />
                 Close
               </Button>
-            </DrawerFooter>
+            </Flex>
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
