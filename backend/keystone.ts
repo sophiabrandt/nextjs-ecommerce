@@ -4,6 +4,7 @@ import { statelessSessions, withItemData } from "@keystone-next/keystone/session
 import "dotenv/config";
 import { accessEnv, sendPasswordResetEmail } from "./lib";
 import { CartItem, Product, ProductImage, User } from "./schemas";
+import { extendGraphqlSchema } from "./mutations";
 
 const databaseURL = accessEnv("DATABASE_URL", "mongodb://localhost/keystone");
 const frontendURL = accessEnv("FRONTEND_URL", "http://localhost:7777");
@@ -47,6 +48,7 @@ export default withAuth(
       },
     },
     lists: createSchema({ CartItem, User, Product, ProductImage }),
+    extendGraphqlSchema,
     ui: {
       isAccessAllowed: ({ session }) => Boolean(session?.data),
     },
