@@ -1,4 +1,5 @@
 import { Heading, ListItem, Text } from "@chakra-ui/react";
+import { RemoveFromCart } from "./RemoveFromCart";
 import { formatMoney } from "@/lib/index";
 import styled from "@emotion/styled";
 import { IStyledTheme } from "@/lib/index";
@@ -13,6 +14,7 @@ const CartItemStyles = styled(ListItem)<IStyledTheme>`
   border-bottom: 1px solid ${(props) => props.theme.colors.ui.secondary};
   display: grid;
   grid-template-columns: auto 1fr auto;
+  align-items: center;
   img {
     margin-right: 1rem;
     width: 100px;
@@ -43,6 +45,7 @@ export const CartItem = ({ cartItem }: ICartItemProps) => {
             </em>
           </Text>
         </div>
+        <RemoveFromCart id={cartItem.id} />
       </CartItemStyles>
     );
   }
