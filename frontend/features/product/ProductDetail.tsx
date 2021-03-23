@@ -1,4 +1,5 @@
 import { formatMoney, IStyledTheme } from "@/lib/index";
+import { AddToCart } from "@/features/cart";
 import { DeleteProduct } from "./DeleteProduct";
 import { useQuery } from "@apollo/client";
 import { ProductQuery, ProductQueryVariables } from "@/generated/ProductQuery";
@@ -47,7 +48,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
             <Text mt={2} fontSize="lg" fontWeight="semibold" color="text.secondary">
               {formatMoney(Number(product.price))}
             </Text>
-            <Flex justify="center">
+            <Flex alignItems="center" justify="center">
               <StyledEditButton m={2}>
                 <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
                   <Flex alignItems="center">
@@ -56,6 +57,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
                   </Flex>
                 </NextLink>
               </StyledEditButton>
+              <AddToCart id={product.id} />
               <DeleteProduct id={product.id} />
             </Flex>
           </Stack>

@@ -12,6 +12,7 @@ export { SIGNIN_MUTATION } from "./signin";
 export { SIGNOUT_MUTATION } from "./signout";
 export { SIGNUP_MUTATION } from "./signup";
 export { UPDATE_PRODUCT_MUTATION } from "./updateProduct";
+export { ADD_TO_CART_MUTATION } from "./addToCart";
 
 export type CustomQueryHook<T, R extends QueryResult> = (input: T) => R;
 export type CustomMutationHook<T, R extends MutationResult> = (input: T) => R;
