@@ -6,7 +6,7 @@ import { ProductQuery, ProductQueryVariables } from "@/generated/ProductQuery";
 import { PRODUCT_QUERY } from "@/graphql/index";
 import { EditIcon } from "@chakra-ui/icons";
 import { DisplayError, Loading } from "@/components/index";
-import { Box, Button, Flex, Heading, Image, Spacer, Stack, Text } from "@chakra-ui/react";
+import { SimpleGrid, Box, Button, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
 
@@ -29,7 +29,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
   if (data?.Product) {
     const { Product: product } = data;
     return (
-      <Flex>
+      <SimpleGrid justifyItems="center" minChildWidth="400px" spacing={8}>
         <Image
           borderRadius="lg"
           boxSize="400px"
@@ -38,7 +38,6 @@ export const ProductDetail = ({ id }: { id: string }) => {
           alt={product.photo?.altText as string | undefined}
           fallbackSrc="https://via.placeholder.com/400"
         />
-        <Spacer />
         <Box w="400px" overflow="hidden">
           <Stack directon={["column"]} spacing={4}>
             <Heading color="brand.primary">{data?.Product?.name}</Heading>
@@ -62,7 +61,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
             </Flex>
           </Stack>
         </Box>
-      </Flex>
+      </SimpleGrid>
     );
   }
   return null;
