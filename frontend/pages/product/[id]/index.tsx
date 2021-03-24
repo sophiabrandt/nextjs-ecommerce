@@ -12,14 +12,14 @@ interface IStaticProps {
   params: { id: string | undefined };
 }
 
-interface IProductPage {
+interface IProductPageProps {
   id?: string;
   title?: string;
 }
 
 const client = initializeApollo();
 
-const Product: NextPage<IProductPage> = ({ id, title }) => {
+const Product: NextPage<IProductPageProps> = ({ id, title }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <Loading />;

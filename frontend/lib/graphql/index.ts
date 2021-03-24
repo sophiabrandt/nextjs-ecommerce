@@ -6,6 +6,7 @@ export { CREATE_ORDER_MUTATION } from "./createOrder";
 export { CREATE_PRODUCT_MUTATION } from "./createProduct";
 export { CURRENT_USER_QUERY } from "./currentUser";
 export { DELETE_PRODUCT_MUTATION } from "./deleteProduct";
+export { ORDER_QUERY } from "./order";
 export { PAGINATION_QUERY } from "./pagination";
 export { PRODUCT_QUERY } from "./product";
 export { REMOVE_FROM_CART_MUTATION } from "./removeFromCart";
