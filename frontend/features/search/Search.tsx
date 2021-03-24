@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import { SearchStyles, DropDown, DropDownItem } from "./SearchStyles";
-import { Image } from "@chakra-ui/react";
+import { Input, Image } from "@chakra-ui/react";
 import { resetIdCounter, useCombobox } from "downshift";
 import { debounce } from "debounce";
 import { useRouter } from "next/router";
@@ -46,7 +46,8 @@ export const Search = () => {
   return (
     <SearchStyles>
       <div {...getComboboxProps()}>
-        <input
+        <Input
+          focusBorderColor="ui.secondary"
           {...getInputProps({
             type: "search",
             placeholder: "Search for an item",
