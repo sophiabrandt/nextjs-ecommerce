@@ -1,4 +1,6 @@
 import { CreateOrderMutation, CreateOrderMutationVariables } from "@/generated/CreateOrderMutation";
+import { CurrentUserQuery_authenticatedItem } from "@/generated/CurrentUserQuery";
+import { useUser } from "@/features/authentication";
 import { CREATE_ORDER_MUTATION } from "@/graphql/index";
 import { IStyledTheme } from "@/lib/index";
 import { useMutation } from "@apollo/client";
@@ -9,6 +11,19 @@ import { loadStripe, StripeError } from "@stripe/stripe-js";
 import { useRouter } from "next/router";
 import nprogress from "nprogress";
 import { FormEvent, useState } from "react";
+import { StoreValue } from "@apollo/client";
+
+interface ICheckoutProps {
+  children: React.ReactNode;
+}
+
+interface ICheckoutFormProps {
+  onClose: () => void;
+}
+
+type StoreObjectCompatible = CurrentUserQuery_authenticatedItem & {
+  [storeFieldName: string]: StoreValue;
+};
 
 const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY ?? "");
 
@@ -21,7 +36,8 @@ const CheckoutFormStyles = styled.form<IStyledTheme>`
   grid-gap: 1rem;
 `;
 
-const CheckoutForm = () => {
+export const CheckoutForm = ({ onClose }: ICheckoutFormProps) => {
+  const user = useUser();
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -46,13 +62,26 @@ const CheckoutForm = () => {
 
       if (paymentMethodResult?.error) {
         nprogress.done();
+        setLoading(false);
         setError(paymentMethodResult.error);
         return;
       }
+
       try {
         const order = await checkout({
           variables: {
             token: paymentMethodResult?.paymentMethod?.id ?? "",
+          },
+          // remove cart items from the Apollo cache
+          update(cache) {
+            cache.modify({
+              id: cache.identify(user as StoreObjectCompatible),
+              fields: {
+                cart() {
+                  return [];
+                },
+              },
+            });
           },
         });
 
@@ -71,6 +100,7 @@ const CheckoutForm = () => {
       console.error(err);
     }
 
+    onClose(); // close the Cart drawer
     setLoading(false);
     nprogress.done();
   };
@@ -104,10 +134,6 @@ const CheckoutForm = () => {
   );
 };
 
-export const Checkout = () => {
-  return (
-    <Elements stripe={stripeLib}>
-      <CheckoutForm />
-    </Elements>
-  );
+export const Checkout = ({ children }: ICheckoutProps) => {
+  return <Elements stripe={stripeLib}>{children}</Elements>;
 };

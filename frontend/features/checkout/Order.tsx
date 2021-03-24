@@ -15,10 +15,13 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
 } from "@chakra-ui/react";
 
-export const Order = ({ id }: { id: string }) => {
+interface IOrderProps {
+  id: string;
+}
+
+export const Order = ({ id }: IOrderProps) => {
   const { data, error, loading } = useQuery<OrderQuery, OrderQueryVariables>(ORDER_QUERY, {
     variables: { id },
   });
@@ -30,8 +33,13 @@ export const Order = ({ id }: { id: string }) => {
     return (
       <Container maxW="container.md">
         <Center>
-          <Heading as="h2" size="xl" mb={8}>
-            Your Order #{id}
+          <Heading as="h2" size="xl">
+            Your Order
+          </Heading>
+        </Center>
+        <Center>
+          <Heading as="h4" size="md" mb={8}>
+            #{id}
           </Heading>
         </Center>
         <Table variant="striped" colorScheme="blackAlpha">
@@ -69,16 +77,16 @@ export const Order = ({ id }: { id: string }) => {
           <Tfoot>
             <Tr>
               <Th></Th>
-              <Th>{order.items.length} Items</Th>
+              <Th>{order.items.length} Item(s)</Th>
               <Th>
                 {order.items.reduce((sum, item) => {
                   if (!item.quantity) return sum;
                   return item?.quantity + sum;
                 }, 0)}{" "}
-                Items Total
+                Item(s) Total
               </Th>
               <Th></Th>
-              <Th>{formatMoney(order.total ?? 0)}</Th>
+              <Th>{formatMoney(order.total ?? 0)} total</Th>
             </Tr>
           </Tfoot>
         </Table>

@@ -1,6 +1,7 @@
 import { MutationResult, QueryResult } from "@apollo/client";
 
 export { ADD_TO_CART_MUTATION } from "./addToCart";
+export { ALL_ORDERS_QUERY } from "./allOrders";
 export { ALL_PRODUCTS_QUERY } from "./allProducts";
 export { CREATE_ORDER_MUTATION } from "./createOrder";
 export { CREATE_PRODUCT_MUTATION } from "./createProduct";

@@ -1,2 +1,2 @@
-export { Checkout } from "./Checkout";
-export { Order } from "./Order.tsx";
+export { Checkout, CheckoutForm } from "./Checkout";
+export { Order } from "./Order";

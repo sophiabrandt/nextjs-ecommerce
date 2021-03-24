@@ -1,5 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { Checkout } from "@/features/checkout";
+import { Checkout, CheckoutForm } from "@/features/checkout";
 import { calcCart, formatMoney } from "@/lib/index";
 import { CartItem } from "./CartItem";
 import {
@@ -50,7 +50,9 @@ export const Cart = () => {
             </DrawerBody>
 
             <footer>
-              <Checkout />
+              <Checkout>
+                <CheckoutForm onClose={onClose} />
+              </Checkout>
               <Flex m={4} justify="space-between" align="center">
                 <Text fontSize="xl">{formatMoney(calcCart(me.cart))}</Text>
                 <Button colorScheme="red" mr={3} onClick={onClose}>
