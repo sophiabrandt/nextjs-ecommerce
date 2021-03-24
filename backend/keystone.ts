@@ -3,7 +3,7 @@ import { config, createSchema } from "@keystone-next/keystone/schema";
 import { statelessSessions, withItemData } from "@keystone-next/keystone/session";
 import "dotenv/config";
 import { accessEnv, sendPasswordResetEmail } from "./lib";
-import { CartItem, Product, ProductImage, User } from "./schemas";
+import { Order, OrderItem, CartItem, Product, ProductImage, User } from "./schemas";
 import { extendGraphqlSchema } from "./mutations";
 
 const databaseURL = accessEnv("DATABASE_URL", "mongodb://localhost/keystone");
@@ -47,7 +47,7 @@ export default withAuth(
         console.log("Connected to the database!");
       },
     },
-    lists: createSchema({ CartItem, User, Product, ProductImage }),
+    lists: createSchema({ CartItem, User, Order, OrderItem, Product, ProductImage }),
     extendGraphqlSchema,
     ui: {
       isAccessAllowed: ({ session }) => Boolean(session?.data),

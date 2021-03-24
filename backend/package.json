@@ -26,7 +26,7 @@
     "nodemailer": "^6.5.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "stripe": "^8.138.0"
+    "stripe": "^8.139.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
