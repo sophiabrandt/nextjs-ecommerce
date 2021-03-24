@@ -1,10 +1,12 @@
 import { SignOut, useUser } from "@/features/authentication";
 import { Cart } from "@/features/cart";
 import {
+  Divider,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbSeparator,
+  SimpleGrid,
   Flex,
   Link,
 } from "@chakra-ui/react";
@@ -23,25 +25,26 @@ export function Nav() {
         </BreadcrumbItem>
       </Breadcrumb>
       {!!user && (
-        <Breadcrumb>
+        <Breadcrumb mr={8}>
           <BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbLink as={NextLink} href="/product/sell">
-              <Link _hover={{ color: "brand.tertiary" }}>Sell</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink as={NextLink} href="/orders">
-              <Link _hover={{ color: "brand.tertiary" }}>Orders</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <SignOut />
-          </BreadcrumbItem>
-          <BreadcrumbItem>
             <Cart />
           </BreadcrumbItem>
         </Breadcrumb>
+      )}
+      {!!user && (
+        <SimpleGrid minChildWidth="100px" spacing="3px">
+          <NextLink href="/product/sell">
+            <Link _hover={{ color: "brand.tertiary" }}>Sell</Link>
+          </NextLink>
+          <Divider />
+          <NextLink href="/orders">
+            <Link _hover={{ color: "brand.tertiary" }}>Orders</Link>
+          </NextLink>
+          <Divider />
+          <SignOut />
+          <Divider />
+        </SimpleGrid>
       )}
       {!user && (
         <Breadcrumb>
