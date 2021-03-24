@@ -48,14 +48,14 @@ export const ProductDetail = ({ id }: { id: string }) => {
               {formatMoney(Number(product.price))}
             </Text>
             <Flex alignItems="center" justify="center">
-              <StyledEditButton m={2}>
-                <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
+              <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
+                <StyledEditButton m={2}>
                   <Flex alignItems="center">
                     <EditIcon mr={2} />
                     Edit
                   </Flex>
-                </NextLink>
-              </StyledEditButton>
+                </StyledEditButton>
+              </NextLink>
               <AddToCart id={product.id} />
               <DeleteProduct id={product.id} />
             </Flex>
