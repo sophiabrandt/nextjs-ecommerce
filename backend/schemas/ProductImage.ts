@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { accessEnv } from "../lib";
 import { list } from "@keystone-next/keystone/schema";
+import { rules, isSignedIn } from "../access";
 import { relationship, text } from "@keystone-next/fields";
 import { cloudinaryImage } from "@keystone-next/cloudinary";
 
@@ -12,6 +13,12 @@ export const cloudinary = {
 };
 
 export const ProductImage = list({
+  access: {
+    create: isSignedIn,
+    read: () => true,
+    update: rules.canManageProducts,
+    delete: rules.canManageProducts,
+  },
   fields: {
     image: cloudinaryImage({
       cloudinary,
