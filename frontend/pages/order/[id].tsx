@@ -1,8 +1,8 @@
+import { Order } from "@/features/order";
 import { OrderQuery, OrderQueryVariables } from "@/generated/OrderQuery";
 import { ORDER_QUERY } from "@/graphql/index";
-import { Order } from "@/features/checkout";
 import { addApolloState, initializeApollo } from "@/lib/index";
-import { NextPage, GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext, NextPage } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";
 

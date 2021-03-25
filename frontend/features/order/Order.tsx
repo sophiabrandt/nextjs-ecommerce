@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { formatMoney } from "@/lib/index";
-import { OrderQuery, OrderQueryVariables } from "@/generated/OrderQuery";
+import { OrderQuery, OrderQueryVariables, OrderQuery_order_items } from "@/generated/OrderQuery";
 import { ORDER_QUERY } from "@/graphql/index";
 import { DisplayError, Loading } from "@/components/index";
 import {
@@ -21,6 +21,13 @@ interface IOrderProps {
   id: string;
 }
 
+const allItemsinOrder = (items: OrderQuery_order_items[]) => {
+  return items.reduce((sum, item) => {
+    if (!item.quantity) return sum;
+    return sum + item.quantity;
+  }, 0);
+};
+
 export const Order = ({ id }: IOrderProps) => {
   const { data, error, loading } = useQuery<OrderQuery, OrderQueryVariables>(ORDER_QUERY, {
     variables: { id },
@@ -30,6 +37,7 @@ export const Order = ({ id }: IOrderProps) => {
 
   if (data?.order) {
     const { order } = data;
+    const quantityTotal = allItemsinOrder(order.items);
     return (
       <Container maxW="container.md">
         <Center>
@@ -77,13 +85,11 @@ export const Order = ({ id }: IOrderProps) => {
           <Tfoot>
             <Tr>
               <Th></Th>
-              <Th>{order.items.length} Item(s)</Th>
               <Th>
-                {order.items.reduce((sum, item) => {
-                  if (!item.quantity) return sum;
-                  return item?.quantity + sum;
-                }, 0)}{" "}
-                Item(s) Total
+                {order.items.length} Item{order.items.length === 1 ? "" : "s"}
+              </Th>
+              <Th>
+                {quantityTotal} Item{quantityTotal === 1 ? "" : "s"}
               </Th>
               <Th></Th>
               <Th>{formatMoney(order.total ?? 0)} total</Th>
