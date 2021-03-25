@@ -1,4 +1,5 @@
 export { CartItem } from "./CartItem";
+export { permissionsList } from "./fields";
 export { Order } from "./Order";
 export { OrderItem } from "./OrderItem";
 export { Product } from "./Product";
