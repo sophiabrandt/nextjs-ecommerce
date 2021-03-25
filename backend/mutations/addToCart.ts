@@ -20,9 +20,9 @@ async function addToCart(
 
   const [existingCartItem] = allCartItems;
   if (existingCartItem) {
-    console.log(
-      `There are already ${existingCartItem.quantity} items in the cart, increment by 1!`
-    );
+    // console.log(
+    //   `There are already ${existingCartItem.quantity} items in the cart, increment by 1!`
+    // );
     return await context.lists.CartItem.updateOne({
       id: existingCartItem.id,
       data: { quantity: existingCartItem.quantity + 1 },
@@ -30,7 +30,7 @@ async function addToCart(
     });
   }
 
-  console.log(`Adding item with id ${productId} to cart!`);
+  // console.log(`Adding item with id ${productId} to cart!`);
   return await context.lists.CartItem.createOne({
     data: {
       product: { connect: { id: productId } },
