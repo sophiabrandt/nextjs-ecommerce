@@ -26,6 +26,12 @@ export const ProductImage = list({
     }),
     altText: text({}),
     product: relationship({ ref: "Product.photo" }),
+    user: relationship({
+      ref: "User.productImages",
+      defaultValue: ({ context }) => ({
+        connect: { id: context.session.itemId },
+      }),
+    }),
   },
   ui: {
     listView: {

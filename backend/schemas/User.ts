@@ -22,5 +22,9 @@ export const User = list({
       ref: "Product.user",
       many: true,
     }),
+    productImages: relationship({
+      ref: "ProductImage.user",
+      many: true,
+    }),
   },
 });
