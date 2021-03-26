@@ -15,6 +15,7 @@ import {
   Tr,
   Th,
   Td,
+  Text,
 } from "@chakra-ui/react";
 
 const allItemsinOrder = (order: AllOrdersQuery_allOrders | null) => {
@@ -68,5 +69,18 @@ export const Orders = () => {
       </Container>
     );
   }
-  return null;
+  return (
+    <Container maxW="container.md">
+      <Center>
+        <Heading as="h2" size="xl">
+          Your Orders
+        </Heading>
+      </Center>
+      <Center>
+        <Text fontSize="xl" mt={8}>
+          No orders yet!
+        </Text>
+      </Center>
+    </Container>
+  );
 };

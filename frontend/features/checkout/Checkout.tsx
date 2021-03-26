@@ -85,6 +85,9 @@ export const CheckoutForm = ({ onClose }: ICheckoutFormProps) => {
           },
         });
 
+        onClose(); // close the Cart drawer
+        setLoading(false);
+        nprogress.done();
         router.push({
           pathname: "/order/[id]",
           query: {
@@ -92,17 +95,17 @@ export const CheckoutForm = ({ onClose }: ICheckoutFormProps) => {
           },
         });
       } catch (err) {
+        setLoading(false);
+        nprogress.done();
         // graphql error is handled via useMutation
         console.error(err);
       }
     } catch (err) {
+      setLoading(false);
+      nprogress.done();
       setError(err);
       console.error(err);
     }
-
-    onClose(); // close the Cart drawer
-    setLoading(false);
-    nprogress.done();
   };
 
   return (

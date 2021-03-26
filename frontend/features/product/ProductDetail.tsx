@@ -1,4 +1,5 @@
 import { formatMoney, IStyledTheme } from "@/lib/index";
+import { useUser } from "@/features/authentication";
 import { AddToCart } from "@/features/cart";
 import { DeleteProduct } from "./DeleteProduct";
 import { useQuery } from "@apollo/client";
@@ -19,6 +20,7 @@ const StyledEditButton = styled(Button)<IStyledTheme>`
 `;
 
 export const ProductDetail = ({ id }: { id: string }) => {
+  const user = useUser();
   const { data, loading, error } = useQuery<ProductQuery, ProductQueryVariables>(PRODUCT_QUERY, {
     variables: { id },
   });
@@ -48,16 +50,20 @@ export const ProductDetail = ({ id }: { id: string }) => {
               {formatMoney(Number(product.price))}
             </Text>
             <Flex alignItems="center" justify="center">
-              <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
-                <StyledEditButton m={2}>
-                  <Flex alignItems="center">
-                    <EditIcon mr={2} />
-                    Edit
-                  </Flex>
-                </StyledEditButton>
-              </NextLink>
               <AddToCart id={product.id} />
-              <DeleteProduct id={product.id} />
+              {product.user && product.user.id === user?.id && (
+                <>
+                  <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
+                    <StyledEditButton ml={2}>
+                      <Flex alignItems="center">
+                        <EditIcon mr={2} />
+                        Edit
+                      </Flex>
+                    </StyledEditButton>
+                  </NextLink>
+                  <DeleteProduct id={product.id} />
+                </>
+              )}
             </Flex>
           </Stack>
         </Box>
