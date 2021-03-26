@@ -26,7 +26,7 @@ const OrderPage: NextPage<IOrderPageProps> = ({ id }) => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const client = initializeApollo();
+  const client = initializeApollo({}, context);
   try {
     const id = (context?.query?.id as string) ?? "";
     await client.query<OrderQuery, OrderQueryVariables>({

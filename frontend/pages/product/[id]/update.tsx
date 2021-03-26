@@ -17,7 +17,7 @@ const UpdatePage = ({ product }: IUpdatePageProps) => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const client = initializeApollo();
+  const client = initializeApollo({}, context);
 
   try {
     const {

@@ -5,6 +5,7 @@ import { createUploadLink } from "apollo-upload-client";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import { paginationField } from "./paginationField";
+import type { GetServerSidePropsContext } from "next";
 
 interface PageProps {
   // eslint-disable-next-line
@@ -15,7 +16,7 @@ const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
-function createApolloClient() {
+const createApolloClient = (context?: GetServerSidePropsContext) => {
   return new ApolloClient({
     // TODO: change for production
     connectToDevTools: true,
@@ -37,6 +38,7 @@ function createApolloClient() {
         fetchOptions: {
           credentials: "include",
         },
+        headers: context?.req?.headers,
       }),
     ]),
     cache: new InMemoryCache({
@@ -49,12 +51,17 @@ function createApolloClient() {
       },
     }),
   });
-}
+};
 
 type InitialState = NormalizedCacheObject | undefined;
 
-export function initializeApollo(initialState: InitialState = undefined) {
-  const _apolloClient = apolloClient ?? createApolloClient();
+export const initializeApollo = (
+  initialState?: InitialState,
+  context?: GetServerSidePropsContext
+) => {
+  const _apolloClient = apolloClient ?? createApolloClient(context);
+  // console.dir({ context });
+  // console.dir({ initialState });
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // get hydrated here
@@ -81,15 +88,18 @@ export function initializeApollo(initialState: InitialState = undefined) {
   if (!apolloClient) apolloClient = _apolloClient;
 
   return _apolloClient;
-}
+};
 
-export function addApolloState(client: ApolloClient<NormalizedCacheObject>, pageProps: PageProps) {
+export const addApolloState = (
+  client: ApolloClient<NormalizedCacheObject>,
+  pageProps: PageProps
+) => {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
   }
 
   return pageProps;
-}
+};
 
 export function useApollo(pageProps: PageProps) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
