@@ -56,8 +56,8 @@ const createApolloClient = (context?: GetServerSidePropsContext) => {
 type InitialState = NormalizedCacheObject | undefined;
 
 export const initializeApollo = (
-  initialState?: InitialState,
-  context?: GetServerSidePropsContext
+  context?: GetServerSidePropsContext,
+  initialState: InitialState | null = null
 ) => {
   const _apolloClient = apolloClient ?? createApolloClient(context);
   // console.dir({ context });

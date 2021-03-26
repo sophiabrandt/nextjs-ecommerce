@@ -25,6 +25,7 @@ export interface AllProductsQuery_allProducts {
   name: string | null;
   price: number | null;
   description: string | null;
+  status: string | null;
   photo: AllProductsQuery_allProducts_photo | null;
 }
 
@@ -38,4 +39,5 @@ export interface AllProductsQuery {
 export interface AllProductsQueryVariables {
   skip?: number | null;
   first?: number | null;
+  status?: string | null;
 }
