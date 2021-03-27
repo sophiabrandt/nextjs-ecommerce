@@ -28,7 +28,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     });
   } catch {
     return {
-      notFound: true,
+      props: {},
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
     };
   }
 };
