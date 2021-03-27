@@ -50,7 +50,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
               {formatMoney(Number(product.price))}
             </Text>
             <Flex alignItems="center" justify="center">
-              <AddToCart id={product.id} />
+              {user && <AddToCart id={product.id} />}
               {product.user && product.user.id === user?.id && (
                 <>
                   <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
