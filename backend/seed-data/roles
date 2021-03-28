@@ -1,0 +1,1 @@
+[{"_id":{"$oid":"605c61e946756508ee4aeb51"},"name":"admin","canManageProducts":true,"canSeeOtherUsers":true,"canManageUsers":true,"canManageRoles":true,"canManageCart":true,"canManageOrders":true,"__v":0}]
