@@ -16,7 +16,8 @@ import {
 } from "./schemas";
 
 const databaseURL = accessEnv("DATABASE_URL", "mongodb://localhost/keystone");
-const frontendURL = accessEnv("FRONTEND_URL", "http://localhost:7777");
+const deployPrevURL = new RegExp(accessEnv("DEPLOY_PREV_URL", "localhost"));
+const prodURL = accessEnv("PROD_URL", "https://change-me.vercel.app/");
 const sessionSecret = accessEnv(
   "COOKIE_SECRET",
   "8r5a4LVRBiZtz8Uca7jfnHjll31ctXnZVIxOHWhqQLlVOWUGGc3lxVGQjFqVgD9uUboRWCDqoKbl4Zp4GOC7lFAURatavdUMucOLzi0Ps6PI9Ho0LGViDeejX99VLn0G"
@@ -46,11 +47,10 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      // TODO: fix for production
-      // cors: {
-      //   origin: [frontendURL],
-      //   credentials: true,
-      // },
+      cors: {
+        origin: [deployPrevURL, prodURL],
+        credentials: true,
+      },
       port: port,
     },
     db: {

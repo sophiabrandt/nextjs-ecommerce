@@ -146,6 +146,7 @@ temp/
 # End of https://www.toptal.com/developers/gitignore/api/linux,node
 
 *.env
+!sample.env
 config/default.ts
 variables.env
 .next
