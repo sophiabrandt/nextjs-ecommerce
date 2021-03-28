@@ -39,6 +39,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#tests">Tests</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -53,7 +54,8 @@
 
 ### Built With
 
-- [Next.js](https://nextjs.org/)
+- [Next.js](https://nextjs.org/) (React.js framework)
+- [Typescript](https://www.typescriptlang.org/) with `strict:true`
 - [Keystone.js](https://www.keystonejs.com/)
 - [Mongo DB](https://www.mongodb.com/cloud/atlas)
 - [Chakra UI](https://chakra-ui.com/)
@@ -104,6 +106,15 @@ cd frontend && yarn run dev
 ```
 
 Go to [http://localhost:3000](http://localhost:3000) for the Keystone CMS (backend) and [http://localhost:7777](http://localhost:7777) for the Next.js application (frontend).
+
+<!-- TESTS -->
+
+## Tests
+
+```sh
+cd backend && yarn run test
+cd frontend && yarn run test
+```
 
 <!-- ROADMAP -->
 
