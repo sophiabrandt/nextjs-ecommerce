@@ -23,7 +23,6 @@ const sessionSecret = accessEnv(
   "8r5a4LVRBiZtz8Uca7jfnHjll31ctXnZVIxOHWhqQLlVOWUGGc3lxVGQjFqVgD9uUboRWCDqoKbl4Zp4GOC7lFAURatavdUMucOLzi0Ps6PI9Ho0LGViDeejX99VLn0G"
 );
 const port = parseInt(accessEnv("PORT", "3000"));
-console.log(`port`, port);
 
 const sessionConfig = {
   maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?
@@ -46,6 +45,11 @@ const { withAuth } = createAuth({
 
 export default withAuth(
   config({
+    graphql: {
+      apolloConfig: {
+        introspection: true,
+      },
+    },
     server: {
       cors: {
         origin: [deployPrevURL, prodURL],
