@@ -46,10 +46,11 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      cors: {
-        origin: "*", // TODO: only for testing vercel deployment
-        credentials: true,
-      },
+      // TODO: fix for production
+      // cors: {
+      //   origin: [frontendURL],
+      //   credentials: true,
+      // },
       port: port,
     },
     db: {
