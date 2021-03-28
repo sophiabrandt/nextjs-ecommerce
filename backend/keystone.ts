@@ -47,7 +47,7 @@ export default withAuth(
   config({
     server: {
       cors: {
-        origin: [frontendURL],
+        origin: "*", // TODO: only for testing vercel deployment
         credentials: true,
       },
       port: port,
