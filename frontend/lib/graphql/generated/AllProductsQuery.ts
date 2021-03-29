@@ -7,11 +7,6 @@
 // GraphQL query operation: AllProductsQuery
 // ====================================================
 
-export interface AllProductsQuery_allProducts_user {
-  __typename: "User";
-  id: string;
-}
-
 export interface AllProductsQuery_allProducts_photo_image {
   __typename: "CloudinaryImage_File";
   publicUrlTransformed: string | null;
@@ -30,7 +25,6 @@ export interface AllProductsQuery_allProducts {
   name: string | null;
   price: number | null;
   description: string | null;
-  user: AllProductsQuery_allProducts_user | null;
   status: string | null;
   photo: AllProductsQuery_allProducts_photo | null;
 }

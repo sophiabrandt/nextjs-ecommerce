@@ -3,7 +3,12 @@ import { useUser } from "@/features/authentication";
 import { AddToCart } from "@/features/cart";
 import { DeleteProduct } from "./DeleteProduct";
 import { useQuery } from "@apollo/client";
-import { ProductQuery, ProductQueryVariables } from "@/generated/ProductQuery";
+import {
+  ProductQuery,
+  ProductQuery_Product,
+  ProductQueryVariables,
+} from "@/generated/ProductQuery";
+import { CurrentUserQuery_authenticatedItem_products } from "@/generated/CurrentUserQuery";
 import { PRODUCT_QUERY } from "@/graphql/index";
 import { EditIcon } from "@chakra-ui/icons";
 import { DisplayError, Loading } from "@/components/index";
@@ -18,6 +23,14 @@ const StyledEditButton = styled(Button)<IStyledTheme>`
     background-color: ${(props) => props.theme.colors.brand.tertiary};
   }
 `;
+
+const doesProductBelongToUser = (
+  prod: ProductQuery_Product,
+  userProds: CurrentUserQuery_authenticatedItem_products[]
+) => {
+  const index = userProds.findIndex((p) => p.id === prod.id);
+  return index > -1 ? true : false;
+};
 
 export const ProductDetail = ({ id }: { id: string }) => {
   const user = useUser();
@@ -51,7 +64,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
             </Text>
             <Flex alignItems="center" justify="center">
               {user && <AddToCart id={product.id} />}
-              {product.user && product.user.id === user?.id && (
+              {user && product && doesProductBelongToUser(product, user.products) && (
                 <>
                   <NextLink href="/product/[id]/update" as={`/product/${product.id}/update`}>
                     <StyledEditButton ml={2}>

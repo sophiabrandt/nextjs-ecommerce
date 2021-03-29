@@ -7,6 +7,11 @@
 // GraphQL query operation: CurrentUserQuery
 // ====================================================
 
+export interface CurrentUserQuery_authenticatedItem_products {
+  __typename: "Product";
+  id: string;
+}
+
 export interface CurrentUserQuery_authenticatedItem_cart_product_photo_image {
   __typename: "CloudinaryImage_File";
   publicUrlTransformed: string | null;
@@ -38,6 +43,7 @@ export interface CurrentUserQuery_authenticatedItem {
   id: string;
   email: string | null;
   name: string | null;
+  products: CurrentUserQuery_authenticatedItem_products[];
   cart: CurrentUserQuery_authenticatedItem_cart[];
 }
 
