@@ -1,6 +1,12 @@
 import { DisplayError } from "@/components/index";
+import { StoreValue } from "@apollo/client";
+import { useUser } from "@/features/authentication";
 import { PAGINATION_QUERY, ALL_PRODUCTS_QUERY, CREATE_PRODUCT_MUTATION } from "@/graphql/index";
 import { PaginationQuery } from "@/generated/PaginationQuery";
+import {
+  CurrentUserQuery_authenticatedItem,
+  CurrentUserQuery_authenticatedItem_products,
+} from "@/generated/CurrentUserQuery";
 import { useMutation } from "@apollo/client";
 import {
   CreateProductMutation,
@@ -28,8 +34,14 @@ interface IFormData {
   image: FileList;
 }
 
+type StoreObjectCompatible = CurrentUserQuery_authenticatedItem &
+  CurrentUserQuery_authenticatedItem_products[] & {
+    [storeFieldName: string]: StoreValue;
+  };
+
 export const CreateProduct = () => {
   const router = useRouter();
+  const user = useUser();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
   const [createProduct, { error, loading }] = useMutation<
     CreateProductMutation,
@@ -60,6 +72,20 @@ export const CreateProduct = () => {
               },
             });
           }
+          // add the product to the current user's list of products
+          if (newProduct) {
+            cache.modify({
+              id: cache.identify(user as StoreObjectCompatible),
+              fields: {
+                products(existing: StoreObjectCompatible[] = [], { readField }) {
+                  if (existing.some((ref) => readField("id", ref) === newProduct.id)) {
+                    return existing;
+                  }
+                  return [...existing, newProduct];
+                },
+              },
+            });
+          }
           // update the pagination query
           const existingPagination = cache.readQuery<PaginationQuery>({ query: PAGINATION_QUERY });
           if (existingPagination?._allProductsMeta && newProduct) {
@@ -71,9 +97,9 @@ export const CreateProduct = () => {
                   _allProductsMeta: { count: existingCount + 1 },
                 },
               });
-              router.push(`/product/${newProduct.id}`);
             }
           }
+          router.push(`/product/${newProduct?.id}`);
         },
       });
     } catch (err) {
