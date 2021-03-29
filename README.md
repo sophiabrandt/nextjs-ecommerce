@@ -62,6 +62,8 @@
 - [Keystone.js](https://www.keystonejs.com/)
 - [Mongo DB](https://www.mongodb.com/cloud/atlas)
 - [Chakra UI](https://chakra-ui.com/)
+- [Stripe](https://stripe.com)
+- [Mailgun](https://mailgun.com)
 
 **Some features**:
 
@@ -79,6 +81,10 @@ GraphQL API: [https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql](https
 The backend runs on a free Heroku tier, so it might be a bit slow to start.
 
 Frontend: [https://nextjs-ecommerce-rouge.vercel.app/](https://nextjs-ecommerce-rouge.vercel.app/)
+
+The password reset uses a sandboxed Mailgun account and only works with one email: dzwjxgqv@sharklasers.com
+
+To read the password reset email, go to [https://www.guerrillamail.com/](https://www.guerrillamail.com/) and set the inbox to "dzwjxgqv@sharklasers.com".
 
 <!-- GETTING STARTED -->
 
