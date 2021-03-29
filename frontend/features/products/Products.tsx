@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { SimpleGrid } from "@chakra-ui/react";
+import { Center, SimpleGrid } from "@chakra-ui/react";
 import { DisplayError, Loading } from "@/components/index";
 import { Product } from "./Product";
 import { AllProductsQuery, AllProductsQueryVariables } from "@/generated/AllProductsQuery";
@@ -28,11 +28,13 @@ export const Products = ({ page }: IProductsProps) => {
   if (error) return <DisplayError error={error} />;
 
   return (
-    <SimpleGrid minChildWidth="350px" spacing={4}>
-      {data?.allProducts?.map((product) => {
-        if (!product) return null;
-        return <Product product={product} key={product.id} />;
-      })}
-    </SimpleGrid>
+    <Center>
+      <SimpleGrid minChildWidth="350px" spacing={4}>
+        {data?.allProducts?.map((product) => {
+          if (!product) return null;
+          return <Product product={product} key={product.id} />;
+        })}
+      </SimpleGrid>
+    </Center>
   );
 };
