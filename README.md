@@ -13,7 +13,7 @@
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/sophiabrandt/nextjs-ecommerce">View Demo</a>
+    <a href="https://nextjs-ecommerce-rouge.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce/issues">Report Bug</a>
     ·
@@ -30,6 +30,9 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
+    </li>
+    <li>
+      <a href="#demo">Demo</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -59,6 +62,23 @@
 - [Keystone.js](https://www.keystonejs.com/)
 - [Mongo DB](https://www.mongodb.com/cloud/atlas)
 - [Chakra UI](https://chakra-ui.com/)
+
+**Some features**:
+
+- Role-based permissions (only a user with permissions can see edit and delete button for a product and can perform these actions, etc.)
+- Incremental Static Site Generation via Next.js
+- Server-Side Rendering via Next.js
+- Advanced Usage of Apollo Cache for a snappy user experience
+
+<!-- DEMO -->
+
+## Demo
+
+Backend: [https://nextjs-ecommerce-keystone.herokuapp.com/](https://nextjs-ecommerce-keystone.herokuapp.com/)  
+GraphQL API: [https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql](https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql) (introspection is disabled)  
+The backend runs on a free Heroku tier, so it might be a bit slow to start.
+
+Frontend: [https://nextjs-ecommerce-rouge.vercel.app/](https://nextjs-ecommerce-rouge.vercel.app/)
 
 <!-- GETTING STARTED -->
 
@@ -105,7 +125,7 @@ cd backend && yarn run dev
 cd frontend && yarn run dev
 ```
 
-Go to [http://localhost:3000](http://localhost:3000) for the Keystone CMS (backend) and [http://localhost:7777](http://localhost:7777) for the Next.js application (frontend).
+Go to [http://localhost:7771](http://localhost:7771) for the Keystone CMS (backend) and [http://localhost:7777](http://localhost:7777) for the Next.js application (frontend).
 
 <!-- TESTS -->
 
