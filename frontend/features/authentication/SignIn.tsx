@@ -30,24 +30,25 @@ export const SignIn = () => {
 
   const onSubmit = async (inputData: IFormData) => {
     try {
-      const res = await signin({
+      await signin({
         variables: {
           email: inputData.email,
           password: inputData.password,
         },
-        /* update(cache, { data }) { */
-        /*   const user = data?.authenticateUserWithPassword; */
-        /*   // is authentication successful? */
-        /*   if (user?.__typename === "UserAuthenticationWithPasswordSuccess") { */
-        /*     const authenticatedUser = user.item; */
-        /*     cache.writeQuery({ */
-        /*       query: CURRENT_USER_QUERY, */
-        /*       data: { */
-        /*         authenticatedItem: authenticatedUser, */
-        /*       }, */
-        /*     }); */
-        /*   } */
-        /* }, */
+        update(cache, { data }) {
+          const user = data?.authenticateUserWithPassword;
+          // is authentication successful?
+          if (user?.__typename === "UserAuthenticationWithPasswordSuccess") {
+            const authenticatedUser = user.item;
+            console.log({ authenticatedUser });
+            cache.writeQuery({
+              query: CURRENT_USER_QUERY,
+              data: {
+                authenticatedItem: authenticatedUser,
+              },
+            });
+          }
+        },
       });
       // route to home page after successful login
       router.push("/");
