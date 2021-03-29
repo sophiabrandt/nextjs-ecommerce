@@ -30,7 +30,7 @@ export const SignIn = () => {
 
   const onSubmit = async (inputData: IFormData) => {
     try {
-      await signin({
+      const res = await signin({
         variables: {
           email: inputData.email,
           password: inputData.password,
@@ -46,11 +46,12 @@ export const SignIn = () => {
                 authenticatedItem: authenticatedUser,
               },
             });
-            // route to home page after successful login
-            router.push("/");
           }
         },
       });
+      console.log({ res });
+      // route to home page after successful login
+      router.push("/");
     } catch (err) {
       console.error(err);
     }

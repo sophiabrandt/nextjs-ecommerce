@@ -45,11 +45,6 @@ const { withAuth } = createAuth({
 
 export default withAuth(
   config({
-    graphql: {
-      apolloConfig: {
-        introspection: true,
-      },
-    },
     server: {
       cors: {
         origin: [deployPrevURL, prodURL],

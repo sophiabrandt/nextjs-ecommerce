@@ -77,7 +77,7 @@
 ## Demo
 
 Backend: [https://nextjs-ecommerce-keystone.herokuapp.com/](https://nextjs-ecommerce-keystone.herokuapp.com/)  
-GraphQL API: [https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql](https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql) (introspection is disabled)  
+GraphQL API: [https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql](https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql)  
 The backend runs on a free Heroku tier, so it might be a bit slow to start.
 
 Frontend: [https://nextjs-ecommerce-rouge.vercel.app/](https://nextjs-ecommerce-rouge.vercel.app/)
