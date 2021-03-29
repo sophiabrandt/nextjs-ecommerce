@@ -1,6 +1,6 @@
 import { DisplayError } from "@/components/index";
 import { SignUpMutation, SignUpMutationVariables } from "@/generated/SignUpMutation";
-import { CURRENT_USER_QUERY, SIGNUP_MUTATION } from "@/graphql/index";
+import { SIGNUP_MUTATION } from "@/graphql/index";
 import { useMutation } from "@apollo/client";
 import { CheckIcon } from "@chakra-ui/icons";
 import {
@@ -12,6 +12,7 @@ import {
   Heading,
   Input,
   Progress,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -23,7 +24,7 @@ interface IFormData {
 }
 
 export const SignUp = () => {
-  const router = useRouter();
+  const toast = useToast();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
   const [signup, { loading, error }] = useMutation<SignUpMutation, SignUpMutationVariables>(
     SIGNUP_MUTATION
@@ -37,22 +38,17 @@ export const SignUp = () => {
           email: inputData.email,
           password: inputData.password,
         },
-        update(cache, { data }) {
-          const newUser = data?.createUser;
-          if (newUser) {
-            cache.writeQuery({
-              query: CURRENT_USER_QUERY,
-              data: {
-                authenticatedItem: newUser,
-              },
-            });
-          }
-        },
       });
 
-      // go back to previous page after sucessful login
       if (data?.createUser) {
-        router.back();
+        toast({
+          position: "top",
+          title: `Signed up with ${data?.createUser?.email}!`,
+          description: "Please sign in now.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     } catch (err) {
       console.error(err);
