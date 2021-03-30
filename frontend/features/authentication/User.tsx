@@ -5,7 +5,7 @@ import { CURRENT_USER_QUERY } from "@/graphql/index";
 export const useUser = () => {
   const { data } = useQuery<CurrentUserQuery>(CURRENT_USER_QUERY, {
     fetchPolicy: "cache-first",
-    nextFetchPolicy: "cache-and-nework",
+    nextFetchPolicy: "cache-and-network",
   });
   return data?.authenticatedItem;
 };
