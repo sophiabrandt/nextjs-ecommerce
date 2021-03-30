@@ -14,6 +14,7 @@ import NextLink from "next/link";
 
 export function Nav() {
   const user = useUser();
+  console.log(`user`, user)
 
   return (
     <Flex align="center" alignItems="center" fontSize="xl" color="text.primary">

@@ -24,7 +24,7 @@ interface IFormData {
 export const SignIn = () => {
   const router = useRouter();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
-  const [signin, { data, loading, error }] = useMutation<SignInMutation, SignInMutationVariables>(
+  const [signin, { data, loading, error, client }] = useMutation<SignInMutation, SignInMutationVariables>(
     SIGNIN_MUTATION
   );
 
@@ -49,6 +49,7 @@ export const SignIn = () => {
           }
         },
       });
+      client.resetStore();
       // route to home page after successful login
       router.push("/");
     } catch (err) {
