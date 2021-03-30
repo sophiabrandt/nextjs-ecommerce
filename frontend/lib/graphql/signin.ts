@@ -8,6 +8,30 @@ export const SIGNIN_MUTATION = gql`
           id
           email
           name
+          products {
+            id
+          }
+          id
+          email
+          name
+          products {
+            id
+          }
+          cart {
+            id
+            quantity
+            product {
+              id
+              price
+              name
+              description
+              photo {
+                image {
+                  publicUrlTransformed
+                }
+              }
+            }
+          }
         }
       }
       ... on UserAuthenticationWithPasswordFailure {
