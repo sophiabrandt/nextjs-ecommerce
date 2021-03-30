@@ -1,5 +1,4 @@
-/* import { SignOut, useUser } from "@/features/authentication"; */
-import { SignOut } from "@/features/authentication";
+import { SignOut, useUser } from "@/features/authentication";
 import { Cart } from "@/features/cart";
 import {
   Divider,
@@ -12,15 +11,9 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useQuery } from "@apollo/client";
-import { CurrentUserQuery } from "@/generated/CurrentUserQuery";
-import { CURRENT_USER_QUERY } from "@/graphql/index";
 
 export function Nav() {
-  /* const user = useUser(); */
-  const { data } = useQuery<CurrentUserQuery>(CURRENT_USER_QUERY);
-  const user = data?.authenticatedItem;
-  console.log(`user`, user);
+  const user = useUser();
 
   return (
     <Flex align="center" alignItems="center" fontSize="xl" color="text.primary">
