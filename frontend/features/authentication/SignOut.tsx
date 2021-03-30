@@ -5,7 +5,7 @@ import { Link } from "@chakra-ui/react";
 import { SIGNOUT_MUTATION } from "@/graphql/index";
 
 export const SignOut = () => {
-  const [signout] = useMutation<SignOutMutation>(SIGNOUT_MUTATION, {
+  const [signout, { client }] = useMutation<SignOutMutation>(SIGNOUT_MUTATION, {
     update(cache) {
       cache.evict({
         fieldName: "authenticatedItem",
@@ -18,7 +18,10 @@ export const SignOut = () => {
         _hover={{ color: "brand.tertiary" }}
         textAlign="left"
         as="button"
-        onClick={() => signout()}
+        onClick={() => {
+          signout();
+          client.resetStore();
+        }}
       >
         Sign Out
       </Link>
