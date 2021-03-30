@@ -5,6 +5,7 @@ import { useApollo } from "@/lib/index";
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
 
@@ -23,6 +24,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={apolloClient}>
       <ChakraProvider theme={customTheme}>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
         <Fonts />
         <Page>
           <Component {...pageProps} />
