@@ -40,11 +40,10 @@ export const SignIn = () => {
           // is authentication successful?
           if (user?.__typename === "UserAuthenticationWithPasswordSuccess") {
             const authenticatedUser = user.item;
-            console.log({ authenticatedUser });
             cache.writeQuery({
               query: CURRENT_USER_QUERY,
               data: {
-                authenticatedItem: authenticatedUser,
+                authenticatedItem: { ...authenticatedUser, cart: [], products: [] },
               },
             });
           }

@@ -41,6 +41,9 @@ const createApolloClient = (context?: GetServerSidePropsContext) => {
       }),
     ]),
     cache: new InMemoryCache({
+      possibleTypes: {
+        authenticatedItem: ["User"],
+      },
       typePolicies: {
         Query: {
           fields: {
