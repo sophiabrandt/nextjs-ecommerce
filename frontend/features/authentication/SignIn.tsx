@@ -35,19 +35,20 @@ export const SignIn = () => {
           email: inputData.email,
           password: inputData.password,
         },
-        update(cache, { data }) {
-          const user = data?.authenticateUserWithPassword;
-          // is authentication successful?
-          if (user?.__typename === "UserAuthenticationWithPasswordSuccess") {
-            const authenticatedUser = user.item;
-            cache.writeQuery({
-              query: CURRENT_USER_QUERY,
-              data: {
-                authenticatedItem: { ...authenticatedUser, cart: [], products: [] },
-              },
-            });
-          }
-        },
+        refetchQueries: [{ query: CURRENT_USER_QUERY }],
+        /* update(cache, { data }) { */
+        /*   const user = data?.authenticateUserWithPassword; */
+        /*   // is authentication successful? */
+        /*   if (user?.__typename === "UserAuthenticationWithPasswordSuccess") { */
+        /*     const authenticatedUser = user.item; */
+        /*     cache.writeQuery({ */
+        /*       query: CURRENT_USER_QUERY, */
+        /*       data: { */
+        /*         authenticatedItem: { ...authenticatedUser, cart: [], products: [] }, */
+        /*       }, */
+        /*     }); */
+        /*   } */
+        /* }, */
       });
       // route to home page after successful login
       router.push("/");
