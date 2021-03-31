@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   ecommercekeystone:
@@ -8,7 +8,7 @@ services:
         - traefik.enable=true
         - traefik.constraint-label=cloud-public
         - traefik.http.routers.ecommercekeystone.entrypoints=websecure
-        - traefik.http.routers.ecommercekeystone.rule=Host(`${DOMAIN}`)
+        - traefik.http.routers.ecommercekeystone.rule=Host(`${BACKEND_DOMAIN}`)
         - traefik.http.routers.ecommercekeystone.tls=true
         - traefik.http.routers.ecommercekeystone.tls.options=tls12@file
         - traefik.http.routers.ecommercekeystone.tls.certresolver=letsencrypt
