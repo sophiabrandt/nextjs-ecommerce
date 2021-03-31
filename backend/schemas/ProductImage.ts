@@ -6,9 +6,9 @@ import { relationship, text } from "@keystone-next/fields";
 import { cloudinaryImage } from "@keystone-next/cloudinary";
 
 export const cloudinary = {
-  cloudName: accessEnv(<string>"CLOUDINARY_CLOUD_NAME"),
-  apiKey: accessEnv(<string>"CLOUDINARY_KEY"),
-  apiSecret: accessEnv(<string>"CLOUDINARY_SECRET"),
+  cloudName: accessEnv(<string>"CLOUDINARY_CLOUD_NAME", "omg")
+  apiKey: accessEnv(<string>"CLOUDINARY_KEY", "cloudinary key"),
+  apiSecret: accessEnv(<string>"CLOUDINARY_SECRET", "cloudinary secret"),
   folder: "nextjs-ecommerce",
 };
 
