@@ -49,7 +49,7 @@ export default withAuth(
   config({
     server: {
       cors: {
-        origin: [deployPrevURL, prodURL],
+        origin: [new RegExp("localhost"), deployPrevURL, prodURL],
         credentials: true,
       },
       port: port,
