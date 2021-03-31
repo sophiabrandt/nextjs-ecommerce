@@ -25,7 +25,9 @@ const sessionSecret = accessEnv(
 const port = parseInt(accessEnv("PORT", "7771"));
 
 const sessionConfig = {
-  maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?
+  secure: false, // TODO: change this
+  maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+  sameSite: false,
   secret: sessionSecret,
 };
 
