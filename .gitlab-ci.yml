@@ -1,0 +1,89 @@
+image: docker:20.10.5
+
+stages:
+  - build
+  - push
+  - deploy
+
+default:
+  before_script:
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+
+services:
+  - docker:20.10.5-dind
+
+build:
+  stage: build
+  variables:
+    DOCKER_DRIVER: overlay2
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+  environment:
+    name: production
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:backend-deps || true
+    - docker pull $CI_REGISTRY_IMAGE:backend-builder || true
+    - docker pull $CI_REGISTRY_IMAGE:backend-latest || true
+    - >
+      docker build
+      --pull
+      --target deps
+      --cache-from $CI_REGISTRY_IMAGE:backend-deps
+      --tag $CI_REGISTRY_IMAGE:backend-deps
+      --file ./backend/Dockerfile
+      ./backend
+    - >
+      docker build
+      --pull
+      --target builder
+      --cache-from $CI_REGISTRY_IMAGE:backend-builder
+      --tag $CI_REGISTRY_IMAGE:backend-builder
+      --file ./backend/Dockerfile
+      ./backend
+    - >
+      docker build
+      --pull
+      --target runner
+      --cache-from $CI_REGISTRY_IMAGE:backend-builder
+      --cache-from $CI_REGISTRY_IMAGE:backend-latest
+      --tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
+      --tag $CI_REGISTRY_IMAGE:backend-latest
+      --file ./backend/Dockerfile
+      ./backend
+    - docker push $CI_REGISTRY_IMAGE:backend-deps
+    - docker push $CI_REGISTRY_IMAGE:backend-builder
+    - docker push $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
+
+push:
+  variables:
+    GIT_STRATEGY: none
+  stage: push
+  only:
+    - main
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE-backend:latest
+    - docker push $CI_REGISTRY_IMAGE-backend:latest
+
+deploy:
+  stage: deploy
+  image: docker:20.10.5
+  variables:
+    DOCKER_DRIVER: overlay2
+  services:
+    - docker:20.10.5-dind
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+  environment:
+    name: production
+  before_script:
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+    - "which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)"
+    - eval $(ssh-agent -s)
+    - cat "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" docker stack deploy --with-registry-auth -c <(docker-compose config -f docker-compose.prod.yml --env-file $ENV_FILE) $SWARM_NAME

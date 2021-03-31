@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ecommercekeystone:
+    image: registry.gitlab.com/repository.host/nextjs-ecommerce-backend:latest
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=cloud-public
+        - traefik.http.routers.ecommercekeystone.entrypoints=websecure
+        - traefik.http.routers.ecommercekeystone.rule=Host(`${DOMAIN}`)
+        - traefik.http.routers.ecommercekeystone.tls=true
+        - traefik.http.routers.ecommercekeystone.tls.options=tls12@file
+        - traefik.http.routers.ecommercekeystone.tls.certresolver=letsencrypt
+        - traefik.http.routers.ecommercekeystone.middlewares=traefik-ratelimit,traefik-inflightreq
+        - traefik.http.services.ecommercekeystone.loadbalancer.server.port=7771
+    networks:
+      - cloud-public
+
+networks:
+  cloud-public:
+    external: true
