@@ -86,4 +86,4 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" docker stack deploy --with-registry-auth -c <(docker-compose config -f docker-compose.prod.yml --env-file $ENV_FILE) $SWARM_NAME
+    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" docker stack deploy --with-registry-auth -c <(docker-compose config -f docker-compose.prod.yml) $SWARM_NAME
