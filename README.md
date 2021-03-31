@@ -76,6 +76,18 @@
 
 ## Demo
 
+🚨  NOTE:  
+
+**Keystone-next does not allow you to set `SameSite` property on cookies**: meaning that you _have_ to deploy the application to the same domain for cookie-based sessions to work.
+
+I have previously deployed the backend to a free Heroku dyno and the frontend to Vercel (links below).
+
+**Deployment is currently broken** until I figure out a solution.
+
+See [issue #1](https://github.com/sophiabrandt/nextjs-ecommerce/issues/1) for more details.
+
+---
+
 Backend: [https://nextjs-ecommerce-keystone.herokuapp.com/](https://nextjs-ecommerce-keystone.herokuapp.com/)  
 GraphQL API: [https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql](https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql)  
 The backend runs on a free Heroku tier, so it might be a bit slow to start.
