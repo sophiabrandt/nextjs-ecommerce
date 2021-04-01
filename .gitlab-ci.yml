@@ -63,8 +63,8 @@ push:
     - main
   script:
     - docker pull $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:backend:latest
-    - docker push $CI_REGISTRY_IMAGE:backend:latest
+    - docker tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:backend-latest
+    - docker push $CI_REGISTRY_IMAGE:backend-latest
 
 deploy:
   stage: deploy
