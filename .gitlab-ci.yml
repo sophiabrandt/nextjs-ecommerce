@@ -24,6 +24,9 @@ build:
     - docker pull $CI_REGISTRY_IMAGE:backend-deps || true
     - docker pull $CI_REGISTRY_IMAGE:backend-builder || true
     - docker pull $CI_REGISTRY_IMAGE:backend-latest || true
+    - docker pull $CI_REGISTRY_IMAGE:frontend-deps || true
+    - docker pull $CI_REGISTRY_IMAGE:frontend-builder || true
+    - docker pull $CI_REGISTRY_IMAGE:frontend-latest || true
     - >
       docker build
       --pull
@@ -51,9 +54,39 @@ build:
       --tag $CI_REGISTRY_IMAGE:backend-latest
       --file ./backend/Dockerfile
       ./backend
+    - >
+      docker build
+      --pull
+      --target deps
+      --cache-from $CI_REGISTRY_IMAGE:frontend-deps
+      --tag $CI_REGISTRY_IMAGE:frontend-deps
+      --file ./frontend/Dockerfile
+      ./frontend
+    - >
+      docker build
+      --pull
+      --target builder
+      --cache-from $CI_REGISTRY_IMAGE:frontend-builder
+      --tag $CI_REGISTRY_IMAGE:frontend-builder
+      --build-arg DATABASE_URL
+      --file ./frontend/Dockerfile
+      ./frontend
+    - >
+      docker build
+      --pull
+      --target runner
+      --cache-from $CI_REGISTRY_IMAGE:frontend-builder
+      --cache-from $CI_REGISTRY_IMAGE:frontend-latest
+      --tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
+      --tag $CI_REGISTRY_IMAGE:frontend-latest
+      --file ./frontend/Dockerfile
+      ./frontend
     - docker push $CI_REGISTRY_IMAGE:backend-deps
     - docker push $CI_REGISTRY_IMAGE:backend-builder
     - docker push $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:frontend-deps
+    - docker push $CI_REGISTRY_IMAGE:frontend-builder
+    - docker push $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
 
 push:
   variables:
@@ -65,6 +98,9 @@ push:
     - docker pull $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
     - docker tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:backend-latest
     - docker push $CI_REGISTRY_IMAGE:backend-latest
+    - docker pull $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:frontend-latest
+    - docker push $CI_REGISTRY_IMAGE:frontend-latest
 
 deploy:
   stage: deploy
@@ -87,4 +123,5 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
+    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.backend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
+    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.frontend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
