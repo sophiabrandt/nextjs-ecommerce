@@ -3,6 +3,18 @@ version: "3.8"
 services:
   ecommercekeystone:
     image: registry.gitlab.com/repository.host/nextjs-ecommerce:backend-latest
+    environment:
+      - CLOUDINARY_CLOUD_NAME=$CLOUDINARY_CLOUD_NAME
+      - CLOUDINARY_KEY=$CLOUDINARY_KEY
+      - CLOUDINARY_SECRET=$CLOUDINARY_SECRET
+      - COOKIE_SECRET=$COOKIE_SECRET
+      - DATABASE_URL=$DATABASE_URL
+      - STRIPE_SECRET=$STRIPE_SECRET
+      - MAIL_HOST=$MAIL_HOST
+      - MAIL_PORT=$MAIL_PORT
+      - MAIL_USER=$MAIL_USER
+      - MAIL_PASS=$MAIL_PASS
+      - PROD_URL=$PROD_URL
     deploy:
       labels:
         - traefik.enable=true
