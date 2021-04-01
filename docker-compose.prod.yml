@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   ecommercekeystone:
-    image: registry.gitlab.com/repository.host/nextjs-ecommerce-backend:latest
+    image: registry.gitlab.com/repository.host/nextjs-ecommerce:backend-latest
     deploy:
       labels:
         - traefik.enable=true
