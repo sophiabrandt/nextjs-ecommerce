@@ -29,7 +29,6 @@ build-backend:
     - docker pull $CI_REGISTRY_IMAGE:backend-latest || true
     - >
       docker build
-      --pull
       --target deps
       --cache-from $CI_REGISTRY_IMAGE:backend-deps
       --tag $CI_REGISTRY_IMAGE:backend-deps
@@ -37,8 +36,8 @@ build-backend:
       ./backend
     - >
       docker build
-      --pull
       --target builder
+      --cache-from $CI_REGISTRY_IMAGE:backend-deps
       --cache-from $CI_REGISTRY_IMAGE:backend-builder
       --tag $CI_REGISTRY_IMAGE:backend-builder
       --build-arg DATABASE_URL
@@ -46,8 +45,8 @@ build-backend:
       ./backend
     - >
       docker build
-      --pull
       --target runner
+      --cache-from $CI_REGISTRY_IMAGE:backend-deps
       --cache-from $CI_REGISTRY_IMAGE:backend-builder
       --cache-from $CI_REGISTRY_IMAGE:backend-latest
       --tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
@@ -74,7 +73,6 @@ build-frontend:
     - docker pull $CI_REGISTRY_IMAGE:frontend-latest || true
     - >
       docker build
-      --pull
       --target deps
       --cache-from $CI_REGISTRY_IMAGE:frontend-deps
       --tag $CI_REGISTRY_IMAGE:frontend-deps
@@ -82,8 +80,8 @@ build-frontend:
       ./frontend
     - >
       docker build
-      --pull
       --target builder
+      --cache-from $CI_REGISTRY_IMAGE:frontend-deps
       --cache-from $CI_REGISTRY_IMAGE:frontend-builder
       --tag $CI_REGISTRY_IMAGE:frontend-builder
       --build-arg NEXT_PUBLIC_BACKEND_URL
@@ -91,12 +89,13 @@ build-frontend:
       ./frontend
     - >
       docker build
-      --pull
       --target runner
+      --cache-from $CI_REGISTRY_IMAGE:frontend-deps
       --cache-from $CI_REGISTRY_IMAGE:frontend-builder
       --cache-from $CI_REGISTRY_IMAGE:frontend-latest
       --tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
       --tag $CI_REGISTRY_IMAGE:frontend-latest
+      --build-arg NEXT_PUBLIC_BACKEND_URL
       --file ./frontend/Dockerfile
       ./frontend
     - docker push $CI_REGISTRY_IMAGE:frontend-deps
