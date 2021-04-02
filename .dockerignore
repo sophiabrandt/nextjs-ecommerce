@@ -6,3 +6,5 @@ README.md
 tags
 docker*
 *.env
+.next
+.keystone
