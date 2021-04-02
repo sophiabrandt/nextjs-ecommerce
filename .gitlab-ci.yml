@@ -1,7 +1,8 @@
 image: docker:20.10.5
 
 stages:
-  - build
+  - build-backend
+  - build-frontend
   - push
   - deploy
 
@@ -12,8 +13,8 @@ default:
 services:
   - docker:20.10.5-dind
 
-build:
-  stage: build
+build-backend:
+  stage: build-backend
   variables:
     DOCKER_DRIVER: overlay2
   rules:
@@ -24,9 +25,6 @@ build:
     - docker pull $CI_REGISTRY_IMAGE:backend-deps || true
     - docker pull $CI_REGISTRY_IMAGE:backend-builder || true
     - docker pull $CI_REGISTRY_IMAGE:backend-latest || true
-    - docker pull $CI_REGISTRY_IMAGE:frontend-deps || true
-    - docker pull $CI_REGISTRY_IMAGE:frontend-builder || true
-    - docker pull $CI_REGISTRY_IMAGE:frontend-latest || true
     - >
       docker build
       --pull
@@ -54,6 +52,22 @@ build:
       --tag $CI_REGISTRY_IMAGE:backend-latest
       --file ./backend/Dockerfile
       ./backend
+    - docker push $CI_REGISTRY_IMAGE:backend-deps
+    - docker push $CI_REGISTRY_IMAGE:backend-builder
+    - docker push $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
+
+build-frontend:
+  stage: build-frontend
+  variables:
+    DOCKER_DRIVER: overlay2
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+  environment:
+    name: production
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:frontend-deps || true
+    - docker pull $CI_REGISTRY_IMAGE:frontend-builder || true
+    - docker pull $CI_REGISTRY_IMAGE:frontend-latest || true
     - >
       docker build
       --pull
@@ -81,9 +95,6 @@ build:
       --tag $CI_REGISTRY_IMAGE:frontend-latest
       --file ./frontend/Dockerfile
       ./frontend
-    - docker push $CI_REGISTRY_IMAGE:backend-deps
-    - docker push $CI_REGISTRY_IMAGE:backend-builder
-    - docker push $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:frontend-deps
     - docker push $CI_REGISTRY_IMAGE:frontend-builder
     - docker push $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
