@@ -57,6 +57,8 @@ build-backend:
     - docker push $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
 
 build-frontend:
+  tags:
+    - gce
   stage: build-frontend
   variables:
     DOCKER_DRIVER: overlay2
