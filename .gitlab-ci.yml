@@ -83,6 +83,7 @@ build-frontend:
       --cache-from $CI_REGISTRY_IMAGE:frontend-builder
       --tag $CI_REGISTRY_IMAGE:frontend-builder
       --build-arg DATABASE_URL
+      --build-arg NEXT_PUBLIC_BACKEND_URL
       --file ./frontend/Dockerfile
       ./frontend
     - >
