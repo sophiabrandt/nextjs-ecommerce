@@ -95,7 +95,6 @@ build-frontend:
       --cache-from $CI_REGISTRY_IMAGE:frontend-latest
       --tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
       --tag $CI_REGISTRY_IMAGE:frontend-latest
-      --build-arg NEXT_PUBLIC_BACKEND_URL
       --file ./frontend/Dockerfile
       ./frontend
     - docker push $CI_REGISTRY_IMAGE:frontend-deps

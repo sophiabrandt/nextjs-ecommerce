@@ -1,10 +1,9 @@
 version: "3.8"
 
 services:
-  ecommercekeystone:
+  ecommercenext:
     image: registry.gitlab.com/repository.host/nextjs-ecommerce:frontend-latest
     environment:
-      - DATABASE_URL=$DATABASE_URL
       - NEXT_PUBLIC_STRIPE_KEY=$NEXT_PUBLIC_STRIPE_KEY
       - NEXT_PUBLIC_PER_PAGE=$NEXT_PUBLIC_PER_PAGE
       - NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
@@ -17,7 +16,7 @@ services:
         - traefik.http.routers.ecommercekeystone.tls=true
         - traefik.http.routers.ecommercekeystone.tls.options=default
         - traefik.http.routers.ecommercekeystone.tls.certresolver=letsencrypt
-        # - traefik.http.routers.ecommercekeystone.middlewares=traefik-ratelimit,traefik-inflightreq
+        - traefik.http.routers.ecommercekeystone.middlewares=traefik-ratelimit,traefik-inflightreq
         - traefik.http.services.ecommercekeystone.loadbalancer.server.port=7777
     networks:
       - cloud-public
