@@ -40,7 +40,6 @@ const createApolloClient = (context?: GetServerSidePropsContext) => {
       }),
     ]),
     credentials: "include",
-    headers: context?.req?.headers,
     cache: new InMemoryCache({
       possibleTypes: {
         authenticatedItem: ["User"],
