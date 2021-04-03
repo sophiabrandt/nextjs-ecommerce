@@ -2,9 +2,11 @@ image: docker:20.10.5
 
 stages:
   - build-backend
-  - build-frontend
-  - push
-  - deploy
+  # - build-frontend
+  - push-backend
+  # - push-frontend
+  - deploy-backend
+  # - deploy-frontend
 
 default:
   before_script:
@@ -14,8 +16,6 @@ services:
   - docker:20.10.5-dind
 
 build-backend:
-  tags:
-    - gce
   stage: build-backend
   variables:
     DOCKER_DRIVER: overlay2
@@ -57,66 +57,75 @@ build-backend:
     - docker push $CI_REGISTRY_IMAGE:backend-builder
     - docker push $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
 
-build-frontend:
-  tags:
-    - gce
-  stage: build-frontend
-  variables:
-    DOCKER_DRIVER: overlay2
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
-  environment:
-    name: production
-  script:
-    - docker pull $CI_REGISTRY_IMAGE:frontend-deps || true
-    - docker pull $CI_REGISTRY_IMAGE:frontend-builder || true
-    - docker pull $CI_REGISTRY_IMAGE:frontend-latest || true
-    - >
-      docker build
-      --target deps
-      --cache-from $CI_REGISTRY_IMAGE:frontend-deps
-      --tag $CI_REGISTRY_IMAGE:frontend-deps
-      --file ./frontend/Dockerfile
-      ./frontend
-    - >
-      docker build
-      --target builder
-      --cache-from $CI_REGISTRY_IMAGE:frontend-deps
-      --cache-from $CI_REGISTRY_IMAGE:frontend-builder
-      --tag $CI_REGISTRY_IMAGE:frontend-builder
-      --build-arg NEXT_PUBLIC_BACKEND_URL
-      --file ./frontend/Dockerfile
-      ./frontend
-    - >
-      docker build
-      --target runner
-      --cache-from $CI_REGISTRY_IMAGE:frontend-deps
-      --cache-from $CI_REGISTRY_IMAGE:frontend-builder
-      --cache-from $CI_REGISTRY_IMAGE:frontend-latest
-      --tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
-      --tag $CI_REGISTRY_IMAGE:frontend-latest
-      --file ./frontend/Dockerfile
-      ./frontend
-    - docker push $CI_REGISTRY_IMAGE:frontend-deps
-    - docker push $CI_REGISTRY_IMAGE:frontend-builder
-    - docker push $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
+# build-frontend:
+#   tags:
+#     - gce
+#   stage: build-frontend
+#   variables:
+#     DOCKER_DRIVER: overlay2
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == 'main'
+#   environment:
+#     name: production
+#   script:
+#     - docker pull $CI_REGISTRY_IMAGE:frontend-deps || true
+#     - docker pull $CI_REGISTRY_IMAGE:frontend-builder || true
+#     - docker pull $CI_REGISTRY_IMAGE:frontend-latest || true
+#     - >
+#       docker build
+#       --target deps
+#       --cache-from $CI_REGISTRY_IMAGE:frontend-deps
+#       --tag $CI_REGISTRY_IMAGE:frontend-deps
+#       --file ./frontend/Dockerfile
+#       ./frontend
+#     - >
+#       docker build
+#       --target builder
+#       --cache-from $CI_REGISTRY_IMAGE:frontend-deps
+#       --cache-from $CI_REGISTRY_IMAGE:frontend-builder
+#       --tag $CI_REGISTRY_IMAGE:frontend-builder
+#       --build-arg NEXT_PUBLIC_BACKEND_URL
+#       --file ./frontend/Dockerfile
+#       ./frontend
+#     - >
+#       docker build
+#       --target runner
+#       --cache-from $CI_REGISTRY_IMAGE:frontend-deps
+#       --cache-from $CI_REGISTRY_IMAGE:frontend-builder
+#       --cache-from $CI_REGISTRY_IMAGE:frontend-latest
+#       --tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
+#       --tag $CI_REGISTRY_IMAGE:frontend-latest
+#       --build-arg NEXT_PUBLIC_BACKEND_URL
+#       --file ./frontend/Dockerfile
+#       ./frontend
+#     - docker push $CI_REGISTRY_IMAGE:frontend-deps
+#     - docker push $CI_REGISTRY_IMAGE:frontend-builder
+#     - docker push $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
 
-push:
+push-backend:
   variables:
     GIT_STRATEGY: none
-  stage: push
+  stage: push-backend
   only:
     - main
   script:
     - docker pull $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA
     - docker tag $CI_REGISTRY_IMAGE:backend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:backend-latest
     - docker push $CI_REGISTRY_IMAGE:backend-latest
-    - docker pull $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:frontend-latest
-    - docker push $CI_REGISTRY_IMAGE:frontend-latest
 
-deploy:
-  stage: deploy
+# push-frontend:
+#   variables:
+#     GIT_STRATEGY: none
+#   stage: push-frontend
+#   only:
+#     - main
+#   script:
+#     - docker pull $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
+#     - docker tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:frontend-latest
+#     - docker push $CI_REGISTRY_IMAGE:frontend-latest
+
+deploy-backend:
+  stage: deploy-backend
   image: docker/compose:debian-1.28.6
   variables:
     DOCKER_DRIVER: overlay2
@@ -137,4 +146,26 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.backend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
-    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.frontend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
+
+# deploy-frontend:
+#   stage: deploy-frontend
+#   image: docker/compose:debian-1.28.6
+#   variables:
+#     DOCKER_DRIVER: overlay2
+#   services:
+#     - docker:20.10.5-dind
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == 'main'
+#   environment:
+#     name: production
+#   before_script:
+#     - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+#     - "which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)"
+#     - eval $(ssh-agent -s)
+#     - cat "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.frontend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"

@@ -32,8 +32,6 @@ COPY --from=builder --chown=keystonejs:nodejs /app/.keystone ./.keystone
 COPY --from=builder --chown=keystonejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=keystonejs:nodejs /app/package.json ./package.json
 
-EXPOSE 7771
-
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.

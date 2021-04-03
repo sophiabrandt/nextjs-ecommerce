@@ -22,7 +22,7 @@ RUN yarn build
 FROM node:14.16-alpine3.10 AS runner
 
 ARG NODE_ENV=production
-ARG PORT=7771
+ARG PORT=7777
 ENV PORT $PORT
 
 WORKDIR /app
@@ -35,8 +35,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
-
-EXPOSE 7777
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
