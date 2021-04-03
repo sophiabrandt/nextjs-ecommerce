@@ -122,6 +122,7 @@ build-frontend:
       --cache-from $CI_REGISTRY_IMAGE:frontend-builder
       --tag $CI_REGISTRY_IMAGE:frontend-builder
       --build-arg NEXT_PUBLIC_BACKEND_URL
+      --build-arg NEXT_PUBLIC_STRIPE_KEY
       --file ./frontend/Dockerfile
       ./frontend
     - >
@@ -133,6 +134,7 @@ build-frontend:
       --tag $CI_REGISTRY_IMAGE:frontend-$CI_COMMIT_SHA
       --tag $CI_REGISTRY_IMAGE:frontend-latest
       --build-arg NEXT_PUBLIC_BACKEND_URL
+      --build-arg NEXT_PUBLIC_STRIPE_KEY
       --file ./frontend/Dockerfile
       ./frontend
     - docker push $CI_REGISTRY_IMAGE:frontend-deps
