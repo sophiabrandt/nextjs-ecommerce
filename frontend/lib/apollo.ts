@@ -18,7 +18,6 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
 const createApolloClient = (context?: GetServerSidePropsContext) => {
   return new ApolloClient({
-    connectToDevTools: true, // TODO: remove
     ssrMode: typeof window === "undefined",
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
