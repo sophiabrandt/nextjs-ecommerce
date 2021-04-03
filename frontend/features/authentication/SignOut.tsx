@@ -10,6 +10,7 @@ export const SignOut = () => {
       cache.evict({
         fieldName: "authenticatedItem",
       });
+      cache.gc();
     },
   });
   return (
@@ -18,8 +19,8 @@ export const SignOut = () => {
         _hover={{ color: "brand.tertiary" }}
         textAlign="left"
         as="button"
-        onClick={() => {
-          signout();
+        onClick={async () => {
+          await signout();
           client.resetStore();
         }}
       >

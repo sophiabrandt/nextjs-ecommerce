@@ -24,9 +24,10 @@ interface IFormData {
 export const SignIn = () => {
   const router = useRouter();
   const { register, handleSubmit, errors, formState } = useForm<IFormData>();
-  const [signin, { data, loading, error, client }] = useMutation<SignInMutation, SignInMutationVariables>(
-    SIGNIN_MUTATION
-  );
+  const [signin, { data, loading, error, client }] = useMutation<
+    SignInMutation,
+    SignInMutationVariables
+  >(SIGNIN_MUTATION);
 
   const onSubmit = async (inputData: IFormData) => {
     try {

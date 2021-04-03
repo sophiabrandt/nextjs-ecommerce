@@ -80,6 +80,7 @@ export const DeleteProduct = ({ id }: IProductDeleteProps) => {
                           cache.evict({
                             fieldName: "_allProductsMeta",
                           });
+                          cache.gc();
                         },
                       });
                       onClose;

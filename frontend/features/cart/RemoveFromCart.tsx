@@ -25,6 +25,7 @@ export const RemoveFromCart = ({ id }: IRemoveFromCartProps) => {
     variables: { id },
     update(cache, { data }) {
       cache.evict({ id: cache.identify(data?.deleteCartItem as StoreObjectCompatible) });
+      cache.gc();
     },
   });
   return (
