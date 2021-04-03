@@ -47,12 +47,12 @@ export const SignIn = () => {
                 authenticatedItem: authenticatedUser,
               },
             });
+            client.resetStore();
+            // route to home page after successful login
+            router.push("/");
           }
         },
       });
-      client.resetStore();
-      // route to home page after successful login
-      router.push("/");
     } catch (err) {
       console.error(err);
     }
