@@ -42,7 +42,6 @@ build-backend:
       --cache-from $CI_REGISTRY_IMAGE:backend-deps
       --cache-from $CI_REGISTRY_IMAGE:backend-builder
       --tag $CI_REGISTRY_IMAGE:backend-builder
-      --build-arg DATABASE_URL
       --file ./backend/Dockerfile
       ./backend
     - >
