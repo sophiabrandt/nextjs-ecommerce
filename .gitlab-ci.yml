@@ -92,6 +92,7 @@ deploy-backend:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.backend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
+    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker system prune && docker image prune -af"
 
 build-frontend:
   tags:
@@ -171,3 +172,4 @@ deploy-frontend:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker stack deploy --with-registry-auth -c <(docker-compose -f docker-compose.frontend.prod.yml --env-file=$ENV_FILE config) $SWARM_NAME"
+    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_HOSTNAME:$SSH_PORT" bash -c "docker system prune && docker image prune -af"

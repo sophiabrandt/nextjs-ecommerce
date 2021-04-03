@@ -11,13 +11,13 @@ services:
       labels:
         - traefik.enable=true
         - traefik.constraint-label=cloud-public
-        - traefik.http.routers.ecommercekeystone.entrypoints=websecure
-        - traefik.http.routers.ecommercekeystone.rule=Host(`${FRONTEND_DOMAIN}`)
-        - traefik.http.routers.ecommercekeystone.tls=true
-        - traefik.http.routers.ecommercekeystone.tls.options=default
-        - traefik.http.routers.ecommercekeystone.tls.certresolver=letsencrypt
-        - traefik.http.routers.ecommercekeystone.middlewares=traefik-ratelimit,traefik-inflightreq
-        - traefik.http.services.ecommercekeystone.loadbalancer.server.port=7777
+        - traefik.http.routers.ecommercenext.entrypoints=websecure
+        - traefik.http.routers.ecommercenext.rule=Host(`${FRONTEND_DOMAIN}`)
+        - traefik.http.routers.ecommercenext.tls=true
+        - traefik.http.routers.ecommercenext.tls.options=default
+        - traefik.http.routers.ecommercenext.tls.certresolver=letsencrypt
+        - traefik.http.routers.ecommercenext.middlewares=traefik-ratelimit,traefik-inflightreq
+        - traefik.http.services.ecommercenext.loadbalancer.server.port=7777
     networks:
       - cloud-public
 
