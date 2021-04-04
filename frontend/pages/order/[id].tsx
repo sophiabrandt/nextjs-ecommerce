@@ -34,7 +34,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       variables: {
         id,
       },
-      context: { headers: { Cookie: context?.req?.headers?.cookie } },
+      context: { headers: { "Cookie": context?.req?.headers?.cookie } },
     });
 
     return addApolloState(client, {
