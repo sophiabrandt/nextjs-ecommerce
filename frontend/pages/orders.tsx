@@ -17,7 +17,7 @@ const OrdersPage: NextPage = () => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const client = initializeApollo(context);
+  const client = initializeApollo({ headers: context?.req?.headers });
   try {
     await client.query<AllOrdersQuery>({
       query: ALL_ORDERS_QUERY,

@@ -4,8 +4,8 @@ import { onError } from "@apollo/link-error";
 import { createUploadLink } from "apollo-upload-client";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
+import { IncomingHttpHeaders } from "http";
 import { paginationField } from "./paginationField";
-import type { GetServerSidePropsContext } from "next";
 
 interface PageProps {
   // eslint-disable-next-line
@@ -16,7 +16,7 @@ const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
-const createApolloClient = (context?: GetServerSidePropsContext) => {
+const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: ApolloLink.from([
@@ -36,7 +36,7 @@ const createApolloClient = (context?: GetServerSidePropsContext) => {
         fetchOptions: {
           credentials: "include",
         },
-        headers: context?.req?.headers,
+        headers: headers,
       }),
     ]),
     credentials: "include",
@@ -57,13 +57,15 @@ const createApolloClient = (context?: GetServerSidePropsContext) => {
 
 type InitialState = NormalizedCacheObject | undefined;
 
+interface IInitializeApollo {
+  headers?: IncomingHttpHeaders | null;
+  initialState?: InitialState | null;
+}
+
 export const initializeApollo = (
-  context?: GetServerSidePropsContext,
-  initialState: InitialState | null = null
+  { headers, initialState }: IInitializeApollo = { headers: null, initialState: null }
 ) => {
-  const _apolloClient = apolloClient ?? createApolloClient(context);
-  // console.dir({ context });
-  // console.dir({ initialState });
+  const _apolloClient = apolloClient ?? createApolloClient(headers);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // get hydrated here
@@ -105,6 +107,6 @@ export const addApolloState = (
 
 export function useApollo(pageProps: PageProps) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
-  const store = useMemo(() => initializeApollo(state), [state]);
+  const store = useMemo(() => initializeApollo({ initialState: state }), [state]);
   return store;
 }
