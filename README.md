@@ -67,32 +67,23 @@
 
 **Some features**:
 
-- Role-based permissions (only a user with permissions can see edit and delete button for a product and can perform these actions, etc.)
-- Incremental Static Site Generation via Next.js
-- Server-Side Rendering via Next.js
-- Advanced Usage of Apollo Cache for a snappy user experience
+- Role-based permissions (only a user with permissions can see "Edit" and "Delete" button for a product and can perform these actions, etc.)
+- [Incremental Static Site Generation](https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration) for product pages
+- [Server-Side Rendering](https://nextjs.org/docs/basic-features/pages#server-side-rendering) for showing orders and updating products
+- [Advanced Usage of Apollo Cache](https://www.apollographql.com/docs/react/caching) for a snappy user experience by manipulating the Apollo Cache with `cache.readQuery`, `cache.writeQuery`, `cache.modify` and `cache.evict`
+- Dockerized Deployment via Docker Swarm
+- Testing with `react-testing-library` and Jest
 
 <!-- DEMO -->
 
 ## Demo
 
-🚨  NOTE:  
+I've deployed a demo (via GitOps/Gitlab CI) to a $5 [Upcloud VPS](https://upcloud.com/) ([How?](https://www.rockyourcode.com/traefik-2-docker-swarm-setup-with-docker-socket-proxy-and-more/)).
 
-**Keystone-next does not allow you to set `SameSite` property on cookies**: meaning that you _have_ to deploy the application to the same domain for cookie-based sessions to work.
+Backend: [https://nextjs-ecommerce-keystone.repository.host](https://nextjs-ecommerce-keystone.repository.host/)  
+GraphQL API: [https://nextjs-ecommerce-keystone.repository.host/api/graphql](https://nextjs-ecommerce-keystone.repository.host/api/graphql)  
 
-I have previously deployed the backend to a free Heroku dyno and the frontend to Vercel (links below).
-
-**Deployment is currently broken** until I figure out a solution.
-
-See [issue #1](https://github.com/sophiabrandt/nextjs-ecommerce/issues/1) for more details.
-
----
-
-Backend: [https://nextjs-ecommerce-keystone.herokuapp.com/](https://nextjs-ecommerce-keystone.herokuapp.com/)  
-GraphQL API: [https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql](https://nextjs-ecommerce-keystone.herokuapp.com/api/graphql)  
-The backend runs on a free Heroku tier, so it might be a bit slow to start.
-
-Frontend: [https://nextjs-ecommerce-rouge.vercel.app/](https://nextjs-ecommerce-rouge.vercel.app/)
+Frontend: [https://nextjs-ecommerce.repository.host](https://nextjs-ecommerce.repository.host/)
 
 The password reset uses a sandboxed Mailgun account and only works with one email: dzwjxgqv@sharklasers.com
 

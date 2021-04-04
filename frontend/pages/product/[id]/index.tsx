@@ -72,11 +72,8 @@ export const getStaticProps = async ({ params: { id } }: IStaticProps) => {
       revalidate: 60,
     };
   } catch (err) {
-    if (err.status !== 404) {
-      throw err;
-    }
     return {
-      props: {},
+      notFound: true,
     };
   }
 };

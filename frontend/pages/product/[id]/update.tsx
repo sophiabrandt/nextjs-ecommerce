@@ -33,8 +33,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       },
     });
   } catch {
+    if (context?.req?.headers?.cookie) {
+      return {
+        props: {},
+      };
+    }
     return {
-      notFound: true,
+      props: {},
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
     };
   }
 };

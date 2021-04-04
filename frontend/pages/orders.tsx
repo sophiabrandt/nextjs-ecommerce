@@ -27,8 +27,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       props: {},
     });
   } catch {
+    if (context?.req?.headers?.cookie) {
+      return {
+        props: {},
+      };
+    }
     return {
       props: {},
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
     };
   }
 };
