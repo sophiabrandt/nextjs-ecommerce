@@ -35,6 +35,9 @@
       <a href="#demo">Demo</a>
     </li>
     <li>
+      <a href="#screenshots">Screenshots</a>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -88,6 +91,14 @@ Frontend: [https://nextjs-ecommerce.repository.host](https://nextjs-ecommerce.re
 The password reset uses a sandboxed Mailgun account and only works with one email: dzwjxgqv@sharklasers.com
 
 To read the password reset email, go to [https://www.guerrillamail.com/](https://www.guerrillamail.com/) and set the inbox to "dzwjxgqv@sharklasers.com".
+
+<!-- SCREENSHOTS  -->
+
+## Screenshots
+
+You can find more screenshots in the screenshots folder.
+
+![Main Page](screenshots/nextjs-ecommerce.png)
 
 <!-- GETTING STARTED -->
 

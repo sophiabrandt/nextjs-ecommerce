@@ -27,8 +27,8 @@ const OrderPage: NextPage<IOrderPageProps> = ({ id }) => {
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const client = initializeApollo({ headers: context?.req?.headers });
+  const id = (context?.query?.id as string) ?? "";
   try {
-    const id = (context?.query?.id as string) ?? "";
     await client.query<OrderQuery, OrderQueryVariables>({
       query: ORDER_QUERY,
       variables: {
@@ -40,8 +40,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       props: { id },
     });
   } catch {
+    if (context?.req?.headers?.cookie) {
+      return {
+        props: { id },
+      };
+    }
     return {
       props: {},
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
     };
   }
 };
