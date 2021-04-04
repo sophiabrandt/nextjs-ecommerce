@@ -22,7 +22,9 @@ export const getStaticProps = async () => {
   const client = initializeApollo();
 
   try {
-    await client.query<AllProductsQuery, AllProductsQueryVariables>({ query: ALL_PRODUCTS_QUERY });
+    await client.query<AllProductsQuery, AllProductsQueryVariables>({
+      query: ALL_PRODUCTS_QUERY,
+    });
 
     // add all products to the Apollo cache;
     // but not the page props

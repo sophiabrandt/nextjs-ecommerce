@@ -21,6 +21,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   try {
     await client.query<AllOrdersQuery>({
       query: ALL_ORDERS_QUERY,
+      context: { headers: { Cookie: context?.req?.headers?.cookie } },
     });
 
     return addApolloState(client, {

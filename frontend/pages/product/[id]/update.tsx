@@ -25,6 +25,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     } = await client.query<ProductQuery, ProductQueryVariables>({
       query: PRODUCT_QUERY,
       variables: { id: context?.query?.id as string },
+      context: { headers: { Cookie: context?.req?.headers?.cookie } },
     });
 
     return addApolloState(client, {
