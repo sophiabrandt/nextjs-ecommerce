@@ -1,10 +1,11 @@
-import { useMemo } from "react";
 import { ApolloClient, ApolloLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import { onError } from "@apollo/link-error";
 import { createUploadLink } from "apollo-upload-client";
 import merge from "deepmerge";
-import isEqual from "lodash/isEqual";
 import { IncomingHttpHeaders } from "http";
+import fetch from "isomorphic-unfetch";
+import isEqual from "lodash/isEqual";
+import { useMemo } from "react";
 import { paginationField } from "./paginationField";
 
 interface PageProps {
@@ -17,6 +18,17 @@ const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
 const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
+  const enhancedFetch = (url: RequestInfo, init: RequestInit) => {
+    return fetch(url, {
+      ...init,
+      headers: {
+        ...init.headers,
+        "Access-Control-Allow-Origin": "*",
+        Cookie: headers?.cookie ?? "",
+      },
+    }).then((response) => response);
+  };
+
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: ApolloLink.from([
@@ -34,12 +46,13 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
       createUploadLink({
         uri: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api/graphql",
         fetchOptions: {
-          credentials: "include",
+          mode: "cors",
         },
+        credentials: "include",
         headers: headers,
+        fetch: enhancedFetch,
       }),
     ]),
-    credentials: "include",
     cache: new InMemoryCache({
       possibleTypes: {
         authenticatedItem: ["User"],
