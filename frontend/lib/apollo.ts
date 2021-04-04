@@ -49,7 +49,6 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
           mode: "cors",
         },
         credentials: "include",
-        headers: headers,
         fetch: enhancedFetch,
       }),
     ]),
