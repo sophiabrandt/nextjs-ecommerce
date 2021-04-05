@@ -119,23 +119,26 @@ To get a local copy up and running follow these steps.
 ### Installation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/sophiabrandt/nextjs-ecommerce.git
    ```
 
 2. Install NPM packages
+
    ```sh
    yarn install
    ```
 
 3. Run docker-compose:
+
    ```sh
    docker-compose up -d
    ```
+
 4. Create configuration file for the backend (`backend/.env`), see [`backend/sample.env`](./backend/sample.env).
 
 5. Create configuration file for the frontend (`frontend/.env.local`), see [`frontend/sample.env`](./frontend/sample.env).
-
 <!-- USAGE EXAMPLES -->
 
 ## Usage
@@ -146,6 +149,23 @@ cd frontend && yarn run dev
 ```
 
 Go to [http://localhost:7771](http://localhost:7771) for the Keystone CMS (backend) and [http://localhost:7777](http://localhost:7777) for the Next.js application (frontend).
+
+If you want to use [Caddy](https://caddyserver.com/), you can use the included [Caddyfile](Caddyfile) for automatic HTTPS certificates in local development.
+
+```sh
+sudo caddy run
+```
+
+Node.js will complain about the missing certificate issuer. For local development, ignore the error with `NODE_TLS_REJECT_UNAUTHORIZED = '0'`:
+
+
+```sh
+ cd frontend
+NODE_TLS_REJECT_UNAUTHORIZED = '0' yarn build
+NODE_TLS_REJECT_UNAUTHORIZED = '0' yarn start
+```
+
+Frontend is available under [https://frontend.app.localhost](https://frontend.app.localhost/orders), backend under [https://backend.app.localhost/](https://backend.app.localhost/).
 
 <!-- TESTS -->
 

@@ -24,7 +24,7 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
       headers: {
         ...init.headers,
         "Access-Control-Allow-Origin": "*",
-        "Cookie": headers?.cookie ?? "",
+        Cookie: headers?.cookie ?? "",
       },
     }).then((response) => response);
   };

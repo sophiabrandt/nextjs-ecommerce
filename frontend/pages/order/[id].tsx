@@ -34,18 +34,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       variables: {
         id,
       },
-      context: { headers: { "Cookie": context?.req?.headers?.cookie } },
     });
 
     return addApolloState(client, {
       props: { id },
     });
   } catch {
-    if (context?.req?.headers?.cookie) {
-      return {
-        props: { id },
-      };
-    }
     return {
       props: {},
       redirect: {

@@ -23,7 +23,7 @@ RUN yarn build
 FROM node:14.16-alpine3.10 AS runner
 
 ARG NODE_ENV=production
-ARG PORT=7777
+ENV NODE_ENV=production
 ARG NEXT_PUBLIC_BACKEND_URL
 ARG NEXT_PUBLIC_STRIPE_KEY
 

@@ -1,0 +1,7 @@
+frontend.app.localhost {
+  reverse_proxy * localhost:7777
+}
+
+backend.app.localhost {
+  reverse_proxy * localhost:7771
+}

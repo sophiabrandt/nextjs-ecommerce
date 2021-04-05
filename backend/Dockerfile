@@ -21,8 +21,7 @@ RUN yarn build
 FROM node:14.16-alpine3.10 AS runner
 
 ARG NODE_ENV=production
-ARG PORT=7771
-ENV PORT $PORT
+ENV NODE_ENV=production
 
 WORKDIR /app
 
