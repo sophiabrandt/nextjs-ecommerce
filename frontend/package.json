@@ -8,7 +8,7 @@
     "start": "next start -p 7777",
     "lint": "eslint --fix \"{,!(node_modules|.next)/**/}*.{js,jsx,ts,tsx}\"",
     "format": "prettier -w -u \"{,!(node_modules|.next)/**/}*.{js,jsx,ts,tsx}\"",
-    "schemagenerate": "apollo client:download-schema --endpoint http://localhost:3000/api/graphql ./lib/graphql/generated/schema.graphqls",
+    "schemagenerate": "apollo client:download-schema --endpoint http://localhost:7771/api/graphql ./lib/graphql/generated/schema.graphqls",
     "codegen": "apollo client:codegen --target typescript --localSchemaFile ./lib/graphql/generated/schema.graphqls --outputFlat --includes \"lib/graphql/**/*.ts\" --excludes \"lib/graphql/generated/**\" --addTypename --globalTypesFile \"lib/graphql/generated/graphql-global-types.ts\" ./lib/graphql/generated",
     "test": "jest"
   },

@@ -19,7 +19,7 @@ export const ALL_ORDERS_QUERY = gql`
           id
           altText
           image {
-            publicUrlTransformed
+            publicUrlTransformed(transformation: { width: "50", crop: "limit", quality: "best" })
           }
         }
       }

@@ -62,6 +62,7 @@
 
 - [Next.js](https://nextjs.org/) (React.js framework)
 - [Typescript](https://www.typescriptlang.org/) with `strict:true`
+- [React Hook Form](https://react-hook-form.com/)
 - [Keystone.js](https://www.keystonejs.com/)
 - [Mongo DB](https://www.mongodb.com/cloud/atlas)
 - [Chakra UI](https://chakra-ui.com/)
@@ -70,11 +71,13 @@
 
 **Some features**:
 
-- Role-based permissions (only a user with permissions can see "Edit" and "Delete" button for a product and can perform these actions, etc.)
+- Role-based Permissions (only a user with permissions can see "Edit" and "Delete" button for a product and can perform these actions, etc.)
+- Debounced Product Search with [DownshiftJS](https://github.com/downshift-js/downshift)
 - [Incremental Static Site Generation](https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration) for product pages
 - [Server-Side Rendering](https://nextjs.org/docs/basic-features/pages#server-side-rendering) for showing orders and updating products
-- [Advanced Usage of Apollo Cache](https://www.apollographql.com/docs/react/caching) for a snappy user experience by manipulating the Apollo Cache with `cache.readQuery`, `cache.writeQuery`, `cache.modify` and `cache.evict`
-- Dockerized Deployment via Docker Swarm
+- [Advanced Usage of Apollo Cache](https://www.apollographql.com/docs/react/caching/cache-configuration/) for a snappy user experience by manipulating the Apollo Cache with `cache.readQuery`, `cache.writeQuery`, `cache.modify` and `cache.evict`
+- Form Validation with [React Hook Form](https://react-hook-form.com/)
+- Automatic Deployment via Docker Swarm and GitLab CI
 - Testing with `react-testing-library` and Jest
 
 <!-- DEMO -->

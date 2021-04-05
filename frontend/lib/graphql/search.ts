@@ -13,7 +13,9 @@ export const SEARCH_PRODUCTS_QUERY = gql`
         id
         altText
         image {
-          publicUrlTransformed
+          publicUrlTransformed(
+            transformation: { width: "50", height: "50", crop: "limit", quality: "100" }
+          )
         }
       }
     }

@@ -19,7 +19,7 @@ export const UPDATE_PRODUCT_MUTATION = gql`
       id
       altText
       image {
-        publicUrlTransformed
+        publicUrlTransformed(transformation: { width: "400", crop: "limit", quality: "auto" })
       }
     }
   }

@@ -12,7 +12,7 @@ export const ADD_TO_CART_MUTATION = gql`
         description
         photo {
           image {
-            publicUrlTransformed
+            publicUrlTransformed(transformation: { width: "400", crop: "limit", quality: "auto" })
           }
         }
       }

@@ -26,6 +26,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <ChakraProvider theme={customTheme}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="description" content="Nextjs Keystone TypeScript ecommerce shop" />
         </Head>
         <Fonts />
         <Page>

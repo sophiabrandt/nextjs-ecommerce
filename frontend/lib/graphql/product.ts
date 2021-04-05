@@ -12,7 +12,7 @@ export const PRODUCT_QUERY = gql`
         id
         altText
         image {
-          publicUrlTransformed
+          publicUrlTransformed(transformation: { width: "400", crop: "limit", quality: "auto" })
         }
       }
     }
