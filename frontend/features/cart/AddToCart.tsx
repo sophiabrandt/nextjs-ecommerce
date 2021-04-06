@@ -22,11 +22,13 @@ export const AddToCart = ({ id }: IAddToCartProps) => {
         });
         if (currentUser?.authenticatedItem?.cart && newCartItem) {
           const authenticatedUser = currentUser.authenticatedItem;
+          // update the cart and update it on the user model
           const newCart = updateCart(authenticatedUser.cart, newCartItem);
           const userWithUpdatedCart = {
             ...authenticatedUser,
             cart: newCart,
           };
+          // write the updated user with cart to the Apollo cache
           cache.writeQuery({
             query: CURRENT_USER_QUERY,
             data: {
