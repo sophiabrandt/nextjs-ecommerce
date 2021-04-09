@@ -1,4 +1,4 @@
-import { render, useRouter } from "test-utils";
+import { act, render, useRouter } from "test-utils";
 import { MockedProvider } from "@apollo/client/testing";
 
 import OrdersPage from "@/pages/orders";
@@ -10,6 +10,7 @@ describe("Orders page", () => {
         <OrdersPage />
       </MockedProvider>
     );
+
     expect(container.firstChild).toMatchSnapshot();
   });
 });
