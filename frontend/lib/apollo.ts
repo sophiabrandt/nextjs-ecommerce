@@ -5,13 +5,9 @@ import merge from "deepmerge";
 import { IncomingHttpHeaders } from "http";
 import fetch from "isomorphic-unfetch";
 import isEqual from "lodash/isEqual";
+import type { AppProps } from "next/app";
 import { useMemo } from "react";
 import { paginationField } from "./paginationField";
-
-interface PageProps {
-  // eslint-disable-next-line
-  [key: string]: any;
-}
 
 const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
@@ -108,7 +104,7 @@ export const initializeApollo = (
 
 export const addApolloState = (
   client: ApolloClient<NormalizedCacheObject>,
-  pageProps: PageProps
+  pageProps: AppProps["pageProps"]
 ) => {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
@@ -117,7 +113,7 @@ export const addApolloState = (
   return pageProps;
 };
 
-export function useApollo(pageProps: PageProps) {
+export function useApollo(pageProps: AppProps["pageProps"]) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo({ initialState: state }), [state]);
   return store;
