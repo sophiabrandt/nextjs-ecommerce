@@ -13,7 +13,7 @@
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://nextjs-ecommerce-rouge.vercel.app/">View Demo</a>
+    <a href="https://nextjs-ecommerce.repository.host">View Demo</a>
     ·
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce/issues">Report Bug</a>
     ·
@@ -78,7 +78,7 @@
 - [Advanced Usage of Apollo Cache](https://www.apollographql.com/docs/react/caching/cache-configuration/) for a snappy user experience by manipulating the Apollo Cache with `cache.readQuery`, `cache.writeQuery`, `cache.modify` and `cache.evict`
 - Form Validation with [React Hook Form](https://react-hook-form.com/)
 - Automatic Deployment via Docker Swarm and GitLab CI
-- Testing with `react-testing-library` and Jest
+- Testing with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) and Jest
 
 <!-- DEMO -->
 
@@ -159,16 +159,16 @@ If you want to use [Caddy](https://caddyserver.com/), you can use the included [
 sudo caddy run
 ```
 
-Node.js will complain about the missing certificate issuer. For local development, ignore the error with `NODE_TLS_REJECT_UNAUTHORIZED = '0'`:
+Node.js will complain about the missing certificate issuer. For _local development_, ignore the error with `NODE_TLS_REJECT_UNAUTHORIZED = '0'`:
 
 
 ```sh
- cd frontend
+cd frontend
 NODE_TLS_REJECT_UNAUTHORIZED = '0' yarn build
 NODE_TLS_REJECT_UNAUTHORIZED = '0' yarn start
 ```
 
-Frontend is available under [https://frontend.app.localhost](https://frontend.app.localhost/orders), backend under [https://backend.app.localhost/](https://backend.app.localhost/).
+The frontend app is available at [https://frontend.app.localhost](https://frontend.app.localhost/orders). You can reach the backend app at [https://backend.app.localhost/](https://backend.app.localhost/).
 
 <!-- TESTS -->
 
@@ -198,5 +198,4 @@ Project Link: [https://github.com/sophiabrandt/nextjs-ecommerce](https://github.
 ## Acknowledgements
 
 - [Wes Bos](https://wesbos.com/)
-- [Kent C. Dodds](https://epicreact.dev/)
 - [Paulin Trognon](https://paulintrognon.fr/blog/typescript-prettier-eslint-next-js)
