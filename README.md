@@ -99,7 +99,7 @@ To read the password reset email, go to [https://www.guerrillamail.com/](https:/
 
 ## Screenshots
 
-You can find more screenshots in the screenshots folder.
+You can find more screenshots in the [screenshots/](screenshots/) folder.
 
 ![Main Page](screenshots/nextjs-ecommerce.png)
 
