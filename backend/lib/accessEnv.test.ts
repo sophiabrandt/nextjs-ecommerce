@@ -3,12 +3,12 @@ import { accessEnv } from "./accessEnv";
 describe("Access Env", () => {
   test("it should return a key from env", () => {
     const test_env = accessEnv("TEST_ENV");
-    expect(test_env).toEqual("env");
+    expect(test_env).toEqual("test");
   });
 
   test("it should return the correct key from env even if default value is provided", () => {
     const test_env = accessEnv("TEST_ENV", "this is wrong");
-    expect(test_env).toEqual("env");
+    expect(test_env).toEqual("test");
   });
 
   test("it should return a default value for a non-existing key when a default value was provided", () => {
