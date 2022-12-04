@@ -80,21 +80,6 @@
 - Automatic Deployment via Docker Swarm and GitLab CI
 - Testing with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) and Jest
 
-<!-- DEMO -->
-
-## Demo
-
-I've deployed a demo (via GitOps/Gitlab CI) to a $5 [Upcloud VPS](https://upcloud.com/) ([How?](https://www.rockyourcode.com/traefik-2-docker-swarm-setup-with-docker-socket-proxy-and-more/)).
-
-Backend: [https://nextjs-ecommerce-keystone.repository.host](https://nextjs-ecommerce-keystone.repository.host/)  
-GraphQL API: [https://nextjs-ecommerce-keystone.repository.host/api/graphql](https://nextjs-ecommerce-keystone.repository.host/api/graphql)  
-
-Frontend: [https://nextjs-ecommerce.repository.host](https://nextjs-ecommerce.repository.host/)
-
-The password reset uses a sandboxed Mailgun account and only works with one email: dzwjxgqv@sharklasers.com
-
-To read the password reset email, go to [https://www.guerrillamail.com/](https://www.guerrillamail.com/) and set the inbox to "dzwjxgqv@sharklasers.com".
-
 <!-- SCREENSHOTS  -->
 
 ## Screenshots
