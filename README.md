@@ -13,8 +13,6 @@
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://nextjs-ecommerce.repository.host">View Demo</a>
-    ·
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce/issues">Report Bug</a>
     ·
     <a href="https://github.com/sophiabrandt/nextjs-ecommerce/issues">Request Feature</a>
