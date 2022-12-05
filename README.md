@@ -30,9 +30,6 @@
       </ul>
     </li>
     <li>
-      <a href="#demo">Demo</a>
-    </li>
-    <li>
       <a href="#screenshots">Screenshots</a>
     </li>
     <li>
